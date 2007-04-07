@@ -1,0 +1,459 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+
+<!-- This file generated using Python HTMLgen module. -->
+<HEAD>
+  <META NAME="GENERATOR" CONTENT="HTMLgen 2.2.2">
+        <TITLE>weave_examples.py</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FBFBFB">
+<pre><font face="Courier New"><font color="#008000">#!/usr/bin/env python
+</font><font color="#004080">"""Simple examples of weave use.
+
+Code meant to be used for learning/testing, not production.
+
+Fernando Perez &lt;fperez@colorado.edu&gt;
+
+March 2002, updated 2005."""</font>
+
+<font color="#C00000">from</font> <font color="#000000">weave</font> <font color="#C00000">import</font> <font color="#000000">inline</font><font color="#0000C0">,</font><font color="#000000">converters</font>
+
+<font color="#C00000">from</font> <font color="#000000">Numeric</font> <font color="#C00000">import</font> <font color="#0000C0">*</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#C00000">def</font> <font color="#000000">simple_print</font><font color="#0000C0">(</font><font color="#000000">input</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Simple print test.
+
+    Since there's a hard-coded printf %i in here, it will only work for numerical
+    inputs (ints).  """</font>
+
+    <font color="#008000"># note in the printf that newlines must be passed as \\n:
+</font>    <font color="#000000">code</font> <font color="#0000C0">=</font> <font color="#004080">'''
+    std::cout &lt;&lt; "Printing from C++ (using std::cout) : "&lt;&lt;input&lt;&lt;std::endl;
+    '''</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'input'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+           <font color="#000000">verbose</font><font color="#0000C0">=</font><font color="#0080C0">2</font><font color="#0000C0">)</font>  <font color="#008000"># see inline docstring for details</font>
+
+<font color="#C00000">def</font> <font color="#000000">py_print</font><font color="#0000C0">(</font><font color="#000000">input</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"Trivial printer, for timing."</font>
+    <font color="#C00000">print</font> <font color="#004080">"Input:"</font><font color="#0000C0">,</font><font color="#000000">input</font>
+
+<font color="#C00000">def</font> <font color="#000000">c_print</font><font color="#0000C0">(</font><font color="#000000">input</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"Trivial printer, for timing."</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> <font color="#004080">"""printf("Input: %i \\n",input);"""</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'input'</font><font color="#0000C0">]</font><font color="#0000C0">)</font>
+
+<font color="#C00000">def</font> <font color="#000000">cpp_print</font><font color="#0000C0">(</font><font color="#000000">input</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"Trivial printer, for timing."</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> <font color="#004080">"""std::cout &lt;&lt; "Input: " &lt;&lt; input &lt;&lt; std::endl;"""</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'input'</font><font color="#0000C0">]</font><font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># Returning a scalar quantity computed from a Numeric array.
+</font><font color="#C00000">def</font> <font color="#000000">trace</font><font color="#0000C0">(</font><font color="#000000">mat</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Return the trace of a matrix.
+    """</font>
+    <font color="#000000">nrow</font><font color="#0000C0">,</font><font color="#000000">ncol</font> <font color="#0000C0">=</font> <font color="#000000">mat</font><font color="#0000C0">.</font><font color="#000000">shape</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">""" 
+double tr=0.0;
+
+for(int i=0;i&lt;nrow;++i)
+    tr += mat(i,i);
+return_val = tr;
+"""</font>
+    <font color="#C00000">return</font> <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'mat'</font><font color="#0000C0">,</font><font color="#004080">'nrow'</font><font color="#0000C0">,</font><font color="#004080">'ncol'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># WRONG CODE: trace() version which modifies in-place a python scalar
+</font><font color="#008000"># variable.  Note that this doesn't work, similarly to how in-place changes in
+</font><font color="#008000"># python only work for mutable objects. Below is an example that does work.
+</font><font color="#C00000">def</font> <font color="#000000">trace2</font><font color="#0000C0">(</font><font color="#000000">mat</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Return the trace of a matrix. WRONG CODE.
+    """</font>
+    <font color="#000000">nrow</font><font color="#0000C0">,</font><font color="#000000">ncol</font> <font color="#0000C0">=</font> <font color="#000000">mat</font><font color="#0000C0">.</font><font color="#000000">shape</font>
+    <font color="#000000">tr</font> <font color="#0000C0">=</font> <font color="#0080C0">0.0</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">""" 
+for(int i=0;i&lt;nrow;++i)
+    tr += mat(i,i);
+"""</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'mat'</font><font color="#0000C0">,</font><font color="#004080">'nrow'</font><font color="#0000C0">,</font><font color="#004080">'ncol'</font><font color="#0000C0">,</font><font color="#004080">'tr'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+           <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">)</font>
+    <font color="#C00000">return</font> <font color="#000000">tr</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># Operating in-place in an existing Numeric array. Contrary to trying to modify
+</font><font color="#008000"># in-place a scalar, this works correctly.
+</font><font color="#C00000">def</font> <font color="#000000">in_place_mult</font><font color="#0000C0">(</font><font color="#000000">num</font><font color="#0000C0">,</font><font color="#000000">mat</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""In-place multiplication of a matrix by a scalar.
+    """</font>
+    <font color="#000000">nrow</font><font color="#0000C0">,</font><font color="#000000">ncol</font> <font color="#0000C0">=</font> <font color="#000000">mat</font><font color="#0000C0">.</font><font color="#000000">shape</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+for(int i=0;i&lt;nrow;++i)
+    for(int j=0;j&lt;ncol;++j)
+        mat(i,j) *= num;
+
+"""</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'num'</font><font color="#0000C0">,</font><font color="#004080">'mat'</font><font color="#0000C0">,</font><font color="#004080">'nrow'</font><font color="#0000C0">,</font><font color="#004080">'ncol'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+           <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># Pure Python version for checking.
+</font><font color="#C00000">def</font> <font color="#000000">cross_product</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Cross product of two 3-d vectors.
+    """</font>
+    <font color="#000000">cross</font> <font color="#0000C0">=</font> <font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">]</font><font color="#0000C0">*</font><font color="#0080C0">3</font>
+    <font color="#000000">cross</font><font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">]</font> <font color="#0000C0">=</font> <font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">1</font><font color="#0000C0">]</font><font color="#0000C0">*</font><font color="#000000">b</font><font color="#0000C0">[</font><font color="#0080C0">2</font><font color="#0000C0">]</font><font color="#0000C0">-</font><font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">2</font><font color="#0000C0">]</font><font color="#0000C0">*</font><font color="#000000">b</font><font color="#0000C0">[</font><font color="#0080C0">1</font><font color="#0000C0">]</font>
+    <font color="#000000">cross</font><font color="#0000C0">[</font><font color="#0080C0">1</font><font color="#0000C0">]</font> <font color="#0000C0">=</font> <font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">2</font><font color="#0000C0">]</font><font color="#0000C0">*</font><font color="#000000">b</font><font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">]</font><font color="#0000C0">-</font><font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">]</font><font color="#0000C0">*</font><font color="#000000">b</font><font color="#0000C0">[</font><font color="#0080C0">2</font><font color="#0000C0">]</font>
+    <font color="#000000">cross</font><font color="#0000C0">[</font><font color="#0080C0">2</font><font color="#0000C0">]</font> <font color="#0000C0">=</font> <font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">]</font><font color="#0000C0">*</font><font color="#000000">b</font><font color="#0000C0">[</font><font color="#0080C0">1</font><font color="#0000C0">]</font><font color="#0000C0">-</font><font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">1</font><font color="#0000C0">]</font><font color="#0000C0">*</font><font color="#000000">b</font><font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">]</font>
+    <font color="#C00000">return</font> <font color="#000000">array</font><font color="#0000C0">(</font><font color="#000000">cross</font><font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># Here we return a list from the C code. This is probably *much* slower than
+</font><font color="#008000"># the python version, it's meant as an illustration and not as production
+</font><font color="#008000"># code.
+</font><font color="#C00000">def</font> <font color="#000000">cross_productC</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Cross product of two 3-d vectors.
+    """</font>
+    <font color="#008000"># py::tuple or py::list both work equally well in this case.
+</font>    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+py::tuple cross(3);
+
+cross[0] = a(1)*b(2)-a(2)*b(1);
+cross[1] = a(2)*b(0)-a(0)*b(2);
+cross[2] = a(0)*b(1)-a(1)*b(0);
+return_val = cross;
+"""</font>
+    <font color="#C00000">return</font> <font color="#000000">array</font><font color="#0000C0">(</font><font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'a'</font><font color="#0000C0">,</font><font color="#004080">'b'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                        <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">)</font><font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># C version which accesses a pre-allocated NumPy vector.  Note: when using
+</font><font color="#008000"># blitz, index access is done with (,,), not [][][]. In fact, [] indexing
+</font><font color="#008000"># fails silently. See this and the next version for a comparison.
+</font><font color="#C00000">def</font> <font color="#000000">cross_productC2</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Cross product of two 3-d vectors.
+    """</font>
+
+    <font color="#000000">cross</font> <font color="#0000C0">=</font> <font color="#000000">zeros</font><font color="#0000C0">(</font><font color="#0080C0">3</font><font color="#0000C0">,</font><font color="#000000">a</font><font color="#0000C0">.</font><font color="#000000">typecode</font><font color="#0000C0">(</font><font color="#0000C0">)</font><font color="#0000C0">)</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+cross(0) = a(1)*b(2)-a(2)*b(1);
+cross(1) = a(2)*b(0)-a(0)*b(2);
+cross(2) = a(0)*b(1)-a(1)*b(0);
+"""</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'a'</font><font color="#0000C0">,</font><font color="#004080">'b'</font><font color="#0000C0">,</font><font color="#004080">'cross'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+           <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">)</font>
+    <font color="#C00000">return</font> <font color="#000000">cross</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># Just like the previous case, but now we don't use the blitz converters.
+</font><font color="#008000"># Weave automagically does the type conversions for us.
+</font><font color="#C00000">def</font> <font color="#000000">cross_productC3</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Cross product of two 3-d vectors.
+    """</font>
+
+    <font color="#000000">cross</font> <font color="#0000C0">=</font> <font color="#000000">zeros</font><font color="#0000C0">(</font><font color="#0080C0">3</font><font color="#0000C0">,</font><font color="#000000">a</font><font color="#0000C0">.</font><font color="#000000">typecode</font><font color="#0000C0">(</font><font color="#0000C0">)</font><font color="#0000C0">)</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">""" 
+cross[0] = a[1]*b[2]-a[2]*b[1];
+cross[1] = a[2]*b[0]-a[0]*b[2];
+cross[2] = a[0]*b[1]-a[1]*b[0];
+"""</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'a'</font><font color="#0000C0">,</font><font color="#004080">'b'</font><font color="#0000C0">,</font><font color="#004080">'cross'</font><font color="#0000C0">]</font><font color="#0000C0">)</font>
+
+    <font color="#C00000">return</font> <font color="#000000">cross</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#C00000">def</font> <font color="#000000">dot_product</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Dot product of two vectors.
+
+    Implemented in a funny (ridiculous) way to use support_code.
+
+    I want to see if we can call another function from inside our own
+    code. This would give us a crude way to implement better modularity by
+    having global constants which include the raw code for whatever C
+    functions we need to call in various places. These can then be included
+    via support_code.
+
+    The overhead is that the support code gets compiled in *every* dynamically
+    generated module, but I'm not sure that's a big deal since the big
+    compilation overhead seems to come from all the fancy C++ templating and
+    whatnot.
+
+    Later: ask Eric if there's a cleaner way to do this."""</font>
+
+    <font color="#000000">N</font> <font color="#0000C0">=</font> <font color="#000000">len</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">)</font>
+    <font color="#000000">support</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+double mult(double x,double y) {
+    return x*y;
+}
+"""</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+double sum = 0.0;
+for (int i=0;i&lt;N;++i) {
+    sum += mult(a(i),b(i));
+}
+return_val = sum;
+"""</font>
+    <font color="#C00000">return</font> <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'a'</font><font color="#0000C0">,</font><font color="#004080">'b'</font><font color="#0000C0">,</font><font color="#004080">'N'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">,</font>
+                  <font color="#000000">support_code</font> <font color="#0000C0">=</font> <font color="#000000">support</font><font color="#0000C0">,</font>
+                  <font color="#000000">libraries</font> <font color="#0000C0">=</font> <font color="#0000C0">[</font><font color="#004080">'m'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#C00000">def</font> <font color="#000000">sumC</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""Return the sum of the elements of a 1-d array.
+    
+    An example of how weave accesses a Numeric array without blitz.  """</font>
+
+    <font color="#000000">num_types</font> <font color="#0000C0">=</font> <font color="#0000C0">{</font><font color="#000000">Float</font><font color="#0000C0">:</font><font color="#004080">'double'</font><font color="#0000C0">,</font>
+                 <font color="#000000">Float32</font><font color="#0000C0">:</font><font color="#004080">'float'</font><font color="#0000C0">}</font>
+    <font color="#000000">x_type</font> <font color="#0000C0">=</font> <font color="#000000">num_types</font><font color="#0000C0">[</font><font color="#000000">x</font><font color="#0000C0">.</font><font color="#000000">typecode</font><font color="#0000C0">(</font><font color="#0000C0">)</font><font color="#0000C0">]</font>
+
+    <font color="#000000">code</font> <font color="#0000C0">=</font> <font color="#004080">"""
+           double result=0.0;
+           double element;
+
+           for (int i = 0; i &lt; Nx[0]; i++){
+
+               // Note the type of the pointer below is computed in python
+               //element = *(%s *)(x-&gt;data+i*x-&gt;strides[0]);
+
+               // Weave's magic does the above for us:
+               element = x[i];
+               
+               result += element;
+               std::cout &lt;&lt; "Element " &lt;&lt; i &lt;&lt; " = " &lt;&lt; element &lt;&lt; "\\n";
+           }
+           std::cout &lt;&lt; "size x " &lt;&lt; Nx[0] &lt;&lt; "\\n";
+
+           return_val = result;
+           """</font> <font color="#0000C0">%</font> <font color="#000000">x_type</font><font color="#0000C0">;</font>
+
+    <font color="#C00000">return</font> <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'x'</font><font color="#0000C0">]</font><font color="#0000C0">,</font><font color="#000000">verbose</font><font color="#0000C0">=</font><font color="#0080C0">0</font><font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#C00000">def</font> <font color="#000000">Cglobals</font><font color="#0000C0">(</font><font color="#000000">arr</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""How to pass data from function to function via globals.
+
+    This allows the kind of 'over the head' parameter passing via globals
+    which is ugly but necessary for using things like generic integrators in
+    Numerical Recipes with aditional parameters.  """</font>
+
+    <font color="#000000">support</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+// Declare globals here
+
+/* These blitz guys must be accessed via pointers to avoid a costly copy.
+Note that now the type is hardwired in. All python polymorphism is gone.  I
+should look into whether this can be fixed by properly using blitz templating.
+*/
+blitz::Array&lt;int, 1&gt; *G_arr_pt;
+
+// The global M will be visible in the "code" segment
+int M = 99;
+
+void aprint(int N) {
+  std::cout &lt;&lt; "In aprint()\\n";
+  for (int i=0;i&lt;N;++i)
+    std::cout &lt;&lt; "arr[" &lt;&lt; i &lt;&lt; "]=" &lt;&lt; (*G_arr_pt)(i) &lt;&lt; " ";
+  std::cout &lt;&lt; std::endl;
+}
+
+"""</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+// Get the passed array reference so the data becomes global
+G_arr_pt = &amp;arr;
+
+std::cout &lt;&lt; "global M=" &lt;&lt; M &lt;&lt; std::endl;
+std::cout &lt;&lt; "local N=" &lt;&lt; N &lt;&lt; std::endl;
+
+
+std::cout &lt;&lt; "First, print using the blitz internal printer:\\n";
+std::cout &lt;&lt; "all arr\\n";
+std::cout &lt;&lt; arr &lt;&lt; std::endl;
+
+std::cout &lt;&lt; "all G_arr\\n";
+std::cout &lt;&lt; *G_arr_pt &lt;&lt; std::endl;
+
+std::cout &lt;&lt; "now by loop\\n";
+
+for (int i=0;i&lt;N;++i)
+  std::cout &lt;&lt; "arr[" &lt;&lt; i &lt;&lt; "]=" &lt;&lt; arr(i) &lt;&lt; " ";
+std::cout &lt;&lt; std::endl;
+
+
+std::cout &lt;&lt; "Now calling aprint\\n";
+
+aprint(N);
+"""</font>
+    <font color="#000000">N</font> <font color="#0000C0">=</font> <font color="#000000">len</font><font color="#0000C0">(</font><font color="#000000">arr</font><font color="#0000C0">)</font>
+    <font color="#C00000">return</font> <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'arr'</font><font color="#0000C0">,</font><font color="#004080">'N'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">,</font>
+                  <font color="#000000">support_code</font> <font color="#0000C0">=</font> <font color="#000000">support</font><font color="#0000C0">,</font>
+                  <font color="#000000">libraries</font> <font color="#0000C0">=</font> <font color="#0000C0">[</font><font color="#004080">'m'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#000000">verbose</font> <font color="#0000C0">=</font> <font color="#0080C0">0</font><font color="#0000C0">,</font>
+                  <font color="#0000C0">)</font>
+
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#008000"># Two trivial examples using the C math library follow.
+</font><font color="#C00000">def</font> <font color="#000000">powC</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">,</font><font color="#000000">n</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""powC(x,n) -&gt; x**n. Implemented using the C pow() function.
+    """</font>
+    <font color="#000000">support</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+#include &lt;math.h&gt;
+"""</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+return_val = pow(x,n);
+"""</font>
+    <font color="#C00000">return</font> <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'x'</font><font color="#0000C0">,</font><font color="#004080">'n'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">,</font>
+                  <font color="#000000">support_code</font> <font color="#0000C0">=</font> <font color="#000000">support</font><font color="#0000C0">,</font>
+                  <font color="#000000">libraries</font> <font color="#0000C0">=</font> <font color="#0000C0">[</font><font color="#004080">'m'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#0000C0">)</font>
+
+<font color="#008000"># Some callback examples
+</font><font color="#C00000">def</font> <font color="#000000">foo</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">,</font><font color="#000000">y</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+     <font color="#C00000">print</font> <font color="#004080">"In Python's foo:"</font>
+     <font color="#C00000">print</font> <font color="#004080">'x'</font><font color="#0000C0">,</font><font color="#000000">x</font>
+     <font color="#C00000">print</font> <font color="#004080">'y'</font><font color="#0000C0">,</font><font color="#000000">y</font>
+     <font color="#C00000">return</font> <font color="#000000">x</font>
+
+<font color="#C00000">def</font> <font color="#000000">cfoo</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">,</font><font color="#000000">y</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+      <font color="#000000">code</font> <font color="#0000C0">=</font> <font color="#004080">"""
+      printf("Attemtping to call back foo() from C...\\n");
+      py::tuple foo_args(2);
+      py::object z;  // This will hold the return value of foo()
+      foo_args[0] = x;
+      foo_args[1] = y;
+      z = foo.call(foo_args);
+      printf("Exiting C code.\\n");
+      return_val = z;
+      """</font>
+      <font color="#C00000">return</font> <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#004080">"foo x y"</font><font color="#0000C0">.</font><font color="#000000">split</font><font color="#0000C0">(</font><font color="#0000C0">)</font> <font color="#0000C0">)</font>
+
+<font color="#000000">x</font><font color="#0000C0">=</font><font color="#0080C0">99</font>
+<font color="#000000">y</font><font color="#0000C0">=</font><font color="#004080">"Hello"</font>
+
+<font color="#C00000">print</font> <font color="#004080">"Pure python..."</font>
+<font color="#000000">z</font><font color="#0000C0">=</font><font color="#000000">foo</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">,</font><font color="#000000">y</font><font color="#0000C0">)</font>
+<font color="#C00000">print</font> <font color="#004080">"foo returned:"</font><font color="#0000C0">,</font><font color="#000000">z</font>
+<font color="#C00000">print</font> <font color="#004080">"\nVia weave..."</font>
+<font color="#000000">z</font><font color="#0000C0">=</font><font color="#000000">cfoo</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">,</font><font color="#000000">y</font><font color="#0000C0">)</font>
+<font color="#C00000">print</font> <font color="#004080">"cfoo returned:"</font><font color="#0000C0">,</font><font color="#000000">z</font>
+
+<font color="#008000"># Complex numbers
+</font><font color="#C00000">def</font> <font color="#000000">complex_test</font><font color="#0000C0">(</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#000000">a</font> <font color="#0000C0">=</font> <font color="#000000">zeros</font><font color="#0000C0">(</font><font color="#0000C0">(</font><font color="#0080C0">4</font><font color="#0000C0">,</font><font color="#0080C0">4</font><font color="#0000C0">)</font><font color="#0000C0">,</font><font color="#000000">Complex</font><font color="#0000C0">)</font>
+    <font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">,</font><font color="#0080C0">0</font><font color="#0000C0">]</font> <font color="#0000C0">=</font> <font color="#0080C0">1</font><font color="#0000C0">+</font><font color="#0080C0">2j</font>
+    <font color="#000000">a</font><font color="#0000C0">[</font><font color="#0080C0">1</font><font color="#0000C0">,</font><font color="#0080C0">1</font><font color="#0000C0">]</font> <font color="#0000C0">=</font> <font color="#0080C0">2</font><font color="#0000C0">+</font><font color="#0080C0">3.5j</font>
+    <font color="#C00000">print</font> <font color="#004080">'Before\n'</font><font color="#0000C0">,</font><font color="#000000">a</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+std::complex&lt;double&gt; i(0, 1);
+std::cout &lt;&lt; a(1,1) &lt;&lt; std::endl;
+a(2,2) = 3.0+4.5*i;
+//a(2,2).imag = 4.5;
+"""</font>
+    <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'a'</font><font color="#0000C0">]</font><font color="#0000C0">,</font><font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'After\n'</font><font color="#0000C0">,</font><font color="#000000">a</font>
+
+<font color="#000000">complex_test</font><font color="#0000C0">(</font><font color="#0000C0">)</font>
+
+<font color="#008000">#-----------------------------------------------------------------------------
+</font><font color="#C00000">def</font> <font color="#000000">sinC</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#004080">"""sinC(x) -&gt; sin(x). Implemented using the C sin() function.
+    """</font>
+    <font color="#000000">support</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+#include &lt;math.h&gt;
+"""</font>
+    <font color="#000000">code</font> <font color="#0000C0">=</font> \
+<font color="#004080">"""
+return_val = sin(x);
+"""</font>
+    <font color="#C00000">return</font> <font color="#000000">inline</font><font color="#0000C0">(</font><font color="#000000">code</font><font color="#0000C0">,</font><font color="#0000C0">[</font><font color="#004080">'x'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#000000">type_converters</font> <font color="#0000C0">=</font> <font color="#000000">converters</font><font color="#0000C0">.</font><font color="#000000">blitz</font><font color="#0000C0">,</font>
+                  <font color="#000000">support_code</font> <font color="#0000C0">=</font> <font color="#000000">support</font><font color="#0000C0">,</font>
+                  <font color="#000000">libraries</font> <font color="#0000C0">=</font> <font color="#0000C0">[</font><font color="#004080">'m'</font><font color="#0000C0">]</font><font color="#0000C0">,</font>
+                  <font color="#0000C0">)</font>
+
+<font color="#C00000">def</font> <font color="#000000">in_place_multNum</font><font color="#0000C0">(</font><font color="#000000">num</font><font color="#0000C0">,</font><font color="#000000">mat</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#000000">mat</font> <font color="#0000C0">*=</font> <font color="#000000">num</font>
+
+<font color="#C00000">def</font> <font color="#000000">main</font><font color="#0000C0">(</font><font color="#0000C0">)</font><font color="#0000C0">:</font>
+    <font color="#C00000">print</font> <font color="#004080">'Printing:'</font>
+    <font color="#C00000">print</font> <font color="#004080">'\nPassing an int:'</font>
+    <font color="#000000">simple_print</font><font color="#0000C0">(</font><font color="#0080C0">42</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'\nNow passing a float.'</font>
+    <font color="#000000">simple_print</font><font color="#0000C0">(</font><font color="#0080C0">42.1</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'\nAnd a string.'</font>
+    <font color="#000000">simple_print</font><font color="#0000C0">(</font><font color="#004080">'Hello World!'</font><font color="#0000C0">)</font>
+
+    <font color="#000000">A</font> <font color="#0000C0">=</font> <font color="#000000">zeros</font><font color="#0000C0">(</font><font color="#0000C0">(</font><font color="#0080C0">3</font><font color="#0000C0">,</font><font color="#0080C0">3</font><font color="#0000C0">)</font><font color="#0000C0">,</font><font color="#004080">'d'</font><font color="#0000C0">)</font>
+
+    <font color="#000000">A</font><font color="#0000C0">[</font><font color="#0080C0">0</font><font color="#0000C0">,</font><font color="#0080C0">0</font><font color="#0000C0">]</font><font color="#0000C0">,</font><font color="#000000">A</font><font color="#0000C0">[</font><font color="#0080C0">1</font><font color="#0000C0">,</font><font color="#0080C0">1</font><font color="#0000C0">]</font><font color="#0000C0">,</font><font color="#000000">A</font><font color="#0000C0">[</font><font color="#0080C0">2</font><font color="#0000C0">,</font><font color="#0080C0">2</font><font color="#0000C0">]</font> <font color="#0000C0">=</font> <font color="#0080C0">1</font><font color="#0000C0">,</font><font color="#0080C0">2.5</font><font color="#0000C0">,</font><font color="#0080C0">3.3</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\nMatrix A:\n'</font><font color="#0000C0">,</font><font color="#000000">A</font>
+    <font color="#C00000">print</font> <font color="#004080">'Trace by two methods. Second fails, see code for details.'</font>
+    <font color="#C00000">print</font> <font color="#004080">'\ntr(A)='</font><font color="#0000C0">,</font><font color="#000000">trace</font><font color="#0000C0">(</font><font color="#000000">A</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'\ntr(A)='</font><font color="#0000C0">,</font><font color="#000000">trace2</font><font color="#0000C0">(</font><font color="#000000">A</font><font color="#0000C0">)</font>
+
+    <font color="#000000">a</font> <font color="#0000C0">=</font> <font color="#0080C0">5.6</font>
+    <font color="#C00000">print</font> <font color="#004080">'\nMultiplying A in place by %s:'</font> <font color="#0000C0">%</font> <font color="#000000">a</font>
+    <font color="#000000">in_place_mult</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">A</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#000000">A</font>
+
+    <font color="#008000"># now some simple operations with 3-vectors.
+</font>    <font color="#000000">a</font> <font color="#0000C0">=</font> <font color="#000000">array</font><font color="#0000C0">(</font><font color="#0000C0">[</font><font color="#0080C0">4.3</font><font color="#0000C0">,</font><font color="#0080C0">1.5</font><font color="#0000C0">,</font><font color="#0080C0">5.6</font><font color="#0000C0">]</font><font color="#0000C0">)</font>
+    <font color="#000000">b</font> <font color="#0000C0">=</font> <font color="#000000">array</font><font color="#0000C0">(</font><font color="#0000C0">[</font><font color="#0080C0">0.8</font><font color="#0000C0">,</font><font color="#0080C0">2.9</font><font color="#0000C0">,</font><font color="#0080C0">3.8</font><font color="#0000C0">]</font><font color="#0000C0">)</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\nPython and C versions follow. Results should be identical:'</font>
+    <font color="#C00000">print</font> <font color="#004080">'a ='</font><font color="#0000C0">,</font><font color="#000000">a</font>
+    <font color="#C00000">print</font> <font color="#004080">'b ='</font><font color="#0000C0">,</font><font color="#000000">b</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\nsum(a_i) ='</font><font color="#0000C0">,</font><font color="#000000">sum</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'sum(a_i) ='</font><font color="#0000C0">,</font><font color="#000000">sumC</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">)</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\na.b ='</font><font color="#0000C0">,</font><font color="#000000">dot</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'a.b ='</font><font color="#0000C0">,</font><font color="#000000">dot_product</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\na x b ='</font><font color="#0000C0">,</font><font color="#000000">cross_product</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'a x b ='</font><font color="#0000C0">,</font><font color="#000000">cross_productC</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\nIn-place versions.'</font>
+    <font color="#C00000">print</font> <font color="#004080">'a x b ='</font><font color="#0000C0">,</font><font color="#000000">cross_productC2</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'a x b ='</font><font color="#0000C0">,</font><font color="#000000">cross_productC3</font><font color="#0000C0">(</font><font color="#000000">a</font><font color="#0000C0">,</font><font color="#000000">b</font><font color="#0000C0">)</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\nSimple functions using the C math library:'</font>
+    <font color="#C00000">import</font> <font color="#000000">math</font>
+    <font color="#000000">x</font> <font color="#0000C0">=</font> <font color="#0080C0">3.5</font>
+    <font color="#000000">n</font> <font color="#0000C0">=</font> <font color="#0080C0">4</font>
+    <font color="#000000">theta</font> <font color="#0000C0">=</font> <font color="#000000">math</font><font color="#0000C0">.</font><font color="#000000">pi</font><font color="#0000C0">/</font><font color="#0080C0">4.</font>
+    <font color="#C00000">print</font> <font color="#004080">'\nx**'</font><font color="#0000C0">+</font><font color="#000000">str</font><font color="#0000C0">(</font><font color="#000000">n</font><font color="#0000C0">)</font><font color="#0000C0">+</font><font color="#004080">'='</font><font color="#0000C0">,</font><font color="#000000">x</font><font color="#0000C0">**</font><font color="#000000">n</font>
+    <font color="#C00000">print</font> <font color="#004080">'x**'</font><font color="#0000C0">+</font><font color="#000000">str</font><font color="#0000C0">(</font><font color="#000000">n</font><font color="#0000C0">)</font><font color="#0000C0">+</font><font color="#004080">'='</font><font color="#0000C0">,</font><font color="#000000">powC</font><font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">,</font><font color="#000000">n</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'\nsin('</font><font color="#0000C0">+</font><font color="#000000">str</font><font color="#0000C0">(</font><font color="#000000">theta</font><font color="#0000C0">)</font><font color="#0000C0">+</font><font color="#004080">')='</font><font color="#0000C0">,</font><font color="#000000">math</font><font color="#0000C0">.</font><font color="#000000">sin</font><font color="#0000C0">(</font><font color="#000000">theta</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'sin('</font><font color="#0000C0">+</font><font color="#000000">str</font><font color="#0000C0">(</font><font color="#000000">theta</font><font color="#0000C0">)</font><font color="#0000C0">+</font><font color="#004080">')='</font><font color="#0000C0">,</font><font color="#000000">sinC</font><font color="#0000C0">(</font><font color="#000000">theta</font><font color="#0000C0">)</font>
+
+    <font color="#C00000">print</font> <font color="#004080">'\nGlobal variables and explicitly typed blitz arrays.'</font>
+    <font color="#000000">x</font> <font color="#0000C0">=</font> <font color="#000000">array</font><font color="#0000C0">(</font><font color="#0000C0">[</font><font color="#0080C0">4</font><font color="#0000C0">,</font><font color="#0080C0">5</font><font color="#0000C0">,</font><font color="#0080C0">6</font><font color="#0000C0">]</font><font color="#0000C0">)</font>
+    <font color="#C00000">print</font> <font color="#004080">'x is a Numeric array:\nx='</font><font color="#0000C0">,</font><font color="#000000">x</font>
+    <font color="#C00000">print</font> <font color="#004080">'Now using weave:'</font>
+    <font color="#000000">Cglobals</font> <font color="#0000C0">(</font><font color="#000000">x</font><font color="#0000C0">)</font>
+
+<font color="#C00000">if</font> <font color="#000000">__name__</font> <font color="#0000C0">==</font> <font color="#004080">'__main__'</font><font color="#0000C0">:</font>
+    <font color="#000000">main</font><font color="#0000C0">(</font><font color="#0000C0">)</font><font color="#000000"></font></font></pre>
+
+</BODY> </HTML>

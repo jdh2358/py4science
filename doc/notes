@@ -1,0 +1,461 @@
+Workshop notes
+==============
+
+Some comments made by Pieter Swart
+
+- Get funding for a few highly qualified students?
+
+- Funding for those already coming to SANUM to stay a few more days for the
+workshop?
+
+
+
+Topics
+------
+
+- Python package installation demo - the cheeseshop
+
+- Show other libs not in 'standard' distro (Judy arrays, for example).
+Download/install/play with one such package in front of people.  Cover the
+TopicalSoftware wiki pages.
+
+
+General feedback
+----------------
+
+- Make a simple example with data structures beyond arrays/functions.  Use a
+tree, for example.
+
+- Scripted examples for everything, so people can follow along and if they
+fall behind, they can catch up.
+
+- More pedagogic examples and exercises.
+
+
+Modules to use
+--------------
+
+Core functionality
+..................
+
+IPython: http://ipython.scipy.org
+
+Scipy (numpy/full): http://www.scipy.org
+
+Matplotlib: http://matplotlib.sourceforge.net
+
+MayaVi: http://mayavi.sourceforge.net
+
+PIL: http://www.pythonware.com/products/pil
+
+
+Other useful modules for most people
+....................................
+
+Scientific: http://starship.python.net/~hinsen/ScientificPython
+
+clnum: http://calcrpnpy.sourceforge.net/clnum.html
+
+gmpy: http://gmpy.sourceforge.net
+
+Pyx: http://pyx.sourceforge.net
+
+Visual Python: http://vpython.org
+
+Networkx: https://networkx.lanl.gov
+
+Pyrex: http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex
+
+SWIG: http://www.swig.org
+
+ctypes: http://starship.python.net/crew/theller/ctypes
+
+
+Others to be mentioned
+......................
+
+pygsl
+
+pydot (graphviz) 
+
+rpy
+
+judy arrays
+
+
+Project ideas
+-------------
+
+getbibtex example
+
+webserver-enabled calculator
+
+Francois' root-finding problem.
+
+Polynomial fitting object: a little data denoising problem.
+
+Fibonacci numbers exploration (http://ulcar.uml.edu/~iag/CS/Fibonacci.html,
+http://mathworld.wolfram.com/FibonacciNumber.html)
+
+One-dimensional quantum problem (non-linear oscillator?)
+
+MonteCarlo integration
+
+Filters (scipy.signal)
+
+FFT/Image processing: simple edge detection.
+
+Low-rank approximations for image compression.
+
+Logistic map
+
+Symbolics?  Ryan's maxima stuff...
+
+A matplotlib animation problem: percolation? Ising?
+
+
+- Pallas orbit fit via trig polynomial:
+
+x = f(t) = a_0 + \sum_{k=1}^{5}a_k \cos(k t) + b_k \sin(k t) + a_6 \cos(6 t)
+
+-> 12 unknowns.
+
+This was the first FFT: instead of solving for 12 unknowns, Gauss blocked the
+system into 4 groups of 3 vars.
+
+
+Topics and references
+---------------------
+
+Descriptors in Python: http://users.rcn.com/python/download/Descriptor.htm
+
+=================================================
+
+Subject: [SciPy-user] Using ctypes and scipy
+Date: Tue, 22 Nov 2005 19:45:56 -0700
+From: Travis Oliphant <oliphant@ee.byu.edu>
+Reply-To: SciPy Users List <scipy-user@scipy.net>
+To: SciPy Users List <scipy-user@scipy.net>
+
+
+I'm including a (small) section in my book on the use of ctypes with 
+scipy.   But, I wanted to let users know a little bit of how nifty it 
+can be for calling out to an external compiled-library.  Ctypes is an 
+additional Python module downloaded separately ( see 
+http://starship.python.net/crew/theller/ctypes/ )
+
+Be warned, however, that calling C-code directly like this can easily 
+result in segfaults if you make a mistake in calling the external 
+library.  But it is a quick-and-dirty way to access arbitrary library code.
+
+Consider the C-code in a file called simple.c:
+
+int
+addone(double *ptr, int size)
+{
+    int k;
+
+    for (k=0; k<size; k++) *ptr++ += 1;
+}
+
+int
+makeone(double *ptr, int size)
+{
+    int k;
+    for (k=0; k<size; k++) *ptr++ = 1;
+}
+
+Suppose this is compiled into a library (on my Linux system I do this
+with the command "gcc -shared -o simple.so simple.c")
+
+Now you can load and call these functions from within Python:
+
+from ctypes import cdll, c_int, c_void_p
+from scipy import empty
+
+N = 1000
+a = empty(N,dtype=float)
+
+lib = cdll.LoadLibrary('./simple.so') 
+# this may be called simple.so or simple.<zzz> where
+# <zzz> is the extension for shared libraries on your system.
+
+# Create c-types arguments to pass
+cN = c_int(N)
+# This is a pointer to the actual location of the data
+ptr = c_void_p(int(a.__array_data__[0], 0)) 
+
+#Now call the routines
+num = lib.makeone(ptr, cN)
+num = lib.addone(ptr, cN)
+print a[:10]
+
+
+Output is:
+
+[ 2.  2.  2.  2.  2.  2.  2.  2.  2.  2.]
+
+Kind of nifty, no?
+
+-Travis
+
+==================================================
+Re: Short-circuiting iterators
+From: Raymond Hettinger <raymond.hettinger@verizon.net>
+Reply-To: python@rcn.com
+Date: Wednesday 07 December 2005 21:15:55
+Groups: gmane.comp.python.devel
+References: 1
+
+[Matthew F. Barnes]
+> The ability to remotely terminate a for-loop also struck me as
+somewhat
+> interesting:
+> 
+>     def estimate(item, iterable):
+>         . . .
+>         if good_enough:
+>             iterable.stop()
+>             return result
+> 
+>     for x in iterable:
+>         . . .
+>         approx *= estimate(x, iterable)
+
+Good inspiration; wrong technique.  For the RightWay(tm), try a
+functional approach composing a target calculation with a function
+generating successively more accurate approximations and a consumer
+function that stops when the desired accuracy is achieved.  The idea is
+to decouple the steps into side-effect-free, reusable components.  For a
+worked-out, comprehensive example, see
+http://www.md.chalmers.se/~rjmh/Papers/whyfp.pdf .
+
+
+> But these are highly contrived and hardly compelling.
+
+That suggests an answer to your earlier question as to whether
+itertools.interruptable(iterable) would be a useful addition ;-)
+
+
+Raymond
+
+====================================================================
+Re: Mutability of function arguments?
+From:Fredrik Lundh <fredrik@pythonware.com>
+Date:Thursday 08 December 2005 10:17:07
+Groups:gmane.comp.python.general
+References: 1 2 3 4
+
+Mike Meyer wrote:
+
+> Your description of "passes references by value" is a description of
+> call by reference. C passes all arguments by value, to pass a
+> reference, the C programmer creates the reference to the value "by
+> hand", then dereferences it by hand at the other end. So C's
+> "call-by-reference" passes the reference by value. There's no
+> difference between C's call-by-reference and Python's
+> call-by-reference, and using different words to try and imply there is
+> will just cause problems further on.
+
+can you guys please stop using "call by value" and "call by reference"
+when you discuss Python.  both terms have established meanings, and
+Python's argument passing model doesn't match any of them.
+
+this was known some 30 years ago; here's a quote from a CLU reference
+manaual from 1979:
+
+    "We call the argument passing technique _call by sharing_,
+    because the argument objects are shared between the
+    caller and the called routine.  This technique does not
+    correspond to most traditional argument passing techniques
+    (it is similar to argument passing in LISP).  In particular IT
+    IS NOT call by value because mutations of arguments per-
+    formed by the called routine will be visible to the caller.
+    And IT IS NOT call by reference because access is not given
+    to the variables of the caller, but merely to certain objects."
+
+(CLU was one of the first languages to use objects in the Python sense,
+as well as the same argument passing model as today's Python)
+
+established terms for Python's argument passing model are
+
+    call by object
+
+or
+
+    call by sharing
+
+for more on this, see the comp.lang.python archives.
+
+</F>
+
+
+-------- Original Message --------
+Subject: web_search 1.0.0
+Date: Sat, 17 Dec 2005 00:13:35 -0800 (PST)
+From: Connelly Barnes <connellybarnes@yahoo.com>
+Reply-To: python-list@python.org
+To: python-announce-list@python.org
+
+
+Query 6 search engines with a uniform API and minimal
+pain from Python.
+
+Compatible with Python 2.3 - 2.4.
+
+  http://oregonstate.edu/~barnesc/web_search/
+
+Example:
+
+  >>> from web_search import yahoo
+  >>> for (name, url, desc) in yahoo('python', 20):
+  ...   print name, url
+  ...
+  (First 20 results for Yahoo search of "python").
+
+Currently supports Ask Jeeves, dmoz, Excite, Google,
+MSN, and Yahoo.
+
+ - Connelly Barnes
+
+
+====================================================================
+Subject: [SciPy-dev] Example of power of new data-type descriptors.
+Date: Mon, 26 Dec 2005 02:00:20 -0700
+From: Travis Oliphant <oliphant.travis@ieee.org>
+Reply-To: SciPy Developers List <scipy-dev@scipy.net>
+To: SciPy Users List <scipy-user@scipy.net>,        SciPy Developers List 
+<scipy-dev@scipy.net>,        numpy-discussion <numpy-discussion@lists.sourceforge.net>
+
+
+
+I'd like more people to know about the new power that is in scipy core 
+due to the general data-type descriptors that can now be used to define 
+numeric arrays.  Towards that effort here is a simple example (be sure 
+to use latest SVN -- there were a coupld of minor changes that improve 
+usability made recently).  Notice this example does not use a special 
+"record" array subclass.  This is just a regular array.  I'm kind of 
+intrigued (though not motivated to pursue) the possibility of accessing 
+(or defining) databases directly into scipy_core arrays using the record 
+functionality.
+
+# Define a new data-type descriptor
+ >>> import scipy
+
+ >>> dtype = scipy.dtypedescr({'names': ['name', 'age', 'weight'], 
+'formats': ['S30', 'i2', 'f4']})
+ >>> a = scipy.array([('Bill',31,260),('Fred',15,135)], dtype=dtype) 
+# the argument to dtypedescr could have also been placed here as the 
+argument to dtype
+
+ >>> print a['name']
+[Bill Fred]
+
+ >>> print a['age']
+[31 15]
+
+ >>> print a['weight']
+[ 260.  135.]
+
+ >>> print a[0]
+('Bill', 31, 260.0)
+
+ >>> print a[1]
+('Fred', 15, 135.0)
+
+It seems to me there are some very interesting possibilities with this 
+new ability.  The record array subclass adds an improved scalar type 
+(the record) and attribute access to get at the fields:  (e.g.  a.name, 
+a.age, and a.weight).    But, if you don't need attribute access you can 
+use regular arrays to do a lot of what you might need a record array to 
+accomplish for you.  I'd love to see what people come up with using this 
+new facility.
+
+The new array PEP for Python basically proposes adding a very simple 
+array object (just the basic PyArrayObject * of Numeric with a 
+bare-bones type-object table) plus this new data-type descriptor object 
+to Python and a very few builtin data-type descriptors (perhaps just 
+object initially).   This would basically add the array interface to 
+Python directly and allow people to start using it generally.  The PEP 
+is slow going because it is not on my priority list right now because it 
+is not essential to making scipy_core work well.  But, I would love to 
+have more people ruminating on the basic ideas which I think are 
+crystallizing.  
+
+Best wishes for a new year,
+
+-Travis Oliphant
+
+
+======================================================================
+
+-------- Original Message --------
+Subject: Re: [Numpy-discussion] question about index array behavior
+Date: Fri, 13 Jan 2006 14:39:03 -0500
+From: Perry Greenfield <perry@stsci.edu>
+To: Russel Howe <russel@appliedminds.com>,        numpy-discussion
+<numpy-discussion@lists.sourceforge.net>
+References: <BD5DBAF1-7E70-4BC2-B390-881A34F55B41@appliedminds.com>
+
+
+On Jan 13, 2006, at 2:07 PM, Russel Howe wrote:
+
+> In the session below, I expected the for loop and the index array to
+> have the same behavior.  Is this behavior by design?  Is there some
+> other way to get the behavior of the for loop?  The loop is too slow
+> for my application ( len(ar1) == 18000).
+> Russel
+
+This sort of usage of index arrays is always going to be a bit
+confusing and this is a common example of that. Anytime you are using
+repeated indices for index assignment, you are not going to get what
+you would naively think. It's useful to think of what is going on in a
+little more detail. Your use of index arrays is resulting in the
+elements you selected generating a 10 element array which is added to
+the random elements. Initially it is a 10 element array with all zero
+elements, and after the addition, it equals the random array elements.
+Then, the index assignment takes place. First, the first element of the
+summed array is assigned to 0, then the second element of the summed
+array is assigned to 0, and that is the problem. The summing is done
+before the assignment. Generally the last index of a repeated set is
+what is assigned as the final value.
+
+It is possible to do what you want without a for loop, but perhaps not
+as fast as it would be in C. One way to do it is to sort the indices in
+increasing order, generate the corresponding selected value array and
+then use accumulated sums to derive the sums corresponding to each
+index. It's a bit complicated, but can be much faster than a for loop.
+See example 3.7.4 to see the details of how this is done in our
+tutorial: http://www.scipy.org/wikis/topical_software/Tutorial
+Maybe someone has a more elegant, faster or clever way to do this that
+I've overlooked. I've seen this come up enough that it may be useful to
+provide a special function to make this easier to do.
+
+Perry Greenfield
+
+> Python 2.4.2 (#1, Nov 29 2005, 08:43:33)
+> [GCC 4.0.1 (Apple Computer, Inc. build 5247)] on darwin
+> Type "help", "copyright", "credits" or "license" for more information.
+> >>> from numarray import *
+> >>> import numarray.random_array as ra
+> >>> print libnumarray.__version__
+> 1.5.0
+> >>> ar1=ra.random(10)
+> >>> ar2=zeros(5, type=Float32)
+> >>> ind=array([0,0,1,1,2,2,3,3,4,4])
+> >>> ar2[ind]+=ar1
+> >>> ar2
+> array([ 0.09791247,  0.26159889,  0.89386773,  0.32572687,
+> 0.86001897], type=Float32)
+> >>> ar1
+> array([ 0.49895534,  0.09791247,  0.424059  ,  0.26159889,  0.29791802,
+>         0.89386773,  0.44290054,  0.32572687,  0.53337622,
+> 0.86001897])
+> >>> ar2*=0.0
+> >>> for x in xrange(len(ind)):
+> ...     ar2[ind[x]]+=ar1[x]
+> ...
+> >>> ar2
+> array([ 0.5968678 ,  0.68565786,  1.19178581,  0.76862741,
+> 1.39339519], type=Float32)
+> >>>

@@ -1,0 +1,3027 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass amsbook
+\language english
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 0
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Chapter
+
+Python for Scientific Computing
+\layout Standard
+\align right 
+With material contributed by Perry Greenfield, Robert Jedrzejewski, Vicki
+ Laidler and John Hunter
+\layout Section
+
+Who is using Python?
+\layout Standard
+
+The use of Python in scientific computing is as wide as the field itself.
+ A sampling of current work is provided here to indicate the breadth of
+ disciplines represented and the scale of the problems addressed.
+ The NASA Jet Propulsion Laboratory (JPL) uses Python as an interface language
+ to 
+\shape smallcaps 
+FORTRAN
+\shape default 
+ and C++ libraries which form a suite of tools for plotting and visualization
+ of spacecraft trajectory parameters in mission design and navigation.
+ The Space Telescope Science Institute (STScI) uses Python in many phases
+ of their pipeline: scheduling Hubble data acquisitions, managing volumes
+ of data, and analyzing astronomical images 
+\begin_inset LatexCommand \cite{BarrettEtal2004}
+
+\end_inset 
+
+.
+ The National Oceanic Atmospheric Administration (NOAA) uses Python for
+ a wide variety of scientific computing tasks including simple scripts to
+ parse and translate data files, prototyping of computational algorithms,
+ writing user interfaces, web front ends, and the development of models
+ 
+\begin_inset LatexCommand \cite{NOAA2000,BarkerHealy2001,ParkerHallBarker2001}
+
+\end_inset 
+
+.
+ At the Fundamental Symmetries Lab at Princeton University, Python is used
+ to efficiently analyze large data sets from an experiment that searches
+ for CPT and Lorentz Violation using an atomic magnetometer 
+\begin_inset LatexCommand \cite{Kornack2002,Kominis2003}
+
+\end_inset 
+
+.
+ The Pediatric Clinical Electrophysiology unit at The University of Chicago,
+ which collects approximately 100
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+,
+\end_inset 
+
+GB of data per week, uses Python to explore novel approaches to the localization
+ and detection of epileptic seizures 
+\begin_inset LatexCommand \cite{HunterEtal2005}
+
+\end_inset 
+
+.
+ The Enthought Corporation is using Python to build customized applications
+ for oil exploration for the petroleum industry.
+ At the world's largest radio telescopes, e.g., Arecibo and the Green Bank
+ Telescope, Python is used for data processing, modelling, and scripting
+ high-performance computing jobs in order to search for and monitor binary
+ and millisecond pulsars in terabyte datasets 
+\begin_inset LatexCommand \cite{Ransometal2004a,Ransom2005}
+
+\end_inset 
+
+.
+ At the Computational Genomics Laboratory at the Australian National University,
+ researchers are using Python to build a toolkit which enables the specification
+ of novel statistical models of sequence evolution on parallel hardware
+ 
+\begin_inset LatexCommand \cite{Huttley2004,Butterfield2004}
+
+\end_inset 
+
+.
+ Michel Sanner's group at the Scripps Research Institute uses Python extensively
+ to build a suite of applications for molecular visualization and exploration
+ of drug/molecule interactions using virtual reality and 3D printing technology
+\begin_inset LatexCommand \cite{Sanner2005a,Sanner2005b}
+
+\end_inset 
+
+.
+ Engineers at Google use Python in automation, control and tuning of their
+ computational grid, and use 
+\family typewriter 
+SWIG
+\family default 
+ generated Python of their in-house C++ libraries in virtually all facets
+ of their work 
+\begin_inset LatexCommand \cite{Beazley1998,Stein2005}
+
+\end_inset 
+
+.
+ Many other use cases -- ranging from animation at Industrial Light and
+ Magic, to space shuttle mission control, to grid monitoring and control
+ at Rackspace, to drug discovery, meteorology and air traffic control --
+ are detailed in O'Reilly's two volumes of 
+\emph on 
+Python Success Stories
+\emph default 
+ 
+\begin_inset LatexCommand \cite{PySuccess2002,PySuccess2005}
+
+\end_inset 
+
+.
+\layout Section
+
+Advantages of Python
+\layout Quotation
+
+
+\shape italic 
+The canonical, "Python is a great first language", elicited, "Python is
+ a great last language!"
+\shape default 
+ -- Noah Spurrier 
+\layout Standard
+
+This quotation summarizes an important reason scientists migrate to Python
+ as a programming language.
+ As a 
+\begin_inset Quotes eld
+\end_inset 
+
+great first language
+\begin_inset Quotes erd
+\end_inset 
+
+ Python has a simple, expressive syntax that is accessible to the newcomer.
+ 
+\begin_inset Quotes eld
+\end_inset 
+
+Python as executable pseudocode
+\begin_inset Quotes erd
+\end_inset 
+
+ reflects the fact that Python syntax mirrors the obvious and intuitive
+ pseudo-code syntax used in many journals 
+\begin_inset LatexCommand \cite{Strous2001}
+
+\end_inset 
+
+.
+ As a great first language, it does not impose a single programming paradigm
+ on scientists, as Java does with object oriented programming, but rather
+ allows one to code at many levels of sophistication, including BASIC/FORTRAN/Ma
+tlab style procedural programming familiar to many scientists.
+ Here is the canonical first program 
+\begin_inset Quotes eld
+\end_inset 
+
+hello world
+\begin_inset Quotes erd
+\end_inset 
+
+ in Python:
+\layout Standard
+\noindent 
+
+\size small 
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+begin{verbatim}
+\newline 
+# Python
+\newline 
+print 'hello world'
+\newline 
+
+\backslash 
+end{verbatim}
+\end_inset 
+
+
+\size default 
+  Contrast the simplicity of that program with the complexity 
+\begin_inset Quotes eld
+\end_inset 
+
+hello world
+\begin_inset Quotes erd
+\end_inset 
+
+ in Java  
+\size small 
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+begin{verbatim}
+\newline 
+// java 
+\newline 
+class myfirstjavaprog
+\newline 
+{  
+\newline 
+  public static void main(String args[])
+\newline 
+  {
+\newline 
+    System.out.println("Hello World!");
+\newline 
+  }
+\newline 
+} 
+\newline 
+
+\backslash 
+end{verbatim}
+\end_inset 
+
+
+\size default 
+ 
+\layout Standard
+\noindent 
+In addition to being accessible to new programmers and scientists, Python
+ is powerful enough to manage the complexity of large applications, supporting
+ functional programming, object orienting programming, generic programming
+ and metaprogramming.
+ That Python supports these paradigms suggests why it is also a 
+\begin_inset Quotes eld
+\end_inset 
+
+great last language
+\begin_inset Quotes erd
+\end_inset 
+
+: as one increases their programming sophistication, the language scales
+ naturally.
+ By contrast, commercial languages like Matlab and IDL, which also support
+ a simple syntax for simple programs do not scale well to complex programming
+ tasks.
+\layout Standard
+
+The built-in Python data-types and standard library provide a powerful platform
+ in every distribution 
+\begin_inset LatexCommand \cite{PyLibRef,Lundh2001}
+
+\end_inset 
+
+.
+ The standard data types encompass regular and arbitrary length integers,
+ complex numbers, floating point numbers, strings, lists, associative arrays,
+ sets and more.
+ In the standard library included with every Python distribution are modules
+ for regular expressions, data encodings, multimedia formats, math, networking
+ protocols, binary arrays and files, and much more.
+ Thus one can open a file on a remote web server and work with it as easily
+ as with a local file 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+begin{verbatim}
+\newline 
+# this 3 line script downloads and prints the yahoo web site
+\newline 
+from urllib import urlopen
+\newline 
+for line in urlopen('http://yahoo.com').readlines():
+\newline 
+   print line
+\newline 
+
+\backslash 
+end{verbatim}
+\end_inset 
+
+
+\layout Standard
+
+Complementing these built-in features, Python is also readily extensible,
+ giving it a wealth of libraries for scientific computing that have been
+ in development for many years 
+\begin_inset LatexCommand \cite{Dubois1996b,Dubois1996c}
+
+\end_inset 
+
+.
+ 
+\family typewriter 
+Numeric Python
+\family default 
+ supports large array manipulations, math, optimized linear algebra, efficient
+ Fourier transforms and random numbers.
+ 
+\family typewriter 
+scipy
+\family default 
+ is a collection of Python wrappers of high performance FORTRAN code (eg
+ LAPACK, ODEPACK) for numerical analysis 
+\begin_inset LatexCommand \cite{LAPACK}
+
+\end_inset 
+
+.
+ 
+\family typewriter 
+IPython
+\family default 
+ is a command shell ala Mathematica, Matlab and IDL for interactive programming,
+ data exploration and visualization with support for command history, completion
+, debugging and more.
+ 
+\family typewriter 
+Matplotlib
+\family default 
+ is a 2D graphics package for making publication quality graphics with a
+ Matlab compatible syntax that is also embeddable in applications.
+ 
+\family typewriter 
+f2py
+\family default 
+, 
+\family typewriter 
+SWIG
+\family default 
+, 
+\family typewriter 
+weave
+\family default 
+, and 
+\family typewriter 
+pyrex
+\family default 
+ are tools for rapidly building Python interfaces to high performance compiled
+ code, 
+\family typewriter 
+MayaVi
+\family default 
+ is a user friendly graphical user interface for 3D visualizations built
+ on top of the state-of-the-art Visualization Toolkit 
+\begin_inset LatexCommand \cite{SchroederEtal2002}
+
+\end_inset 
+
+.
+ 
+\family typewriter 
+pympi
+\family default 
+, 
+\family typewriter 
+pypar
+\family default 
+, 
+\family typewriter 
+pyro
+\family default 
+, 
+\family typewriter 
+scipy.cow
+\family default 
+, and 
+\family typewriter 
+pyxg
+\family default 
+ are tools for cluster building and doing parallel, remote and distributed
+ computations.
+ This is a sampling of general purpose libraries for scientific computing
+ in Python, and does not begin to address the many high quality, domain
+ specific libraries that are also available.
+\layout Standard
+
+All of the infrastructure described above is open source software that is
+ freely distributable for academic and commercial use.
+ In both the educational and scientific arenas, this is a critical point.
+ For education, this platform provides students with tools that they can
+ take with them outside the classroom to their homes and jobs and careers
+ beyond.
+ By contrast, the use commercial tools such as Matlab and IDL limits access
+ to major institutions.
+ For scientists, the use of open source tools is consistent with the scientific
+ principle that all of the steps in an analysis or simulation should be
+ open for review, and with the principle of reproducible research 
+\begin_inset LatexCommand \cite{BuckheitDonoho1995}
+
+\end_inset 
+
+.
+\layout Section
+
+Mixed Language Programming
+\layout Standard
+
+The programming languages of each generation evolve in part to fix the problems
+ of those that came before 
+\begin_inset LatexCommand \cite{BerginEtal1996}
+
+\end_inset 
+
+.
+ 
+\shape smallcaps 
+FORTRAN
+\shape default 
+, the original high level language of scientific computing 
+\begin_inset LatexCommand \cite{Rosen1967}
+
+\end_inset 
+
+, was designed to allow scientists to express code at a level closer to
+ the language of the problem domain.
+ 
+\shape smallcaps 
+ALGOL
+\shape default 
+ and its successor Pascal, widely used in education in the 1970s, were designed
+ to alleviate some of the perceived problems with 
+\shape smallcaps 
+FORTRAN
+\shape default 
+ and to create a language with a simpler and more expressive syntax 
+\begin_inset LatexCommand \cite{Backus1963,Naur1963}
+
+\end_inset 
+
+.
+ Object oriented programming languages evolved to allow a closer correspondence
+ between the code and the physical system it models 
+\begin_inset LatexCommand \cite{GoldbergRobson1989}
+
+\end_inset 
+
+, and C++ provided a relatively high performance object orientated implementatio
+n compatible with the popular C programming language 
+\begin_inset LatexCommand \cite{Stroustrup1994,Stroustrup2000}
+
+\end_inset 
+
+.
+ But implementing object orientation efficiently requires programmers stay
+ close to the machine, managing memory and pointers, and this created a
+ lot of complexity in programs while limiting portability.
+ Interpreted languages such as Tcl, Perl, Python, and Java evolved to manage
+ some of the low-level and platform specific details, making programs easier
+ to write and maintain, but with a performance penalty 
+\begin_inset LatexCommand \cite{Ousterhout1998,ArnoldEtal2005}
+
+\end_inset 
+
+.
+ For many scientists, however, pure object oriented systems like Java are
+ unfamiliar, and languages like Matlab and Python provide the safety, portabilit
+y and ease of use of an interpreted language without imposing an object
+ oriented approach to coding 
+\begin_inset LatexCommand \cite{VanRossumDrake2003,HanselmanLittlefield2004}
+
+\end_inset 
+
+.
+\layout Standard
+
+The result of these several decades is that there are many platforms for
+ scientific computing in use today.
+ The number of man hours invested in numerical methods in 
+\shape smallcaps 
+FORTRAN
+\shape default 
+, visualization libraries in C++, bioinformatics toolkits in Perl, object
+ frameworks in Java, domain specific toolkits in Matlab, etc
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+dots 
+\end_inset 
+
+requires an approach that integrates this work.
+ Python is the language that provides maximal integration with other languages,
+ with tools for transparently and semi-automatically interfacing with 
+\shape smallcaps 
+FORTRAN
+\shape default 
+, C, C++, Java, .NET, Matlab, and Mathematica code 
+\begin_inset LatexCommand \cite{Hugunin1997,Beazley1998}
+
+\end_inset 
+
+.
+ In our view, the ability to work seamlessly with code from many languages
+ is the present and the future of scientific computing, and Python effectively
+ integrates these languages into a single environment.
+\layout Section
+
+Getting started
+\layout Standard
+
+We'll get started with python by introducing arrays and plotting by working
+ with a simple ASCII text file 
+\family typewriter 
+mydata.dat
+\family default 
+ of two columns; the first column contains the times that some measurement
+ was acquired, and the second column are the sampled voltages at that time.
+ The file looks like
+\layout LyX-Code
+
+0.0000 0.4911
+\layout LyX-Code
+
+0.0500 0.5012
+\layout LyX-Code
+
+0.1000 0.7236
+\layout LyX-Code
+
+0.1500 1.1756
+\layout LyX-Code
+
+...
+ and so on
+\layout Standard
+\noindent 
+While it would be easy enough to process this file by writing a python function
+ to do it, there is no need to, since the matplotlib pylab module has a
+ matlab-compatible l
+\family typewriter 
+oad
+\family default 
+ function for loading ASCII array data (Figure 
+\begin_inset LatexCommand \ref{fig:load_ascii}
+
+\end_inset 
+
+).
+ To complete these exercises, you should have ipython and matplotlib installed,
+ and start ipython in pylab mode with 
+\layout LyX-Code
+
+> ipython -pylab
+\layout LyX-Code
+
+
+\begin_inset Float figure
+wide false
+collapsed false
+
+\layout Standard
+\align center 
+
+\begin_inset Graphics
+	filename fig/load_ascii.png
+	lyxscale 50
+	width 4in
+
+\end_inset 
+
+
+\layout Caption
+
+
+\begin_inset LatexCommand \label{fig:load_ascii}
+
+\end_inset 
+
+Loading 
+\family typewriter 
+ASCII
+\family default 
+ data and displaying with 
+\family typewriter 
+plot
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+
+\backslash 
+lstinputlisting[caption={Loading an ASCII text file and plotting the columns}]{snippets/load_data.ipy}
+\layout Standard
+
+\end_inset 
+
+
+\layout Standard
+
+It is also easy to load data from binary files.
+ In the example below, we have some image data in raw binary string format.
+ The image is 256x256 pixels, and each pixel is a 2 byte integer.
+ We read this into a string using python's 
+\family typewriter 
+file
+\family default 
+ function -- the 'rb' flag says to open the file in 
+\family typewriter 
+read/binary
+\family default 
+ mode.
+ We can then use the numerix 
+\family typewriter 
+fromstring
+\family default 
+ method to convert this to an array, passing the type of the data (
+\family typewriter 
+Int16
+\family default 
+) as an argument.
+ We reshape the array by changing the array shape attribute to 256 by 256,
+ and pass this off to the matplotlib pylab command 
+\family typewriter 
+imshow
+\family default 
+ for plotting.
+ matplotlib has a number of colormaps, and the default one is jet; the data
+ are automatically normalized and colormaps producing the image in Figure
+ 
+\begin_inset LatexCommand \ref{fig:array_hothead}
+
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+
+\backslash 
+lstinputlisting[caption={Loading an binary image data and plotting it in matplotlib}]{snippets/load_binary.ipy}
+\layout Standard
+
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Float figure
+wide false
+collapsed false
+
+\layout Standard
+\align center 
+
+\begin_inset Graphics
+	filename fig/hothead.png
+	lyxscale 50
+	width 4in
+
+\end_inset 
+
+
+\layout Caption
+
+
+\begin_inset LatexCommand \label{fig:array_hothead}
+
+\end_inset 
+
+Loading binary image data and displaying with 
+\family typewriter 
+imshow
+\end_inset 
+
+
+\layout Section
+
+An Introduction to Arrays
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Arrays
+\end_inset 
+
+
+\layout Subsection
+
+Creating arrays
+\layout Standard
+
+There are a few different ways to create arrays besides modules that obtain
+ arrays from data files such
+\layout LyX-Code
+
+>>> x = zeros((20,30))
+\layout Standard
+
+creates a 20x30 array of zeros (default integer type; details on how to
+ specify other types will follow).
+ Note that the dimensions (
+\begin_inset Quotes eld
+\end_inset 
+
+shape
+\begin_inset Quotes erd
+\end_inset 
+
+ in numarray parlance) are specified by giving the dimensions as a comma-separat
+ed list within parentheses.
+ The parentheses aren't necessary for a single dimension.
+ As an aside, the parentheses used this way are being used to specify a
+ Python tuple; more will be said about those in a later tutorial.
+ For now you only need to imitate this usage.
+\layout Standard
+
+Likewise one can create an array of 1's using the 
+\family typewriter 
+ones()
+\family default 
+ function.
+\layout Standard
+
+The 
+\family typewriter 
+arange()
+\family default 
+ function can be used to create arrays with sequential values.
+ E.g.,
+\layout LyX-Code
+
+>>> arange(10)
+\layout LyX-Code
+
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+\layout Standard
+
+Note that that the array defaults to starting with a 0 value and does not
+ include the value specified (though the array does have a length that correspon
+ds to the argument)
+\layout Standard
+
+Other variants:
+\layout LyX-Code
+
+>>> arange(10.)
+\layout LyX-Code
+
+array([ 0., 1., 2., 3., 4., 5., 6., 7., 8., 9])
+\layout LyX-Code
+
+>>> arange(3,10)
+\layout LyX-Code
+
+array([3, 4, 5, 6, 7, 8, 9])
+\layout LyX-Code
+
+>>> arange(1., 10., 1.1) # note trickiness
+\layout LyX-Code
+
+array([1.
+ , 2.1, 3.2, 4.3, 5.4, 6.5, 7.6, 8.7, 9.8])
+\layout Standard
+
+Finally, one can create arrays from literal arguments:
+\layout LyX-Code
+
+>>> print array([3,1,7])
+\layout LyX-Code
+
+[3 1 7]
+\layout LyX-Code
+
+>>> print array([[2,3],[4,4]])
+\layout LyX-Code
+
+[[2 3]
+\layout LyX-Code
+
+ [4 4]]
+\layout Standard
+
+The brackets, like the parentheses in the zeros example above have a special
+ meaning in Python which will be covered later (Python lists).
+ For now, just mimic the syntax used here.
+\layout Subsection
+
+Array numeric types
+\layout Standard
+
+numarray supports all standard numeric types.
+ The default integer matches what Python uses for integers, usually 32 bit
+ integers or what numarray calls 
+\family typewriter 
+Int32
+\family default 
+.
+ The same is true for floats, i.e., generally 64-bit doubles called 
+\family typewriter 
+Float64
+\family default 
+ in numarray.
+ The default complex type is 
+\family typewriter 
+Complex64
+\family default 
+.
+ Many of the functions accept a type argument.
+ For example
+\layout LyX-Code
+
+>>> zeros(3, Int8) # Signed byte
+\layout LyX-Code
+
+>>> zeros(3, type=UInt8) # Unsigned byte
+\layout LyX-Code
+
+>>> array([2,3], type=Float32)
+\layout LyX-Code
+
+>>> arange(4, type=Complex64)
+\layout Standard
+
+The possible types are 
+\family typewriter 
+Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float32, Float64,
+ Complex32, Complex64.
+ 
+\family default 
+To find out the type of an array use the .type() method.
+ E.g.,
+\layout LyX-Code
+
+>>> arr.type()
+\layout LyX-Code
+
+Float32
+\layout Standard
+
+To convert an array to a different type use the 
+\family typewriter 
+astype()
+\family default 
+ method, e.g,
+\layout LyX-Code
+
+>>> a = arr.astype(Float64)
+\layout Subsection
+
+Printing arrays
+\layout Standard
+
+Interactively, there are two common ways to see the value of an array.
+ Like many Python objects, just typing the name of the variable itself will
+ print its contents (this only works in interactive mode).
+ You can also explicitly print it.
+ The following illustrates both approaches:
+\layout LyX-Code
+
+>>> x = arange(10)
+\layout LyX-Code
+
+>>> x
+\layout LyX-Code
+
+array([0, 1, 2, 3, 4, 5, 6, 7, 8 9])
+\layout LyX-Code
+
+>>> print x
+\layout LyX-Code
+
+[0 1 2 3 4 5 6 7 8 9]
+\layout Standard
+
+By default the array module limits the amount of an array that is printed
+ out (to spare you the effects of printing out millions of values).
+ For example:
+\layout LyX-Code
+
+>>> x = arange(1000000)
+\layout LyX-Code
+
+print x
+\layout LyX-Code
+
+[    0     1     2 ..., 999997 999998 999999]
+\layout Subsection
+
+Indexing 1-D arrays
+\layout Standard
+
+As with IDL and Matlab, there are many options for indexing arrays.
+\layout LyX-Code
+
+>>> x = arange(10)
+\layout LyX-Code
+
+>>> x
+\layout LyX-Code
+
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+\layout Standard
+
+Simple indexing:
+\layout LyX-Code
+
+>>> x[2] # 3rd element
+\layout LyX-Code
+
+2
+\layout Standard
+
+Indexing is 0-based.
+ The first value in the array is 
+\family typewriter 
+x[0]
+\layout Standard
+
+Indexing from end:
+\layout LyX-Code
+
+>>> x[-2] # -1 represents the last element, -2 next to last...
+\layout LyX-Code
+
+8
+\layout Standard
+
+Slices
+\layout Standard
+
+To select a subset of an array:
+\layout LyX-Code
+
+>>> x[2:5]
+\layout LyX-Code
+
+array([2, 3, 4])
+\layout Standard
+
+Note that the upper limit of the slice is not included as part of the subset!
+ This is viewed as unexpected by newcomers and a defect.
+ Most find this behavior very useful after getting used to it (the reasons
+ won't be given here).
+ Also important to understand is that slices are views into the original
+ array in the same sense that references view the same array.
+ The following demonstrates:
+\layout LyX-Code
+
+>>> y = x[2:5]
+\layout LyX-Code
+
+>>> y[0] = 99
+\layout LyX-Code
+
+>>> y
+\layout LyX-Code
+
+array([99, 3, 4])
+\layout LyX-Code
+
+>>> x
+\layout LyX-Code
+
+array([0, 1, 99, 3, 4, 5, 6, 7, 8, 9])
+\layout Standard
+
+Changes to a slice will show up in the original.
+ If a copy is needed use 
+\family typewriter 
+x[2:5].copy()
+\layout Standard
+
+Short hand notation
+\layout LyX-Code
+
+>>> x[:5] # presumes start from beginning
+\layout LyX-Code
+
+array([ 0, 1, 99, 3, 4])
+\layout LyX-Code
+
+>>> x[2:] # presumes goes until end
+\layout LyX-Code
+
+array([99, 3, 4, 5, 6, 7, 8, 9])
+\layout LyX-Code
+
+>>> x[:] # selects whole dimension
+\layout LyX-Code
+
+array([0, 1, 99, 3, 4, 5, 6, 7, 8, 9])
+\layout Standard
+
+Strides:
+\layout LyX-Code
+
+>>> x[2:8:3] # Stride every third element
+\layout LyX-Code
+
+array([99, 5])
+\layout Standard
+
+Index arrays:
+\layout LyX-Code
+
+>>> x[[4,2,4,1]]
+\layout LyX-Code
+
+array([4, 99, 4, 1])
+\layout Standard
+
+Using results of logical indexing 
+\layout LyX-Code
+
+>>> x > 5
+\layout LyX-Code
+
+array([0,0,1,0,0,0,1,1,1,1], type=Bool)
+\layout LyX-Code
+
+>>> x[x>5]
+\layout LyX-Code
+
+array([99, 6, 7, 8, 9])
+\layout Subsection
+
+Indexing multidimensional arrays
+\layout Standard
+
+Before describing this in detail it is very important to note an item regarding
+ multidimensional indexing that will certainly cause you grief until you
+ become accustomed to it: ARRAY INDICES USE THE OPPOSITE CONVENTION AS FORTRAN
+ REGARDING ORDER OF INDICES FOR MULTIDIMENSIONAL ARRAYS.
+\layout LyX-Code
+
+>>> im = arange(24)
+\layout LyX-Code
+
+>>> im.shape = 4,6
+\layout LyX-Code
+
+>>> im
+\layout LyX-Code
+
+array([[ 0,  1,  2,  3,  4,  5],
+\layout LyX-Code
+
+       [ 6,  7,  8,  9, 10, 11],
+\layout LyX-Code
+
+       [12, 13, 14, 15, 16, 17],
+\layout LyX-Code
+
+       [18, 19, 20, 21, 22, 23]])
+\layout Standard
+
+To emphasize the point made in the previous paragraph, the index that represents
+ the most rapidly varying dimension in memory is the 2nd index, not the
+ first.
+ 
+\layout Standard
+
+Partial indexing:
+\layout LyX-Code
+
+>>> im[1]
+\layout LyX-Code
+
+array([6, 7, 8, 9, 10, 11])
+\layout Standard
+
+If only some of the indices for a multidimensional array are specified,
+ then the result is an array with the shape of the 
+\begin_inset Quotes eld
+\end_inset 
+
+leftover
+\begin_inset Quotes erd
+\end_inset 
+
+ dimensions, in this case, 1-dimensional.
+ The 2nd row is selected, and since there is no index for the column, the
+ whole row is selected.
+\layout Standard
+
+All of the indexing tools available for 1-D arrays apply to 
+\emph on 
+n
+\emph default 
+-dimensional arrays as well (though combining index arrays with slices is
+ not currently permitted).
+ To understand all the indexing options in their full detail, read sections
+ 4.6, 4.7 and 6 of the numarray manual.
+\layout Subsection
+
+Compatibility of dimensions
+\layout Standard
+
+In operations involving combining (e.g., adding) arrays or assigning them
+ there are rules regarding the compatibility of the dimensions involved.
+ For example the following is permitted:
+\layout LyX-Code
+
+>>> x[:5] = 0
+\layout Standard
+
+since a single value is considered 
+\begin_inset Quotes eld
+\end_inset 
+
+broadcastable
+\begin_inset Quotes erd
+\end_inset 
+
+ over a 5 element array.
+ But this is not permitted:
+\layout LyX-Code
+
+>>> x[:5] = array([0,1,2,3]) 
+\layout Standard
+
+since a 4 element array does not match a 5 element array.
+ 
+\layout Standard
+
+
+\emph on 
+The following explanation can probably be skipped by most on the first reading;
+\emph default 
+ it is only important to know that rules for combining arrays of different
+ shapes are quite general.
+ It is hard to precisely specify the rules without getting a bit confusing,
+ but it doesn't take long to get a good intuitive feeling for what is and
+ isn't permitted.
+ Here's an attempt anyway: The shapes of the two involved arrays when aligned
+ on their trailing part must be equal in value or one must have the value
+ one for that dimension.
+ The following pairs of shapes are compatible:
+\layout LyX-Code
+
+(5,4):(4,) -> (5,4)
+\layout LyX-Code
+
+(5,1):(4,) -> (5,4)
+\layout LyX-Code
+
+(15,3,5):(15,1,5) -> (15,3,5)
+\layout LyX-Code
+
+(15,3,5):(3,5) -> (15,3,5)
+\layout LyX-Code
+
+(15,1,5):(3,1) -> (15,3,5)
+\layout Standard
+
+so that one can add arrays of these shapes or assign one to the other (in
+ which case the one being assigned must be the smaller shape of the two).
+ For the dimensions that have a 1 value that are matched against a larger
+ number, the values in that dimension are simply repeated.
+ For dimensions that are missing, the sub-array is simply repeated for those.
+ The following shapes are not compatible:
+\layout LyX-Code
+
+(3,4):(4,3)
+\layout LyX-Code
+
+(1,3):(4,)
+\layout Standard
+
+Examples:
+\layout LyX-Code
+
+>>> x = zeros((5,4))
+\layout LyX-Code
+
+>>> x[:,:] = [2,3,2,3]
+\layout LyX-Code
+
+>>> x
+\layout LyX-Code
+
+array([[2, 3, 2, 3],
+\layout LyX-Code
+
+       [2, 3, 2, 3],
+\layout LyX-Code
+
+       [2, 3, 2, 3],
+\layout LyX-Code
+
+       [2, 3, 2, 3],
+\layout LyX-Code
+
+       [2, 3, 2, 3]])
+\layout LyX-Code
+
+>>> a = arange(3)
+\layout LyX-Code
+
+>>> b = a[:] # different array, same data (huh?)
+\layout LyX-Code
+
+>>> b.shape = (3,1)
+\layout LyX-Code
+
+>>> b
+\layout LyX-Code
+
+array([[0],
+\layout LyX-Code
+
+       [1],
+\layout LyX-Code
+
+       [2]])
+\layout LyX-Code
+
+>>> a*b # outer product
+\layout LyX-Code
+
+array([[0, 0, 0],
+\layout LyX-Code
+
+       [0, 1, 2],
+\layout LyX-Code
+
+       [0, 2, 4]])
+\layout Subsection
+
+ufuncs
+\layout Standard
+
+A ufunc (short for Universal Function) applies the same operation or function
+ to all the elements of an array independently.
+ When two arrays are added together, the 
+\family typewriter 
+add
+\family default 
+ ufunc is used to perform the array addition.
+ There are ufuncs for all the common operations and mathematical functions.
+ More specialized ufuncs can be obtained from add-on libraries.
+ All the operators have corresponding ufuncs that can be used by name (e.g.,
+ 
+\family typewriter 
+add
+\family default 
+ for 
+\family typewriter 
++
+\family default 
+).
+ These are all listed in table below.
+ Ufuncs also have a few very handy methods for binary operators and functions
+ whose use are demonstrated here.
+\layout LyX-Code
+
+>>> x = arange(9)
+\layout LyX-Code
+
+>>> x.shape = (3,3)
+\layout LyX-Code
+
+>>> x
+\layout LyX-Code
+
+array([0, 1, 2],
+\layout LyX-Code
+
+      [3, 4, 5],
+\layout LyX-Code
+
+      [6, 7, 8]])
+\layout LyX-Code
+
+>>> add.reduce(x) # sums along the first index
+\layout LyX-Code
+
+array([9, 12, 15])
+\layout LyX-Code
+
+>>> add.reduce(x, axis=1) # sums along the 2nd index
+\layout LyX-Code
+
+array([3, 12, 21])
+\layout LyX-Code
+
+>>> add.accumulate(x) # cumulative sum along the first index
+\layout LyX-Code
+
+array([[0,  1,  2],
+\layout LyX-Code
+
+       [3,  5,  7],
+\layout LyX-Code
+
+       [9, 12, 15]])
+\layout LyX-Code
+
+>>> multiply.outer(arange(3),arange(3))
+\layout LyX-Code
+
+array([[0, 0, 0],
+\layout LyX-Code
+
+       [0, 1, 2],
+\layout LyX-Code
+
+       [0, 2, 4]])
+\layout Standard
+
+Standard Ufuncs (with corresponding symbolic operators, when they exist,
+ shown in parentheses)
+\layout Standard
+
+
+\begin_inset  Tabular
+<lyxtabular version="3" rows="15" columns="3">
+<features>
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+add (+)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+log
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+greater (>)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+subtract (-)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+log10
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+greater_equal (>=)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+multiply (*)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+cos
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+less (<)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+divide (/)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+arcos
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+less_equal (<=)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+remainder (%)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+sin
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+logical_and
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+absolute, abs
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+arcsin
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+logical_or
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+floor
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+tan
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+logical_xor
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+ceil
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+arctan
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+bitwise_and (&)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+fmod
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+cosh
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+bitwise_or (|)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+conjugate
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+sinh
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+bitwise_xor (^)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+minimum
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+tanh
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+bitwise_not (~)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+maximum
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+sqrt
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+rshift (>>)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+power (**)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+equal (==)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+lshift (<<)
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+exp
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+not_equal (!=)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+\end_inset 
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset 
+
+
+\layout Standard
+
+
+\emph on 
+Note that there are no corresponding Python operators for 
+\family typewriter 
+\emph default 
+logical_and
+\family default 
+\emph on 
+ and 
+\family typewriter 
+\emph default 
+logical_or
+\family default 
+\emph on 
+.
+ The Python 
+\family typewriter 
+\emph default 
+and
+\family default 
+\emph on 
+ and 
+\family typewriter 
+\emph default 
+or
+\family default 
+\emph on 
+ operators are NOT equivalent to these respective ufuncs!
+\layout Subsection
+
+Array functions
+\layout Standard
+
+There are many array utility functions.
+ The following lists the more useful ones with a one line description.
+ See the numarray manual for details on how they are used.
+ Arguments shown with argument=value indicate what the default value is
+ if called without a value for that argument.
+\layout Description
+
+
+\family typewriter 
+all
+\family default 
+\series medium 
+(
+\emph on 
+a
+\emph default 
+):
+\family typewriter 
+\series default 
+ 
+\family default 
+are all elements of array nonzero
+\layout Description
+
+
+\family typewriter 
+allclose
+\family default 
+\series medium 
+(
+\emph on 
+a1,\SpecialChar ~
+a2,\SpecialChar ~
+rtol=1.e-5,\SpecialChar ~
+atol=1.e-8
+\emph default 
+):
+\series default 
+ true if all elements within specified amount (between two arrays)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+alltrue
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=0
+\emph default 
+):
+\series default 
+ are all elements nonzero along specified axis true.
+\layout Description
+
+
+\family typewriter 
+any
+\family default 
+\series medium 
+(
+\emph on 
+a
+\emph default 
+):
+\series default 
+ are any elements of an array nonzero
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+argmax
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=-1
+\emph default 
+),\SpecialChar ~
+argmin(
+\emph on 
+a,axis=-1
+\emph default 
+):
+\series default 
+ return array with min/max locations for selected axis
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+argsort
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=-1
+\emph default 
+): 
+\series default 
+returns indices of results of sort on an array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+choose
+\family default 
+\series medium 
+(
+\emph on 
+selector,\SpecialChar ~
+population,\SpecialChar ~
+clipmode=CLIP
+\emph default 
+): 
+\series default 
+fills specified array by selecting corresponding values from a set of arrays
+ using integer selection array (population is a tuple of arrays; see tutorial
+ 2)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+clip
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+amin,\SpecialChar ~
+amax
+\emph default 
+):
+\series default 
+ clip values of array 
+\emph on 
+a
+\emph default 
+ at values 
+\emph on 
+amin
+\emph default 
+, 
+\emph on 
+amax
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+dot
+\family default 
+\series medium 
+(
+\emph on 
+a1,\SpecialChar ~
+a2
+\emph default 
+):
+\series default 
+ dot product of arrays 
+\family typewriter 
+\emph on 
+a1
+\family default 
+\emph default 
+ & 
+\family typewriter 
+\emph on 
+a2
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+compress
+\family default 
+\series medium 
+(
+\emph on 
+condition,\SpecialChar ~
+a\SpecialChar ~
+,axis=0
+\emph default 
+):
+\series default 
+ selects elements from array 
+\emph on 
+a
+\emph default 
+ based on boolean arraycondition
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+concatenate
+\family default 
+\series medium 
+(
+\emph on 
+arrays,\SpecialChar ~
+axis=0
+\emph default 
+): 
+\series default 
+concatenate arrays contained in sequence of arrays arrays
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+cumproduct
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=0
+\emph default 
+):
+\series default 
+ net cumulative product along specified axis
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+cumsum
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=0
+\emph default 
+): 
+\series default 
+accumulate array along specified axis
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+diagonal
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+offset=0,\SpecialChar ~
+axis1=0,\SpecialChar ~
+axis2=1
+\emph default 
+):
+\series default 
+ returns diagonal of 2-d matrix with optional offsets.
+ 
+\layout Description
+
+
+\family typewriter 
+fromfile
+\family default 
+\series medium 
+(
+\emph on 
+file,\SpecialChar ~
+type,\SpecialChar ~
+shape=None
+\emph default 
+): 
+\series default 
+Use binary data in file to form new array of specified type.
+\layout Description
+
+
+\family typewriter 
+fromstring
+\family default 
+\series medium 
+(
+\emph on 
+datastring,\SpecialChar ~
+type,\SpecialChar ~
+shape=None
+\emph default 
+): 
+\series default 
+Use binary data in 
+\emph on 
+datastring
+\emph default 
+ to form new array of specified shape and type
+\layout Description
+
+
+\family typewriter 
+identity
+\family default 
+\series medium 
+(
+\emph on 
+n,\SpecialChar ~
+type=None
+\emph default 
+): 
+\series default 
+returns identity matrix of size nxn.
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+indices
+\family default 
+\series medium 
+(
+\emph on 
+shape,\SpecialChar ~
+type=None
+\emph default 
+): 
+\series default 
+generate array with values corresponding to position of selected index of
+ the array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+innerproduct
+\family default 
+\series medium 
+(
+\emph on 
+a1,\SpecialChar ~
+a2
+\emph default 
+):
+\series default 
+ guess
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+matrixmultiply
+\family default 
+\series medium 
+(
+\emph on 
+a1,\SpecialChar ~
+a2
+\emph default 
+):
+\series default 
+ guess
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+outerproduct
+\family default 
+\series medium 
+(
+\emph on 
+a1,\SpecialChar ~
+a2
+\emph default 
+):
+\series default 
+ guess
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+product
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=0
+\emph default 
+):
+\series default 
+ net product of elements along specified axis
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+ravel
+\family default 
+\series medium 
+(
+\emph on 
+a
+\emph default 
+): 
+\series default 
+creates a 1-d version of an array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+repeat
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+repeats,\SpecialChar ~
+axis=0
+\emph default 
+):
+\series default 
+ generates new array with repeated copies of input array 
+\emph on 
+a
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+resize
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+shape
+\emph default 
+): 
+\series default 
+replicate or truncate array to new shape
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+searchsorted
+\family default 
+\series medium 
+(
+\emph on 
+bin,\SpecialChar ~
+a
+\emph default 
+):
+\series default 
+ return indices of mapping values of an array 
+\emph on 
+a
+\emph default 
+ into a monotonic array 
+\emph on 
+bin
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+sometrue
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=0
+\emph default 
+):
+\series default 
+ are any elements along specified axis true 
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+sort
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=-1
+\emph default 
+): 
+\series default 
+sort array elements along selected axis
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+sum
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis=0
+\emph default 
+):
+\series default 
+ sum array along specified axis
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+swapaxes
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axis1,\SpecialChar ~
+axis2
+\emph default 
+):
+\series default 
+ switch indices for axis of array (doesn't actually move data, just maps
+ indices differently)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+trace
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+offset=0,\SpecialChar ~
+axis1=0,\SpecialChar ~
+axis2=1
+\emph default 
+):
+\series default 
+ compute trace of matrix 
+\emph on 
+a
+\emph default 
+ with optional offset.
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+transpose
+\family default 
+\series medium 
+(
+\emph on 
+a,\SpecialChar ~
+axes=None
+\emph default 
+):
+\series default 
+ transpose indices of array (doesn't actually move data, just maps indices
+ differently)
+\layout Description
+
+
+\family typewriter 
+where
+\family default 
+\series medium 
+(
+\emph on 
+a
+\emph default 
+):
+\series default 
+ find 
+\begin_inset Quotes eld
+\end_inset 
+
+true
+\begin_inset Quotes erd
+\end_inset 
+
+ locations in array 
+\emph on 
+a
+\layout Subsection
+
+Array methods
+\layout Standard
+\paragraph_spacing single 
+
+Arrays have several methods.
+ They are used as methods are with any object.
+ For example (using the array from the previous example):
+\layout LyX-Code
+\paragraph_spacing single 
+\align block 
+>>> # sum all array elements
+\layout LyX-Code
+\paragraph_spacing single 
+\align block 
+>>> x.sum() # the L indicates a Python Long integer
+\layout LyX-Code
+\paragraph_spacing single 
+\align block 
+36L 
+\layout Standard
+\paragraph_spacing single 
+
+The following lists all the array methods that exist for an array object
+ 
+\family typewriter 
+a
+\family default 
+ (a number are equivalent to array functions; these have no summary description
+ shown):
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.argmax
+\family default 
+\series medium 
+(
+\emph on 
+axis=-1
+\emph default 
+)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.argmin
+\family default 
+\series medium 
+(
+\emph on 
+axis=-1
+\emph default 
+)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.argsort
+\family default 
+\series medium 
+(
+\emph on 
+axis=-1
+\emph default 
+)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.astype
+\family default 
+\series medium 
+(
+\emph on 
+type
+\emph default 
+):
+\series default 
+ copy array to specified numeric type
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.byteswap
+\family default 
+\series medium 
+():
+\series default 
+ perform byteswap on data in place
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.byteswapped
+\family default 
+\series medium 
+():
+\series default 
+ return byteswapped copy of array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.conjugate
+\family default 
+\series medium 
+(): 
+\series default 
+complex conjugate
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.copy
+\family default 
+\series medium 
+():
+\series default 
+ produce copied version of array (instead of view)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.diagonal
+\family default 
+\series medium 
+()
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.info
+\family default 
+\series medium 
+(): 
+\series default 
+print info about array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.isaligned
+\family default 
+\series medium 
+():
+\series default 
+ are data elements guaranteed aligned with memory?
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.isbyteswapped
+\family default 
+\series medium 
+():
+\series default 
+ are data elements in native processor order?
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.iscontiguous
+\family default 
+\series medium 
+():
+\series default 
+ are data elements contiguous in memory?
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.is_c_array
+\family default 
+\series medium 
+(): 
+\series default 
+are data elements aligned, not byteswapped, and contiguous?
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.is_fortran_contiguous
+\family default 
+\series medium 
+():
+\series default 
+ are indicies defined to follow Fortran conventions?
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.is_f_array
+\family default 
+\series medium 
+():
+\family typewriter 
+\series default 
+ 
+\family default 
+are indices defined to follow Fortran conventions and data are aligned and
+ not byteswapped
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.itemsize
+\family default 
+\series medium 
+(): 
+\series default 
+size of data element in bytes
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.max
+\family default 
+\series medium 
+(type=None):
+\series default 
+ maximum value in array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.min
+\family default 
+\series medium 
+():
+\family typewriter 
+\series default 
+ 
+\family default 
+minimum value in array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.nelements
+\family default 
+\series medium 
+():
+\family typewriter 
+\series default 
+ 
+\family default 
+total number of elements in array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.new
+\family default 
+\series medium 
+(): 
+\series default 
+returns new array of same type and size (data uninitialized)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.repeat
+\family default 
+\series medium 
+(a,repeats,axis=0):
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.resize
+\family default 
+\series medium 
+(shape):
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.size
+\family default 
+\series medium 
+(): 
+\series default 
+same as nelements
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.type
+\family default 
+\series medium 
+():
+\series default 
+ returns type of array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.typecode
+\family default 
+\series medium 
+():
+\series default 
+ returns corresponding typecode character used by Numeric 
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.tofile
+\family default 
+\series medium 
+(
+\emph on 
+file
+\emph default 
+):
+\series default 
+ write binary data to file
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.tolist
+\family default 
+\series medium 
+(): 
+\series default 
+convert data to Python list format
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.tostring
+\family default 
+\series medium 
+():
+\series default 
+ copy binary data to Python string
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.transpose
+\family default 
+\series medium 
+(
+\emph on 
+axes=-1
+\emph default 
+):
+\series default 
+ transpose array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.stddev
+\family default 
+\series medium 
+():
+\series default 
+ standard deviation
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.sum
+\family default 
+\series medium 
+():
+\family typewriter 
+\series default 
+ 
+\family default 
+sum of all elements
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.swapaxes
+\family default 
+\series medium 
+(
+\emph on 
+axis1,axis2
+\emph default 
+)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.togglebyteorder
+\family default 
+\series medium 
+():
+\family typewriter 
+\series default 
+ 
+\family default 
+change byteorder flag without changing actual data byteorder
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.trace
+\family default 
+\series medium 
+()
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+\emph on 
+a
+\emph default 
+.view
+\family default 
+\series medium 
+():
+\series default 
+ returns new array object using view of same data
+\layout Subsection
+
+Array attributes:
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+a.shape:
+\family default 
+ returns shape of array
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+a.flat:
+\family default 
+ returns view of array treating it as 1-dimensional.
+ Doesn't work if array is not contiguous
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+a.real: 
+\family default 
+return real component of array (exists for all types)
+\layout Description
+\paragraph_spacing other 0.50 
+
+
+\family typewriter 
+a.imag,\SpecialChar ~
+a.imaginary:
+\family default 
+ return imaginary component (exists only for complex types)
+\layout Section
+
+Exercises
+\layout Exercise
+
+Load the binary image shown in Figure
+\begin_inset LatexCommand \ref{fig:array_hothead}
+
+\end_inset 
+
+.
+ What is the mean pixel value, what are the standard deviation of pixel
+ values? Sum over the rows and make a bar plot for the summated intensity
+ across rows.
+ Do the same for columns.
+ Make a histogram of all the data in the image.
+ (Hint -- see n
+\family typewriter 
+x.mlab.mean
+\family default 
+, 
+\family typewriter 
+nx.mlab.std
+\family default 
+, 
+\family typewriter 
+pylab.bar
+\family default 
+ and 
+\family typewriter 
+pylab.hist)
+\layout Example
+
+this is another test
+\layout Standard
+
+this is a test
+\the_end

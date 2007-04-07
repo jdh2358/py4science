@@ -1,0 +1,37 @@
+============
+ Py4Science
+============
+
+This directory contains materials for a workshop on the uses of Python for
+scientific computing, as well as the draft of a full book on the same topic. 
+
+
+Workshop
+========
+
+This workshop has been presented, in various forms, at the following places
+(presenter legend below): 
+
+- University of California, Berkeley, Brain Imaging Laboratory. February
+  2005. JDH, FP.
+
+- Los Alamos National Laboratory, Math Division.  June 2005. JDH, FP.
+
+- University of Stellenbosch, South Africa, Depts of Applied Mathematics and
+  Biochemistry (jointly organized).  April 2006.  FP, SvdW.
+
+- University of Michigan, Ann Arbor, Mathematics Dept.  April 2007.  JDH, FP.
+
+Presenters:
+
+- JDH: John. D. Hunter <jdh2358@gmail.com>
+- FP: Fernando Perez <Fernando.Perez@colorado.edu>
+- SvdW: Stefan van der Walt <stefan@sun.ac.za>
+
+
+Book
+====
+
+The book contains material by a number of different authors, listed therein.
+In due time, we plan on this being developed as an open project for wider
+distribution.

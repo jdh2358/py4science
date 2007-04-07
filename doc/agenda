@@ -1,0 +1,146 @@
+==========================================
+ Practical Scientific Computing in Python
+==========================================
+
+Prerequisites and audience
+==========================
+
+This is a workshop targetted at the level of a upper graduate student in
+engineering or an upper undergraduate in applied mathematics or physics.  A
+working knowledge of basic programming is assumed, as well as familiarity with
+calculus, basic linear algebra, FFTs, and other similar topics.
+
+The course will stay reasonably basic in the python techniques used, but the
+core language itself will not be taught.  Students are expected to at the very
+least work thoroughly through the official Python tutorial, as well as read
+Perry Greenfield's data analysis tutorial.
+
+
+Proposed agenda
+===============
+
+Day 1
+-----
+
+830-845 Introduction
+Set up computers, introduce instructors, hand out course materials
+
+845-930 Python for scientific computing
+A high-level overview of the topic of Python in a scientific context.
+
+930-1030  Workflow.
+
+Editor: (X)Emacs, Vi(m), SPE.
+
+ipython.  Saving and reloading files.
+
+Getting help:
+  - pydoc (-g)
+
+  - The standard docs (bookmark them)
+
+  - ipython ?/??, help(), the tab key.
+
+  - The open source process: mailing lists, wikis.  Python
+  cookbook. Participate!
+
+
+Basic setup:
+  - ipython
+  - matplotlib (latex, etc).
+  - Modules: import/reload, PYTHONPATH.
+
+1030:1100 -- Break
+
+
+* Define a simple function: Wallis' product for pi.  Illustrates arbitrary
+size integers.
+
+* Qsort: lists, recursion.
+
+* Define a trapezoid rule integrator: function objects, arrays.
+
+--- Lunch
+
+* Univariate polynomials, root finding: poly1d objects, convolutions,
+plotting. 
+
+* Data fitting/smoothing: least squares, cubic splines, polynomial fitting.
+
+* Numerical integration and root finding: Find t such that
+
+ \int_0^t{ f(s) ds} = u
+
+for a known, monotonically increasing f(s) and a fixed u.
+
+* Prime numbers: the Sieve of Erathostenes.  Illustrates lists and sets.
+
+* Word frequencies: use of dictionaries and text processing.
+
+
+Day 2
+-----
+
+* FFTs: 2-d image denoising via FFT.
+
+* Visual (VPython): Show some examples, explain.  Target shooting exercise.
+
+* Eigenfaces problem, part 1.
+
+* Eigenfaces problem, part 2.
+
+* Speed: weave.blitz, weave.inline.
+
+
+Day 3
+-----
+
+* Interactive work with IPython
+
+Efficient use of IPython to speed up development and everyday scientific
+work. Profiling, debugging and embedding of IPython into third-party codes.
+
+* Modules, Packages, $PYTHONPATH.
+
+* Unit testing.
+
+* Object Oriented Programming.
+
+* Advanced Matplotlib.
+
+* 3d visualization.
+
+We'll cover the use of MayaVi, which encapsulates much of the complexity of
+VTK. Some examples of low-level VTK use will be shown.
+
+  - imv.surf example, interact with it, modify and save to disk.  Wireframe
+  and contour, change colormaps.
+
+* Code wrapping - f2py, pyrex, swig, boost.
+
+weave.inline
+weave.blitz
+
+f2py simple wrapping example, then they have to repeat the process for a
+pre-written .f file given to them but unwrapped.  Then, they must write a
+small .py script which actually calls the fortran .so.
+
+* Package distribution: distutils.
+
+* PIL.
+
+Unused examples and exercises
+-----------------------------
+
+* Bessel functions: special functions library, array manipulations to check
+recursion relation.
+
+* Montecarlo integration to compute pi.
+
+* One-dimensional FFT - Bode plot.
+
+* Spectral interpolation.
+
+* Steinman interpolation.
+
+* More weave.inline examples.

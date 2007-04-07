@@ -1,0 +1,86 @@
+===========================================
+ Practical Python for Scientific Computing
+===========================================
+
+
+This is a 2-day, hands-on workshop focused on practical techniques useful for
+scientific computing.  The topics and examples covered will be generic enough
+that they should be useful to students coming from a wide range of disciplines.
+
+Some of the topics covered in the examples will include: numerical integration,
+data reading and plotting, data fitting, simple text processing, linear
+algebra and FFT-based image denoising.  We will also discuss how to access
+low-level languages (C, C++ and Fortran) from within Python, both for the
+purposes of accessing existing libraries and for speeding up critical portions
+of programs.
+
+Apart from some introductory material presented on day 1, the workshop will
+consist entirely of hands-on exercises.  Simple problems will be presented and
+students will be given approximately 20 minutes to solve each, starting from an
+incomplete code fragment containing some hints.  Then, a brief discussion of
+the solution will follow.
+
+We have already used this format on previous occasions and the results were
+very positive, with students finding that this approach kept them engaged with
+actively learning new material for 2 days.  It allows us to cycle through a
+number of topics of interest to a wide audience, and leaves the students with a
+small body of code they can later take home to further study and develop.
+
+
+Prerequisites and Resources
+===========================
+
+The workshop is targetted at students (graduate or undergraduate) and
+researchers in engineering, mathematics or physics interested in learning about
+Python as a tool for their daily work.  A working knowledge of basic
+programming is assumed, as well as familiarity with calculus, basic linear
+algebra, FFTs, and other similar topics.  The minimum level of mathematical
+proficiency required is thus roughly that of an upper undergraduate in applied
+mathematics or physics.
+
+The course will stay reasonably basic in the Python techniques used, but the
+core language itself will *not* be taught.  There is simply no time, in two
+days, to properly cover both all the language and a sufficient amount of
+scientifically relevant material.
+
+Python is an easy language to learn, so students are assummed to, at the very
+least, work *thoroughly* through the official Python tutorial_, as well as to
+have familiarized themselves with Perry Greenfield's `data analysis tutorial`_.
+In addition, the SciPy website has a list of additional `documentation
+resources`_, as well as a collection of `tutorials and software`_ useful for a
+wide variety of scientific fields.
+
+
+.. _tutorial: http://docs.python.org/tut
+.. _`data analysis tutorial`: http://new.scipy.org/wikis/topical_software/Tutorial
+.. _`documentation resources`: http://new.scipy.org/Documentation
+.. _`tutorials and software`: http://new.scipy.org/Topical_Software
+
+
+Presenters
+==========
+
+The workshop will be conducted by:
+
+John Hunter
+
+  John was trained as a computational neuroscientist and has developed a number
+  of Python-based packages for processing Electroencephalography and brain
+  imaging datasets.  He is also the original author of the Matplotlib_ library,
+  the most widely used library for publication quality 2-D scientific plotting
+  in Python.  John currently works at Tradelink.
+
+  
+Fernando Perez
+
+  Fernando is a physicist who uses Python extensively as part of his research
+  in the development of new algorithms for the fast application of
+  multidimensional integral operators.  He is also the original author of
+  IPython_, the de facto standard interactive shell for scientific computing,
+  with support for interactive plotting with Matplotlib as well as new
+  facilities for high-level control of distributed and parallel codes.
+  Fernando currently works in the Applied Mathematics Department at the
+  University of Colorado, Boulder.
+
+.. _Matplotlib: http://matplotlib.sourceforge.net
+.. _IPython: http://ipython.scipy.org

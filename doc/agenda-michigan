@@ -1,0 +1,129 @@
+===================================================
+ Practical Scientific Computing in Python - Agenda
+===================================================
+
+JDH/FP indicates who presents what.
+
+
+Day 1 (Friday April 13)
+=======================
+
+900-905 Introduction 
+Set up computers, introduce instructors.
+
+905-945 FP: Python for scientific computing
+A high-level overview of the topic of Python in a scientific context.
+
+950-1045 JDH: Workflow.
+
+Editor: (X)Emacs, Vi(m), etc.
+
+ipython.  Saving and reloading files, interactive use of variables, %run,
+%debug, %xmode verbose.
+
+Getting help:
+  - pydoc (-g, -p)
+
+  - The standard docs (bookmark them)
+
+  - ipython ?/??, help(), the tab key.  numpy.*cos*? search.
+
+  - The open source process: mailing lists, wikis, svn.  Python
+  cookbook. Participate!
+
+
+Basic setup:
+  - ipython
+  - matplotlib (latex, etc).
+  - Modules: import/reload, PYTHONPATH.
+
+
+1045:1100 --- Coffee break ---
+
+
+1100:1215 FP: Introductory examples.
+
+* Qsort: lists, recursion.
+
+* Define a simple function: Wallis' product for pi.  Illustrates arbitrary
+size integers.
+
+* Define a trapezoid rule integrator: function objects, arrays.
+
+1215:1315 --- Lunch Break ---
+
+1315:1400 JDH: Basic numpy/pylab
+
+* Record arrays
+
+* Timeseries
+
+1400:1430 FP: Numerical integration and root finding: Find t such that
+
+ \int_0^t{ f(s) ds} = u
+
+for a known, monotonically increasing f(s) and a fixed u.
+
+
+1430:1500 FP: Univariate polynomials, root finding: poly1d objects,
+convolutions, plotting.
+
+1500:1515 --- Coffee break ---
+
+1515:1700: JDH/FP - Optional material (there's a colloquium talk)
+
+* Word frequencies: use of dictionaries and text processing.
+
+* Getbibtex: fetching bibliographic information from the net (networking,
+  regular expressions, command-line scripting).
+
+* Beautiful soup: screen-scraping HTML for data extraction.
+
+* Possible 3d demos (not user exercises) using VPython and VTK/MayaVi.
+
+
+Day 2 (Saturday April 14)
+=========================
+
+900:945 JDH: Data fitting/smoothing: least squares, cubic splines, polynomial
+fitting.  Basic linear algebra.
+
+945:1030 FP: FFTs: 2-d image denoising via FFT.
+
+1030:1045 --- Coffee break ---
+
+1045:1130 JDH: Logistic map
+
+1130:1200 FP: Bessel functions: special functions library, array manipulations
+to check recursion relation.
+
+1200:1300 --- Lunch break ---
+
+1300:1345 JDH: Statistics & distributions
+
+1345:1445 FP:
+
+* Montecarlo integration to compute pi.
+
+* Speed: weave.blitz, weave.inline.
+
+1445:1500 Wrapup, discussion, questions, coffee.
+
+
+
+Unused examples and exercises, extra ideas
+==========================================
+
+* Prime numbers: the Sieve of Erathostenes.  Illustrates lists and sets.
+
+* Visual (VPython): Show some examples, explain.  Target shooting exercise.
+
+* Eigenfaces problem, part 1.
+
+* Eigenfaces problem, part 2.
+
+* One-dimensional FFT - Bode plot.
+
+* Spectral interpolation.
+
+* Steinman interpolation.

@@ -14,14 +14,14 @@ import numpy
 import scipy
 
 def pause(msg=None):
-    P.close('all')
     print '*'*70
     if msg:
         print msg
     raw_input('Press Enter to continue.')
+    P.close('all')
 
 numpy.test(10,10)
-pause('This test suite should pass with no errors.')
+pause('The previous test suite should have passed with no errors.')
 
 scipy.test(10,10)
 pause('This one has 3 known failures, ignore them.')

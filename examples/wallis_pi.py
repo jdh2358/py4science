@@ -88,7 +88,7 @@ if __name__ == '__main__':
     P.semilogy(nrng,diff)
     # and superimpose red circles
     P.semilogy(nrng,diff,'ro')
-    P.title(r"Convergence of Wallis' product formula for $\pi$")
+    P.title(r"$\rm{Convergence of Wallis' product formula for}\ \pi$")
     P.xlabel('Number of terms')
     P.ylabel(r'$|\rm{Error}|$')
     P.grid()

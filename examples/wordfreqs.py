@@ -6,8 +6,7 @@ def word_freq(text):
 
     freqs = {}
     for word in text.split():
-        freqs.setdefault(word,0)
-        freqs[word] += 1
+        freqs[word] = freqs.get(word, 0) + 1        
     return freqs
 
 def print_vk(lst):
@@ -15,7 +14,8 @@ def print_vk(lst):
 
     # Find the longest key: remember, the list has value/key paris, so the key
     # is element [1], not [0]
-    longest_key = max(map(lambda x: len(x[1]),lst))
+    #longest_key = max(map(lambda x: len(x[1]),lst))
+    longest_key = max([len(word) for count, word in lst])
     # Make a format string out of it
     fmt = '%'+str(longest_key)+'s -> %s'
     # Do actual printing

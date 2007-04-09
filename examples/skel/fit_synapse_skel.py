@@ -45,7 +45,7 @@ class Model:
     def fit(self, guess):
         """
         Use scipy.optimize to get the best fit of the model to the
-        data
+        data.  see scipy.optimize.fmin_l_bfgs_b
         """
         pass
 

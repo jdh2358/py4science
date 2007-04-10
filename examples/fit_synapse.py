@@ -10,7 +10,7 @@ import scipy.optimize
 from matplotlib.mlab import load
 import matplotlib.cbook as cbook
 from pylab import figure, show
-
+ 
 
 class Model(object):
     """
@@ -97,6 +97,43 @@ def one_exponential(t, (a, alpha)):
             m[k] = m[k-1]*numpy.exp(-alpha*(t[k]-t[k-1])) + a
     return m + 1.
 
+
+# data files are located in 'data' and have filenames
+# synapse_times.dat and synapse_data.dat, each of which contain a
+# single column of ASCII floating point numbers.  load each into an
+# array t and s, where t is the array of times and s an equal length
+# array of synapse amplitudes
+t = load(os.path.join('data', 'synapse_times.dat'))
+s = load(os.path.join('data', 'synapse_data.dat'))
+
+guess = (-0.05, 0.3)
+
+
+# create the model and do the best fit
+model = Model(t, s, one_exponential)
+bounds = [(None, 0.), (0., None)]
+bestpars = model.fit(guess, bounds=bounds)
+
+
+# plot the interspike-interval histogram, the actual data, and the best model fit
+fig = figure()
+ax1 = fig.add_subplot(311)
+model.plot_isi(ax1)
+ax2 = fig.add_subplot(312)
+model.plot_data(ax2, bestpars)
+
+
+
+
+
+### OPTIONAL BELOW THIS POINT
+
+# for the nexponential model, provide ordered pairs of a, alpha for
+# the amplitude and rate constant of an exponential factor.  Eg, if
+# pars is length(6), this is a 3 factor model with parameters (a1,
+# alpha1, a2, alpha2, a3, alpha3).  If a is negative the factor is
+# depression, and if a is positive to factor is excitatory
+
 def nexponential(t, pars):
     """
     a N-factor linear exponential model
@@ -134,8 +171,6 @@ def nexponential(t, pars):
      
     return m
     
-        
-
 def autobounds(pars):
     """
     if pars is an nexponential parameter vector, return bounds
@@ -152,40 +187,15 @@ def autobounds(pars):
         bounds.append(pos)               # alpha bounds strictly pos
     return bounds
 
-# data files are located in 'data' and have filenames
-# synapse_times.dat and synapse_data.dat, each of which contain a
-# single column of ASCII floating point numbers.  load each into an
-# array t and s, where t is the array of times and s an equal length
-# array of synapse amplitudes
-t = load(os.path.join('data', 'synapse_times.dat'))
-s = load(os.path.join('data', 'synapse_data.dat'))
-
-# for the nexponential model, provide ordered pairs of a, alpha for
-# the amplitude and rate constant of an exponential factor.  Eg, if
-# pars is length(6), this is a 3 factor model with parameters (a1,
-# alpha1, a2, alpha2, a3, alpha3).  If a is negative the factor is
-# depression, and if a is positive to factor is excitatory
-
-guess1 = (-0.05, 0.3)
-#guess2 = (-0.05, 0.3, -0.1, 1.0) 
-#guess3 = (-0.05, 0.3, -0.1, 1.0, 0.3, 25.)
-
-
-# create the model and do the best fit
-model = Model(t, s, one_exponential)
-bounds = [(None, 0.), (0., None)]
-bestpars = model.fit(guess1, bounds=bounds)
+guess = (-0.05, 0.3, -0.1, 1.0) 
+#guess = (-0.05, 0.3, -0.1, 1.0, 0.3, 25.)
 
 # an nexponential model with auto-bounds
-#model = Model(t, s, nexponential)
-#bestpars = model.fit(guess2, bounds=autobounds(guess2))
+model = Model(t, s, nexponential)
 
-# plot the interspike-interval histogram, the actual data, and the best model fit
-fig = figure()
-ax1 = fig.add_subplot(211)
-model.plot_isi(ax1)
-ax2 = fig.add_subplot(212)
-model.plot_data(ax2, bestpars)
+bestpars = model.fit(guess, bounds=autobounds(guess))
+ax3 = fig.add_subplot(313)
+model.plot_data(ax3, bestpars)
 
 
 show()

@@ -12,8 +12,7 @@ import matplotlib.cbook as cbook
 from pylab import figure, show
 
 XXX = None
-
-class Model:
+class Model(object):
     """
     Helper class for parametric modeling of spike train data
     """
@@ -40,31 +39,47 @@ class Model:
         call model with signature m = model(t, pars) and return the
         root-mean-square RMS error between actual spikes s and model m
         """
-        pass
-
-    def fit(self, guess):
+        XXX
+    
+    def fit(self, guess, bounds=None):
         """
         Use scipy.optimize to get the best fit of the model to the
-        data.  see scipy.optimize.fmin_l_bfgs_b
+        data.  See scipy.optimize.fmin_l_bfgs_b
         """
-        pass
-
+        XXX
+        
     def plot_data(self, ax, pars=None):
         """
         plot the data in axes ax.  If pars is not None, overlay the
         model estimated at those parameters
         """
-        pass
-        
+        XXX
+
     def plot_isi(self, ax):
         """
         make a plot of the interspike interval histogram (the
         interspike interval is the difference between adjacent spike
         times.  ax is an axes instance to make the plot in
         """
-        pass
+        XXX
 
 
+def one_exponential(t, (a, alpha)):
+    """
+    a one factor exponential model.  t is a vector of times of the
+    delta impulses.  The underlying factor is given by the convolution
+    of the response function $a exp(-alpha t)$ with the delta inputs,
+    and by the sift theorem we reduce the convolution to
+
+      factor[0] = a
+      factor[k] = factor[k-1] * exp(-alpha t) + a 
+
+    and the predicted amplitude
+
+      m[k] = 1 + factor[k]
+    """
+    XXX
+    
 def nexponential(t, pars):
     """
     a N-factor linear exponential model
@@ -86,12 +101,18 @@ def nexponential(t, pars):
 
     pars is an (a1, alpha1, a2, alpha2, ..., an, alphan) tuple
 
-    return value is a length(pars) vector of best fit params
     """
-    pass
+    XXX # OPTIONAL
         
 
-
+def autobounds(pars):
+    """
+    if pars is an nexponential parameter vector, return bounds
+    assuming the sign of the amplitude guess and positive rate
+    contants.  return value is a len(pars) list of (pmin, pmax) bounds
+    """
+    XXX # OPTIONAL
+    
 # data files are located in 'data' and have filenames
 # synapse_times.dat and synapse_data.dat, each of which contain a
 # single column of ASCII floating point numbers.  load each into an
@@ -105,13 +126,20 @@ s = XXX
 # pars is length(6), this is a 3 factor model with parameters (a1,
 # alpha1, a2, alpha2, a3, alpha3).  If a is negative the factor is
 # depression, and if a is positive to factor is excitatory
-guess = (-0.05, 0.3)
-#guess = (-0.05, 0.3, -0.1, 1.0)
-#guess = (-0.05, 0.3, -0.1, 1.0, 0.3, 25.)
+
+guess1 = (-0.05, 0.3)
+#guess2 = (-0.05, 0.3, -0.1, 1.0) 
+#guess3 = (-0.05, 0.3, -0.1, 1.0, 0.3, 25.)
+
 
 # create the model and do the best fit
-model = Model(t, s, nexponential)
-bestpars = model.fit(guess)
+model = Model(t, s, one_exponential)
+bounds = [(None, 0.), (0., None)]
+bestpars = model.fit(guess1, bounds=bounds)
+
+# an nexponential model with auto-bounds
+#model = Model(t, s, nexponential)
+#bestpars = model.fit(guess2, bounds=autobounds(guess2))
 
 # plot the interspike-interval histogram, the actual data, and the best model fit
 fig = figure()

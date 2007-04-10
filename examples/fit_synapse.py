@@ -12,7 +12,7 @@ import matplotlib.cbook as cbook
 from pylab import figure, show
 
 
-class Model:
+class Model(object):
     """
     Helper class for parametric modeling of spike train data
     """
@@ -40,15 +40,17 @@ class Model:
         root-mean-square RMS error between actual spikes s and model m
         """
         m = self.model(self.t, pars)
-        return numpy.sqrt(numpy.mean((self.s-m)**2.))
+        err = numpy.sqrt(numpy.mean((self.s-m)**2.))
+        #print pars, err
+        return err
 
-
-    def fit(self, guess):
+    def fit(self, guess, bounds=None):
         """
         Use scipy.optimize to get the best fit of the model to the
         data.  See scipy.optimize.fmin_l_bfgs_b
         """
-        bestpars, err, infod = scipy.optimize.fmin_l_bfgs_b(self.rms, guess, approx_grad=True)
+        bestpars, err, infod = scipy.optimize.fmin_l_bfgs_b(
+            self.rms, guess, approx_grad=True, bounds=bounds)
         #print bestpars, err, infod
         return bestpars
 
@@ -72,6 +74,29 @@ class Model:
         return ax.hist(numpy.diff(self.t), bins=100)
 
 
+def one_exponential(t, (a, alpha)):
+    """
+    a one factor exponential model.  t is a vector of times of the
+    delta impulses.  The underlying factor is given by the convolution
+    of the response function $a exp(-alpha t)$ with the delta inputs,
+    and by the sift theorem we reduce the convolution to
+
+      factor[0] = a
+      factor[k] = factor[k-1] * exp(-alpha t) + a 
+
+    and the predicted amplitude
+
+      m[k] = 1 + factor[k]
+    """
+    m = a*numpy.ones((len(t),), dtype=numpy.float_)
+
+    for k, tk in enumerate(t):
+        if k==0:
+            m[k] = a
+        else:
+            m[k] = m[k-1]*numpy.exp(-alpha*(t[k]-t[k-1])) + a
+    return m + 1.
+
 def nexponential(t, pars):
     """
     a N-factor linear exponential model
@@ -94,17 +119,38 @@ def nexponential(t, pars):
     pars is an (a1, alpha1, a2, alpha2, ..., an, alphan) tuple
 
     """
-    n,remainder = divmod(len(pars),2)
+    N,remainder = divmod(len(pars),2)
     assert(remainder==0)
-    m = numpy.ones((len(t), ), dtype=numpy.float_)
+    m = numpy.ones((len(t), ), dtype=numpy.float_)  # the model amplitudes
+    factors = numpy.zeros((N,), dtype=numpy.float_) # the N exponential factors
+    exp = numpy.exp       # local attribute lookup faster
+    as = pars[::2]        # the N amplitudes
+    alphas = pars[1::2]   # the N rate constants
+    tlast = t[0]
     for k, tk in enumerate(t):
-        deltat = tk-t[:k]
-        for a, alpha in cbook.pieces(pars):
-            m[k] += numpy.sum(a * numpy.exp(-alpha*(deltat)))
+        factors = factors*exp(-alphas*(tk-tlast)) + as
+        m[k] += factors.sum()
+        tlast = tk
+     
     return m
     
         
 
+def autobounds(pars):
+    """
+    if pars is an nexponential parameter vector, return bounds
+    assuming the sign of the amplitude guess and positive rate
+    contants.  return value is a len(pars) list of (pmin, pmax) bounds
+    """
+    pos = 0., None
+    neg = None, 0.
+    bounds = []
+    for a, alpha in cbook.pieces(pars):
+        if a<0: abounds = neg
+        else: abounds =   pos    
+        bounds.append(abounds)           # amplitude bounds
+        bounds.append(pos)               # alpha bounds strictly pos
+    return bounds
 
 # data files are located in 'data' and have filenames
 # synapse_times.dat and synapse_data.dat, each of which contain a
@@ -119,13 +165,20 @@ s = load(os.path.join('data', 'synapse_data.dat'))
 # pars is length(6), this is a 3 factor model with parameters (a1,
 # alpha1, a2, alpha2, a3, alpha3).  If a is negative the factor is
 # depression, and if a is positive to factor is excitatory
-guess = (-0.05, 0.3)
-#guess = (-0.05, 0.3, -0.1, 1.0)
-#guess = (-0.05, 0.3, -0.1, 1.0, 0.3, 25.)
+
+guess1 = (-0.05, 0.3)
+#guess2 = (-0.05, 0.3, -0.1, 1.0) 
+#guess3 = (-0.05, 0.3, -0.1, 1.0, 0.3, 25.)
+
 
 # create the model and do the best fit
-model = Model(t, s, nexponential)
-bestpars = model.fit(guess)
+model = Model(t, s, one_exponential)
+bounds = [(None, 0.), (0., None)]
+bestpars = model.fit(guess1, bounds=bounds)
+
+# an nexponential model with auto-bounds
+#model = Model(t, s, nexponential)
+#bestpars = model.fit(guess2, bounds=autobounds(guess2))
 
 # plot the interspike-interval histogram, the actual data, and the best model fit
 fig = figure()

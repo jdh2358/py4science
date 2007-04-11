@@ -4,7 +4,7 @@ from matplotlib.numerix.mlab import rand
 from pylab import figure, draw, show, ion, ioff,frange,gcf,rcParams,rc
 
 def bifurcation_diagram(map_type,param0=0,param1=1,nparam=300,
-                        ntransients=100,ncycles=200, dotcolor=0.5,
+                        ntransients=100,ncycles=200, dotcolor="0.5",
                         fig=None,
                         nboundaries=0):
 

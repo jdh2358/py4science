@@ -1,5 +1,7 @@
-#LyX 1.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 221
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
 \textclass beamer
 \begin_preamble
 % Include only certain frames - this speeds up compilation
@@ -64,699 +66,892 @@
 \fontscheme pslatex
 \graphics default
 \paperfontsize default
-\spacing single 
-\papersize Default
-\paperpackage a4
-\use_geometry 0
-\use_amsmath 1
-\use_natbib 0
-\use_numerical_citations 0
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\cite_engine basic
+\use_bibtopic false
 \paperorientation landscape
 \secnumdepth 2
 \tocdepth 2
 \paragraph_separation indent
 \defskip medskip
 \quotes_language english
-\quotes_times 2
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tracking_changes false
+\output_changes true
+\end_header
 
-\layout Standard
+\begin_body
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
+\begin_layout Standard
 Some things to fix in a future version:
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 - trim a bit of time
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 - add more about ipython and my own python work, reduce that of others
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 - add a final python pros/cons, esp.
  the cons part.
  It will make things more balanced.
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 - the PDE part repeats a bit the 'python benefits' which were already pounded
  on.
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset ERT
-status Open
+status open
 
-\layout Standard
+\begin_layout Standard
+
 % disable the bottom bar for the title and outline pages
-\layout Standard
+\end_layout
 
-\backslash 
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
 setbeamertemplate{footline}{}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset ERT
-status Open
+status open
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 vspace*{-5mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Title
+\end_layout
 
+\begin_layout Title
 Python in Scientific Computing
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
-
+\begin_layout Standard
 Python & Scientific Computing
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Subtitle
+\end_layout
 
+\begin_layout Subtitle
 An Introduction
-\layout Author
+\end_layout
 
-Fernando\SpecialChar ~
+\begin_layout Author
+Fernando\InsetSpace ~
 Pérez
-\newline 
+\newline
 
-\family typewriter 
-\size scriptsize 
+\family typewriter
+\size scriptsize
 <Fernando.Perez@colorado.edu>
-\family default 
-\size default 
+\family default
+\size default
 
-\newline 
-Stéfan van der Walt
-\newline 
+\newline
+John Hunter
+\newline
 
-\family typewriter 
-\size scriptsize 
-<stefan@sun.ac.za>
-\family default 
-\size default 
+\family typewriter
+\size scriptsize
+<jdh2358@gmail.com>
+\family default
+\size default
 
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
+\begin_layout Standard
+FP/JDH
+\begin_inset Note Note
+status collapsed
 
-FP/SVDW
-\begin_inset Note
-collapsed true
-
-\layout Standard
-
+\begin_layout Standard
 This is used by the 'split' footline theme on the left side of the page
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 vspace{5mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Institute
+\end_layout
 
+\begin_layout Institute
 Applied Mathematics, U.
  of Colorado at Boulder
-\newline 
-Electronics Engineering, U.
- of Stellenbosch
-\begin_inset Note
-collapsed false
+\newline
+Tradelink
+\begin_inset Note Note
+status open
 
-\layout Standard
-
+\begin_layout Standard
 - Use the 
-\backslash 
+\backslash
 inst command only if there are several affiliations.
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 - Keep it simple, no one is interested in your street address.
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
+\begin_layout Standard
+CU\InsetSpace ~
+Boulder/Tradelink
+\begin_inset Note Note
+status open
 
-CU\SpecialChar ~
-Boulder/U.
- Stellenbosch
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
+\begin_layout Standard
 optional, but mostly needed
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 vspace{5mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Date
+\end_layout
 
-University of Stellenbosch 
-\newline 
-April 12, 2006
+\begin_layout Date
+University of Michigan at Ann Arbor
+\newline
+April 12, 2007
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
+\begin_layout Standard
+U Mich, 04/13/06
+\end_layout
 
-U Stell, 04/12/06
-\end_inset 
-
-
-\layout Standard
+\end_inset
 
 
-\begin_inset Note
-collapsed false
+\end_layout
 
-\layout Standard
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
+\begin_layout Standard
 If you have a file called "institution-logo-filename.xxx", where xxx is a
  graphic format that can be processed by latex or pdflatex, resp., then you
  can add a logo by uncommenting the following:
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 %
-\backslash 
+\backslash
 pgfdeclareimage[height=0.5cm]{institution-logo}{institution-logo-filename}
-\layout Standard
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
 %
-\backslash 
+\backslash
 logo{
-\backslash 
+\backslash
 pgfuseimage{institution-logo}}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
+\begin_layout Standard
 The following causes the table of contents to be shown at the beginning
  of every Section.
  Delete this, if you do not want it.
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 AtBeginSection[]{
-\layout Standard
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
   
-\backslash 
+\backslash
 frame<beamer>{ 
-\layout Standard
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
     
-\backslash 
+\backslash
 frametitle{Outline}
-\layout Standard
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
     
-\backslash 
+\backslash
 tableofcontents[currentsection]
-\layout Standard
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
 }
-\layout Standard
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
 }
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
+\begin_layout Standard
 If you wish to uncover everything in a step-wise fashion, uncomment the
  following command:
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 %
-\backslash 
+\backslash
 beamerdefaultoverlayspecification{<+->}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset ERT
-status Open
+status open
 
-\layout Standard
+\begin_layout Standard
+
 % reactivate the footline
-\layout Standard
+\end_layout
 
-\backslash 
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
 setbeamertemplate{footline}[infolines theme]
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 Outline
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset LatexCommand \tableofcontents{}
 
-\end_inset 
+\end_inset
 
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 [pausesections]
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Section
+\end_layout
 
+\begin_layout Section
 Scientific Computing
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
-
+\begin_layout Standard
 SciComp
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 Traditional approaches
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
-
+\begin_layout Standard
 Status quo
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 FORTRAN, C and C++
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 
-\series bold 
+\series bold
 \color blue
 Caveat:
-\series default 
+\series default
 \color default
  C++ suffers less from some of these problems, but it has other issues.
-\layout Pause
+\end_layout
 
-\layout Itemize
+\begin_layout Pause
 
+\end_layout
 
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Tools from a time when CPU time was more expensive than human time.
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Low-level:
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Primitive data types (no good strings, sets, hash tables, 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 ldots
-\end_inset 
+\end_layout
+
+\end_inset
 
 ).
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Manual memory management: bugs, bugs, bugs.
  Hard ones.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Slow edit/compile/test cycle.
-\end_deeper 
-\layout Itemize
+\end_layout
 
-
+\end_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Clumsy access to visualization, quick profiling, text processing, 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 ldots
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 No interactive facilities - scientific work is inherently exploratory.
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Object Orientation?
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Not a silver bullet, but a very good model for many scientific codes.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Non-existent in FORTRAN & C, clumsy and subtle in C++.
-\end_deeper 
-\layout Pause
+\end_layout
 
-\layout Standard
+\end_deeper
+\begin_layout Pause
 
+\end_layout
 
-\series bold 
+\begin_layout Standard
+
+\series bold
 \color blue
 However!
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 They deliver excellent performance.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Millions of LOC in existing scientific libraries (LAPACK, BLAS, 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 ldots
-\end_inset 
+\end_layout
+
+\end_inset
 
 )
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 Higher level tools in the last decade
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Mathematica and Maple: a unique niche I won't address today.
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 IDL and Matlab: extremely popular tools in science and engineering.
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Great interactivity, visualization, and extensive libraries.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Unpleasant languages for large-scale programs and non-numerical tasks.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Expensive/proprietary: lock-in.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Often considered `prototyping' tools: this leads to a lot of code rewriting.
-\end_deeper 
-\layout Itemize
+\end_layout
 
-
+\end_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 A common approach (I've been there): mix and match multiple tools:
-\begin_deeper 
-\layout Itemize
+\end_layout
 
-
+\begin_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 FORTRAN, C, C++ programs ...
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 driven by Bash/awk/sed/Perl scripts ...
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 which feed them input and take their outputs ...
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 and pass them to Gnuplot, Grace, OpenDX, etc.
-\end_deeper 
-\layout Itemize
+\end_layout
 
-
+\end_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Many different syntaxes: 
 \color red
 huge context switching overhead!
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 Python?
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
-
+\begin_layout Standard
 Python
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 Python in this context
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 A bytecode-interpreted language (VMs in C, Java and .NET).
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 Interactive
 \color default
  interpreter provided.
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 Free
 \color default
  (BSD license), highly portable (Linux, OSX, Solaris, Windows, ...).
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Extremely readable syntax (
 \color blue
 
 \begin_inset Quotes eld
-\end_inset 
+\end_inset
 
 executable pseudo-code
 \begin_inset Quotes erd
-\end_inset 
+\end_inset
 
 
 \color default
 ).
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
@@ -765,236 +960,281 @@ Simple
 : non-professional programmers can become (and remain) proficient with a
  very small effort (c.f.
  C++).
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Clean object oriented model, but 
 \color blue
 not mandatory
 \color default
 .
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Rich built-in types: lists, sets, dictionaries (hash tables), strings, ...
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Very comprehensive standard library (
 \color blue
 batteries included
 \color default
 ): 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Text processing, networking protocols, threading, GUIs, ...
-\end_deeper 
-\layout Itemize
+\end_layout
 
-
+\end_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Standard libraries for IDL/Matlab-like arrays (Numeric/numarray).
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Easy to wrap existing C, C++ and FORTRAN codes:
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Python bindings for a vast amount of third-party libraries (scientific or
  not).
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 This addresses the speed issues (native python is slow).
-\end_deeper 
-\layout Section
+\end_layout
 
+\end_deeper
+\begin_layout Section
 Interlude: Python in the real world
 \begin_inset OptArg
-collapsed true
+status collapsed
 
-\layout Standard
-
+\begin_layout Standard
 Examples
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 EEG analysis for epilepsy
 \begin_inset OptArg
-collapsed true
+status collapsed
 
-\layout Standard
-
+\begin_layout Standard
 EEG analysis
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginPlainFrame
+\end_layout
 
+\begin_layout BeginPlainFrame
 Data analysis for epilepsy surgery
-\layout FrameSubtitle
+\end_layout
 
+\begin_layout FrameSubtitle
 Isolating the origin of drug-resistant epileptic seizures which require
  surgery.
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 John Hunter, Department of Pediatric Neurology, University of Chicago.
-\layout Standard
-\align center 
+\end_layout
 
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename fig/mpl_brain1.png
 	lyxscale 50
 	width 80text%
 	keepAspectRatio
 
-\end_inset 
+\end_inset
 
 
-\layout BeginPlainFrame
+\end_layout
 
+\begin_layout BeginPlainFrame
 Electrode location in 3D, combined with MRI data
-\layout Standard
-\align center 
+\end_layout
 
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename fig/mpl_brain2.png
 	lyxscale 50
 	width 90text%
 	keepAspectRatio
 
-\end_inset 
+\end_inset
 
 
-\layout BeginPlainFrame
+\end_layout
 
+\begin_layout BeginPlainFrame
 Full reconstruction of electrode location
-\layout Standard
-\align center 
+\end_layout
 
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename fig/mpl_brain3.png
 	lyxscale 50
 	width 90text%
 	keepAspectRatio
 
-\end_inset 
+\end_inset
 
 
-\layout BeginPlainFrame
+\end_layout
 
+\begin_layout BeginPlainFrame
 Correlation analysis of seizure data
-\layout Standard
-\align center 
+\end_layout
 
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename fig/mpl_brain4.png
 	lyxscale 50
 	width 90text%
 	keepAspectRatio
 
-\end_inset 
+\end_inset
 
 
-\layout BeginPlainFrame
+\end_layout
 
+\begin_layout BeginPlainFrame
 Final location of epileptic foci for surgery
-\layout Standard
-\align center 
+\end_layout
 
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename fig/mpl_brain5.png
 	lyxscale 50
 	width 90text%
 	keepAspectRatio
 
-\end_inset 
+\end_inset
 
 
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 Multiwavelets
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 Adaptive, multiwavelet algorithms for integral operators
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 Gregory Beylkin, Vani Cheruvu, Fernando Perez.
  Applied Math, U.
  of Colorado at Boulder.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Fast application of integral kernels.
  (Partial Differential Equations)
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Implementation went from 1 to 3 dimensions directly (
-\emph on 
+\emph on
 extremely
-\emph default 
+\emph default
  unusual).
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 A clean Object Oriented design: the code reads like the underlying math.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Very good performance, thanks to NumPy, F2PY and weave.
-\layout Standard
-\align center 
+\end_layout
 
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename fig/rho_2d_surf.png
 	lyxscale 80
 	width 35text%
 
-\end_inset 
+\end_inset
 
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{1cm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \begin_inset Graphics
@@ -1002,26 +1242,30 @@ hspace{1cm}
 	lyxscale 80
 	width 25text%
 
-\end_inset 
+\end_inset
 
 
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 PMV: molecular structures
 \begin_inset OptArg
-collapsed true
+status collapsed
 
-\layout Standard
-
+\begin_layout Standard
 PMV
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 Structural Bio-Informatics
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 Michel F.
  Sanner, Molecular Biology Department, The Scripps Research Institute, La
  Jolla, California.
@@ -1030,240 +1274,319 @@ Michel F.
 
 \begin_inset LatexCommand \htmlurl{http://www.scripps.edu/~sanner}
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 Full talks: 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://www.scipy.org/wikis/scipy04/ConferenceSchedule}
 
-\end_inset 
+\end_inset
 
 
 \color default
 .
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Applications:
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 PMV: Visualization and analysis of biological molecules
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Vision: Visual programming for Python.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 PyARTK: Augmented Reality with Applications in Molecular Biology.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 FlexTree: Python in the flexibility study of biological molecules
-\end_deeper 
-\layout Itemize
+\end_layout
 
-
+\end_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Code
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 11 Python packages 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 220,000 lines of code 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 1370 classes in Python 
-\end_deeper 
-\layout Itemize
+\end_layout
 
+\end_deeper
+\begin_layout Itemize
 10 C and C++ packages 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 200 classes 
-\end_deeper 
-\end_deeper 
-\layout BeginPlainFrame
+\end_layout
 
+\end_deeper
+\end_deeper
+\begin_layout BeginPlainFrame
 PMV: the Python Molecule Viewer
-\layout Standard
-\align center 
+\end_layout
 
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename fig/pmv.png
 	lyxscale 50
 	width 100text%
 	keepAspectRatio
 
-\end_inset 
+\end_inset
 
 
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 MayaVi: data visualization
 \begin_inset OptArg
-collapsed true
+status collapsed
 
-\layout Standard
-
+\begin_layout Standard
 MayaVi
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 MayaVi: sophisticated data visualization
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 MayaVi:
 \color blue
  
-\begin_inset LatexCommand \htmlurl{http://mayavi.sourceforge.net}
+\begin_inset LatexCommand \htmlurl{https://svn.enthought.com/enthought/wiki/MayaVi}
 
-\end_inset 
-
-
-\layout Itemize
+\end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Free, easy to use scientific data visualizer.
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Heavy lifting of OpenGL-based rendering: VTK (a C++ library).
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 A very good example of how to properly use Python:
-\begin_deeper 
-\layout Itemize
+\end_layout
 
-
+\begin_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 MayaVi is a standalone GUI program...
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 but also a Python library callable by any other Python program.
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Python: very easy to modify, even by adding at runtime user-defined modules
  which populate the GUI automatically.
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 C++: excellent rendering performance, fully hardware-accelerated OpenGL.
-\end_deeper 
-\layout Pause
+\end_layout
 
-\layout Standard
-\align center 
+\end_deeper
+\begin_layout Standard
 
-\series bold 
-\color red
-[DEMO]
-\layout Subsection*
+\series bold
+\color blue
+The punchline:
+\series default
+\color default
+ fully programmable visualization, with builtin access to all kinds of numerical
+ (and other) libraries from within the viz tool.
+\end_layout
 
+\begin_layout BeginPlainFrame
+FluidLab: a MayaVi-based CFD visualization tool
+\end_layout
+
+\begin_layout Standard
+With: K.
+ Julien, P.
+ Schmitt and B.
+ Barrow at U.
+ Colorado (Applied Math).
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/pmv.png
+	lyxscale 50
+	width 100text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
 Others
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 A few other projects (URLs in Appendix)
-\layout FrameSubtitle
+\end_layout
 
+\begin_layout FrameSubtitle
 Python is becoming very popular in many different scientific areas
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 VPython:
 \color default
  easy, real-time 3D programming (Carnegie Mellon, used for an introductory
  mechanics course).
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 UCSF Chimera: 
 \color default
 extensible, interactive molecular graphics program ($$: NIH).
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 PyRAF:
@@ -1271,1431 +1594,1665 @@ PyRAF:
  Hubble Space Telescope interface to IRAF, a standard in astronomical image
  processing.
  The HST develops Numarray, the next generation Python array library.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 BioPython: 
 \color default
 tools for computational molecular biology.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 VisionEgg:
 \color default
  real-time stimuli for vision research experiments (OpenGL).
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 Natural Language Toolkit:
 \color default
  symbolic and statistical natural language processing.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 Neural Integrator:
 \color default
  visual programming for neural networks.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 
 \color blue
 Orange:
 \color default
  component-based data mining software.
-\layout Section
+\end_layout
 
+\begin_layout Section
 Python and Scientific Computing
 \begin_inset OptArg
-collapsed false
+status open
 
-\layout Standard
-
+\begin_layout Standard
 Python
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 Basic features
 \begin_inset OptArg
-collapsed true
+status collapsed
 
-\layout Standard
-
-Python\SpecialChar ~
+\begin_layout Standard
+Python\InsetSpace ~
 Basics
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
-
+\begin_layout BeginFrame
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 [label=current]
-\end_inset 
+\end_layout
+
+\end_inset
 
 Basic Python features
-\layout ExampleBlock
+\end_layout
 
-
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 {Meaningful indentation, self-documenting, interactive language}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Examples below: IPython (enhanced interactive environment)
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Exploratory, incremental development, with live debugging on exceptions.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Direct access to the filesystem and OS.
-\newline 
+\newline
 
-\family typewriter 
+\family typewriter
 \color blue
 In [8]:
 \color default
  def hypot(a,b): 
-\newline 
+\newline
 
 \color blue
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 ...:
 \color default
- \SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+ \InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 "Return the length of the hypotenuse." 
-\newline 
+\newline
 
 \color blue
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 ...:
 \color default
- \SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+ \InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 return sqrt(a**2+b**2) 
-\newline 
+\newline
 
 \color blue
 In [9]:
 \color default
  pdoc hypot 
-\newline 
+\newline
 Return the length of the hypotenuse.
-\newline 
+\newline
 
 \color blue
 In [10]:
 \color default
  pdef hypot
-\newline 
+\newline
 hypot(a, b)
-\newline 
+\newline
 
 \color blue
 In [12]:
 \color default
  cd talks/0411_mines/ 
-\newline 
+\newline
 /home/fperez/talks/0411_mines
-\newline 
+\newline
 
 \color blue
 In [13]:
 \color default
  ls 
-\newline 
+\newline
 0411_python_scicomp.lyx doublependulum.py* ...
-\end_deeper 
-\layout BeginPlainFrame
+\end_layout
 
+\end_deeper
+\begin_layout BeginPlainFrame
 Python Basics (2)
-\layout ExampleBlock
+\end_layout
 
-
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Dictionaries (C-implemented, well optimized hash tables)}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Perfect for building complex, sparse data structures
-\family typewriter 
-\size small 
+\family typewriter
+\size small
 \color blue
 
-\newline 
+\newline
 In [21]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 dct={'k1':'v1',(3,4):cos,'nest':{1:2}}
-\newline 
+\newline
 
 \color blue
 In [22]:
 \color default
-\SpecialChar ~
-dct.keys(),\SpecialChar ~
+\InsetSpace ~
+dct.keys(),\InsetSpace ~
 dct.values()
-\newline 
+\newline
 
 \color red
 Out[22]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 (['k1', 'nested', (3, 4)], ['v1', {1: 2}, <built-in function cos>])
-\newline 
+\newline
 
 \color blue
 In [23]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 dct[3,4](pi) 
-\newline 
+\newline
 
 \color red
 Out[23]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 -1.0
-\end_deeper 
-\layout Separator
+\end_layout
 
-\layout ExampleBlock
+\end_deeper
+\begin_layout Separator
 
+\end_layout
 
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Open
+status open
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Easy access to C/C++ (via SciPy's 
-\backslash 
+\backslash
 texttt{weave.inline}) and FORTRAN (
-\backslash 
+\backslash
 texttt{f2py})}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Standard
+\end_layout
 
+\begin_deeper
+\begin_layout Standard
 
-\family typewriter 
-\size small 
-
+\family typewriter
+\size small
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [26]:
 \color default
  code='std::cout << "a is: " << a << std::endl;'
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [27]:
 \color default
  a='Hello world'
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [28]:
 \color default
  inline(code,['a']) 
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 a is: Hello world
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [29]:
 \color default
  a=99
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [30]:
 \color default
  inline(code,['a']) 
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 a is: 99 
-\end_deeper 
-\layout Subsection
+\end_layout
 
+\end_deeper
+\begin_layout Subsection
 A better development model
 \begin_inset OptArg
-collapsed true
+status collapsed
 
-\layout Standard
-
-Development\SpecialChar ~
+\begin_layout Standard
+Development\InsetSpace ~
 Model
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 A different model of development
-\layout FrameSubtitle
+\end_layout
 
+\begin_layout FrameSubtitle
 
-\emph on 
+\emph on
 \color red
 Global optimization is the root of all evil
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 Never write `
-\family typewriter 
+\family typewriter
 main()
-\family default 
+\family default
 ' in C anymore: 
 \color red
 you are optimizing globally!
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Prototype the code in Python.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Wrap existing libraries for Python access and reuse them (Numeric, LAPACK,
  VTK, ...)
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Identify remaining hot spots via 
 \color blue
 profiling
 \color default
 .
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Rewrite 
 \color blue
 only
 \color default
  the code for those hot spots in C/C++/FORTRAN.
-\end_deeper 
-\layout Itemize
+\end_layout
 
-
+\end_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 The resulting code will be production-ready: 
 \color blue
 no throw-away codes
 \color default
 .
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Make your code available as a library for 
 \color blue
 interactive use
 \color default
 .
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Integrate plotting, visualization, logging, ..., into your objects.
-\end_deeper 
-\layout Itemize
+\end_layout
 
-
+\end_deeper
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 Apply this to existing codes
 \color default
  
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Break them into a library core and control layers.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Wrap the libraries and expose them to Python.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Write all new control as quick, light Python scripts.
-\end_deeper 
-\layout Section*
+\end_layout
 
+\end_deeper
+\begin_layout Section*
 Summary
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 Summary
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 Python
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 An excellent language for scientific computing development.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Scales from interactive exploration to full-blown production codes.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Accessible to scientists who are not professional programmers.
-\end_deeper 
-\layout Standard
+\end_layout
 
-
+\end_deeper
+\begin_layout Standard
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 vskip0pt plus.5fill
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
-
+\begin_layout Itemize
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color red
 Outlook
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 SciPy, matplotlib, IPython, MayaVi, 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 ldots
-\end_inset 
+\end_layout
+
+\end_inset
 
  are moving forward and improving.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 At the end of the course, you should be able to start using Python productively
  for your work.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 These projects are all Open Source: if you find a flaw, a bug, or a missing
  feature,
-\emph on 
+\emph on
 \color blue
  jump on board!
-\end_deeper 
-\layout EndFrame
+\end_layout
 
-\layout Section*
-\start_of_appendix 
+\end_deeper
+\begin_layout EndFrame
 
-\begin_inset Note
-collapsed false
+\end_layout
 
-\layout Standard
+\begin_layout Section*
+\start_of_appendix
+\begin_inset Note Note
+status open
 
+\begin_layout Standard
 All of the following is optional and typically not needed.
-\end_inset 
+\end_layout
+
+\end_inset
 
 Appendix
-\layout Subsection*
+\end_layout
 
+\begin_layout Subsection*
 URLs
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 Some useful URLs
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 A collection of links on Python and Scientific Computing:
 \color blue
 
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://amath.colorado.edu/faculty/fperez/python/scicomp}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 SciPy: 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://www.scipy.org}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 IPython, an improved interactive shell
 \color blue
 :
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://ipython.scipy.org}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Matplotlib, 2d plotting with Matlab syntax
 \color blue
 :
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://matplotlib.sourceforge.net}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 MayaVi, 3d data visualization:
 \color blue
 
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://mayavi.sourceforge.net}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 PyX, programmatic PostScript generation (with 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 LaTeX 
-\end_inset 
+\end_layout
+
+\end_inset
 
  support)
 \color blue
 :
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://pyx.sourceforge.net}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 F2Py (FORTRAN): 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://cens.ioc.ee/projects/f2py2e}
 
-\end_inset 
+\end_inset
 
 
 \color default
  
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 SWIG (C/C++ for Python): 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://swig.org}
 
-\end_inset 
+\end_inset
 
 
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 URLs for projects mentioned earlier
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 VPython, real-time 3D: 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://vpython.org}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 UCSF Chimera - interactive molecular graphics
 \color blue
 :
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://www.cgl.ucsf.edu/chimera}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 PyRAF - Hubble Space Telescope interface to IRAF
 \color blue
 :
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://www.stsci.edu/resources/software_hardware/pyraf}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 BioPython - 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://biopython.org}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 VisionEgg - vision research experiments (OpenGL):
 \color blue
 
-\newline 
+\newline
 
 \begin_inset LatexCommand \htmlurl{http://www.visionegg.org}
 
-\end_inset 
+\end_inset
 
 
 \color default
  
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Natural Language Toolkit: 
-\newline 
+\newline
 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://nltk.sourceforge.net}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Neural Integrator - visual programming for neural networks:
-\newline 
+\newline
 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://starship.python.net/crew/seehof/NeuralPython.html}
 
-\end_inset 
+\end_inset
 
 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Orange - component-based data mining:
-\newline 
+\newline
 
 \color blue
 
 \begin_inset LatexCommand \htmlurl{http://www.ailab.si/orange}
 
-\end_inset 
+\end_inset
 
 
-\layout Subsection
+\end_layout
 
+\begin_layout Subsection
 Python overview
-\layout BeginFrame
+\end_layout
 
+\begin_layout BeginFrame
 An overview of Python's features
-\layout FrameSubtitle
+\end_layout
 
+\begin_layout FrameSubtitle
 A readable, eclectic collection of the best features from many languages.
-\layout ExampleBlock
+\end_layout
 
-
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 {Data types}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Arbitrary length integers
-\newline 
+\newline
 
-\family typewriter 
+\family typewriter
 \color blue
 In [1]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 2**64 
-\newline 
+\newline
 
 \color red
 Out[1]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 18446744073709551616L 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Floats (standard C doubles) and complex numbers
-\newline 
+\newline
 
-\family typewriter 
+\family typewriter
 \color blue
 In [4]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 1j**2 
-\newline 
+\newline
 
 \color red
 Out[4]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 (-1+0j) 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Strings
-\newline 
+\newline
 
-\family typewriter 
+\family typewriter
 \color blue
 In [6]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 'hello world'.upper() 
-\newline 
+\newline
 
 \color red
 Out[6]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 'HELLO WORLD' 
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Lists (arbitrarily nested, variable length)
-\newline 
+\newline
 
-\family typewriter 
+\family typewriter
 \color blue
 In [9]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 [99,'hello',1j,['sublist'],99].count(99) 
-\newline 
+\newline
 
 \color red
 Out[9]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 2 
-\end_deeper 
-\layout BeginFrame
+\end_layout
 
+\end_deeper
+\begin_layout BeginFrame
 Python Basics (2)
-\layout ExampleBlock
+\end_layout
 
-
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Data types (cont)}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Dictionaries (C-implemented, well optimized hash tables)
-\newline 
+\newline
 
-\family typewriter 
-\size small 
+\family typewriter
+\size small
 \color blue
 In [21]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 dct={'k1':'v1',2:'v2',(3,4):math.cos,'nest':{1:2}}
-\newline 
+\newline
 
 \color blue
 In [22]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 dct.keys() 
-\newline 
+\newline
 
 \color red
 Out[22]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 ['k1', 'nest', 2, (3, 4)]
-\newline 
+\newline
 
 \color blue
 In [23]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 dct.values() 
-\newline 
+\newline
 
 \color red
 Out[23]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 ['v1', {1: 2}, 'v2', <built-in function cos>]
-\newline 
+\newline
 
 \color blue
 In [24]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 dct[3,4](math.pi) 
-\newline 
+\newline
 
 \color red
 Out[24]:
 \color default
-\SpecialChar ~
+\InsetSpace ~
 -1.0
-\end_deeper 
-\layout Separator
+\end_layout
 
-\layout ExampleBlock
+\end_deeper
+\begin_layout Separator
 
+\end_layout
 
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Strongly, but dynamically typed}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 One of its major strengths: extreme flexibility.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Slow: everything is checked at runtime.
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 
-\family typewriter 
-
+\family typewriter
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{15mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 for x in range(10):
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{15mm}
-\end_inset 
+\end_layout
 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-print x**2\SpecialChar ~
+\end_inset
 
-\family default 
-\emph on 
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+print x**2\InsetSpace ~
+
+\family default
+\emph on
 \color blue
 # x and ** are checked every time!
-\end_deeper 
-\layout BeginFrame
+\end_layout
 
+\end_deeper
+\begin_layout BeginFrame
 Python Basics (3)
-\layout ExampleBlock
+\end_layout
 
-
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Interactive}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Itemize
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 Efficient for exploratory, incremental development.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Live debugging on exceptions.
-\layout Itemize
+\end_layout
 
+\begin_layout Itemize
 Direct access to the filesystem and OS.
-\end_deeper 
-\layout Separator
+\end_layout
 
-\layout ExampleBlock
+\end_deeper
+\begin_layout Separator
 
+\end_layout
 
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Clean object system}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Standard
+\end_layout
 
+\begin_deeper
+\begin_layout Standard
 With multiple inheritance and operator overloading:
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 
-\family typewriter 
-
+\family typewriter
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [12]:
 \color default
  class simple: 
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\end_inset
+
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 
 \color blue
 ....:
 \color default
- \SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+ \InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 def __add__(self,other): 
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 
-\family typewriter 
-
+\family typewriter
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\end_inset
+
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 
 \color blue
 ....:
 \color default
- \SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+ \InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 print 'Me plus something else:',other
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 
-\family typewriter 
-
+\family typewriter
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [13]:
 \color default
  a = simple()
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 
-\family typewriter 
-
+\family typewriter
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [14]:
 \color default
  a + 34
-\layout Standard
+\end_layout
 
+\begin_layout Standard
 
-\family typewriter 
-
+\family typewriter
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
 
-Me plus something else:\SpecialChar ~
+\end_inset
+
+Me plus something else:\InsetSpace ~
 34 
-\end_deeper 
-\layout BeginPlainFrame
+\end_layout
 
+\end_deeper
+\begin_layout BeginPlainFrame
 Python Basics (4)
-\layout ExampleBlock
+\end_layout
 
-
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Functions are first class objects}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Standard
+\end_layout
 
+\begin_deeper
+\begin_layout Standard
 
-\family typewriter 
-
+\family typewriter
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\size small 
+\size small
 def compose(f,g):
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\end_inset
+
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 return lambda x: f(g(x))
-\end_deeper 
-\layout Separator
+\end_layout
 
-\layout ExampleBlock
+\end_deeper
+\begin_layout Separator
 
+\end_layout
 
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Easy access to C/C++ (with SciPy's weave.inline module)}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Standard
+\end_layout
 
+\begin_deeper
+\begin_layout Standard
 
-\family typewriter 
-\size small 
-
+\family typewriter
+\size small
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [26]:
 \color default
  code='std::cout << "a is: " << a << std::endl;'
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [27]:
 \color default
  a='Hello world'
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [28]:
 \color default
  inline(code,['a']) 
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 a is: Hello world
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [29]:
 \color default
  a=99
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
 \color blue
 In [30]:
 \color default
  inline(code,['a']) 
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 a is: 99 
-\end_deeper 
-\layout Separator
+\end_layout
 
-\layout ExampleBlock
+\end_deeper
+\begin_layout Separator
 
+\end_layout
 
+\begin_layout ExampleBlock
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
+
 <+->{Elegant, simple and expressive: quicksort in 3 lines (Nathan Gray)}
-\end_inset 
+\end_layout
+
+\end_inset
 
 
-\begin_deeper 
-\layout Standard
+\end_layout
 
+\begin_deeper
+\begin_layout Standard
 
-\family typewriter 
-\size small 
-
+\family typewriter
+\size small
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
+
+\end_inset
 
 def qsort(L): 
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\end_inset
+
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 if len(L) <= 1: return L
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\end_inset
+
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 return qsort( 
-\series bold 
+\series bold
 \color blue
 [
-\series default 
+\series default
  lt for lt in L[1:] if lt < L[0] 
-\series bold 
+\series bold
 ]
-\series default 
+\series default
 \color default
  ) + 
-\backslash 
+\backslash
  
-\newline 
+\newline
 
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
+
+\backslash
 hspace{7mm}
-\end_inset 
+\end_layout
 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
+\end_inset
+
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
 [L[0]] + qsort(
-\series bold 
+\series bold
 \color blue
 [
-\series default 
+\series default
 ge for ge in L[1:] if ge >= L[0]
-\series bold 
+\series bold
 ]
-\series default 
+\series default
 \color default
 )
-\end_deeper 
-\layout EndFrame
+\end_layout
 
-\the_end
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

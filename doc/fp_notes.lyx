@@ -412,16 +412,28 @@ Speed optimizations using
 weave
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+Illustrates
+\series default
+: weave.blitz, weave.inline.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Task
+\series default
+: ...
+\end_layout
+
 \begin_layout Subsection*
 Code skeleton
 \end_layout
 
 \begin_layout Standard
 MISSING
-\end_layout
-
-\begin_layout Standard
-weave.blitz, weave.inline.
 \end_layout
 
 \end_body

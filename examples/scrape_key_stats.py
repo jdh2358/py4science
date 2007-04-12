@@ -1,5 +1,6 @@
 """
-Use urllib to download key statistics for several stock tickers; URL example pattern
+Use urllib to download key statistics for several stock tickers; URL
+example pattern
 
 http://finance.yahoo.com/q/ks?s=INTC
 """
@@ -13,8 +14,9 @@ import BeautifulSoup
 def get_datadir():
     """
     return the data dir used by this program.  It should be
-    data/key_stats.  use the "os" module to check for the directories existence and create it if
-    necessary.  See os.exists, os.path.join and os.mkdir
+    data/key_stats.  use the os module to check for the directories
+    existence and create it if necessary.  See os.exists, os.path.join
+    and os.mkdir
     """
     if not os.path.exists('data'):
         os.mkdir('data')

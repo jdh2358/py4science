@@ -1,0 +1,114 @@
+import scipy.stats as stats
+from matplotlib.mlab import detrend_linear, load
+
+import numpy
+import pylab
+
+
+class Descriptives:
+    """
+    a helper class for basic descriptive statistics and time series plots
+    """
+    def __init__(self, samples):
+        self.samples = numpy.asarray(samples)
+        self.N = len(samples)
+        self.median = stats.median(samples)
+        self.min = numpy.amin(samples)
+        self.max = numpy.amax(samples)
+        self.mean = stats.mean(samples)
+        self.std = stats.std(samples)
+        self.var = self.std**2.
+        self.skew = stats.skew(samples)
+        self.kurtosis = stats.kurtosis(samples)
+        self.range = self.max - self.min
+
+    def __repr__(self):
+        """
+        Create a string representation of self; pretty print all the
+        attributes:
+
+         N, median, min, max, mean, std, var, skew, kurtosis, range,
+        """
+        
+        descriptives = (
+            'N        = %d'        % self.N,
+            'Mean     = %1.4f' % self.mean,
+            'Median   = %1.4f'   % self.median,
+            'Min      = %1.4f'  % self.min,
+            'Max      = %1.4f'  % self.max,
+            'Range    = %1.4f'  % self.range,                        
+            'Std      = %1.4f' % self.std,            
+            'Skew     = %1.4f'     % self.skew,
+            'Kurtosis = %1.4f' % self.kurtosis,           
+        )
+        return '\n'.join(descriptives)
+
+    def plots(self, figfunc, maxlags=20, Fs=1, detrend=detrend_linear, fmt='bo'):
+        """
+        plots the time series, histogram, autocorrelation and spectrogram
+
+        figfunc is a figure generating function, eg pylab.figure
+        
+        return an object which stores plot axes and their return
+        values from the plots.  Attributes of the return object are
+        'plot', 'hist', 'acorr', 'pdf', 'specgram' and these are the
+        return values from the corresponding plots.  Additionally, the
+        axes instances are attached as c.ax1...c.ax5 and the figure is
+        c.fig
+
+        keyword args:
+        
+          Fs      : the sampling frequency of the data
+
+          maxlags : max number of lags for the autocorr
+
+          detrend : a function used to detrend the data for the correlation and spectral functions
+
+          fmt     : the plot format string
+        """
+        data = self.samples
+
+        class C: pass
+        c = C()
+        N = 5
+        fig = figfunc()
+        ax = c.ax1 = fig.add_subplot(N,1,1)
+        c.plot = ax.plot(data, fmt)
+
+        ax = c.ax2 = fig.add_subplot(N,1,2)
+        c.hist = ax.hist(data, 100)
+
+
+        ax = c.ax3 = fig.add_subplot(N,1,3)
+        c.acorr = ax.acorr(data, detrend=detrend, usevlines=True, maxlags=maxlags)
+
+        ax = c.ax4 = fig.add_subplot(N,1,4)
+        c.psd = ax.psd(data, Fs=Fs, detrend=detrend)
+
+        ax = c.ax5 = fig.add_subplot(N,1,5)
+        c.specgtram = ax.specgram(data, Fs=Fs, detrend=detrend)
+        c.ax = ax
+        c.fig = fig
+        return c
+
+
+if __name__=='__main__':
+
+    # load the data in filename fname into the list data, which is a
+    # list of floating point values, one value per line.  Note you
+    # will have to do some extra parsing
+    data = []
+    #fname = 'data/nm560.dat'  # tree rings in New Mexico 837-1987
+    fname = 'data/hsales.dat'  # home sales
+    for line in file(fname):
+        line = line.strip()
+        if not line: continue
+        vals = line.split()
+        val = vals[0]
+        data.append(float(val))
+
+    desc = Descriptives(data)
+    print desc
+    c = desc.plots(pylab.figure, Fs=12, fmt='-o')
+    c.ax1.set_title(fname)
+    pylab.show()

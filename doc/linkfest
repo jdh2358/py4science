@@ -1,0 +1,76 @@
+= python docs = 
+
+  python docs: http://www.python.org/doc/
+
+  python tutorial: http://docs.python.org/tut/tut.html
+
+  library reference: http://docs.python.org/lib/lib.html
+
+
+= scipy and friends docs: http://www.scipy.org/Documentation = 
+
+    Overview:
+
+        Greenfield tutorial:
+ 
+            Excellent tutorial showing many of the scientific python
+            packages used in conjunction; may use numarray but easy to
+            convert to numpy.
+            http://www.scipy.org/wikis/topical_software/Tutorial.
+
+        Hunter Perez Roadshow:
+
+            Rough around the edges and a bit out of date, but contains
+            useful stuff -
+            http://amath.colorado.edu/faculty/fperez/tmp/py4science.pdf
+    
+    numpy:
+
+        for purchase: http://www.trelgol.com/
+
+        examples: http://www.scipy.org/Numpy_Example_List
+
+        numarray (older but mostly compatible, free and excellent) :
+            http://www.stsci.edu/resources/software_hardware/numarray/manualPDF
+
+    ipython : http://ipython.scipy.org/moin/Documentation
+    
+        manual: http://ipython.scipy.org/doc/manual.pdf  
+
+        video:   http://showmedo.com/videos/series?name=PythonIPythonSeries
+
+    scipy:
+
+        tutorial:  http://www.scipy.org/SciPy_Tutorial
+
+        cookbook: http://www.scipy.org/Cookbook
+      
+    matplotlib 
+
+        tutorial :   http://matplotlib.sourceforge.net/tutorial.html
+
+        users guide: http://matplotlib.sourceforge.net/users_guide_0.90.0.pdf
+
+        cookbook: http://www.scipy.org/Cookbook/Matplotlib
+
+
+= svn = 
+
+    numpy:      svn co http://svn.scipy.org/svn/numpy/trunk numpy
+
+    scipy:      svn co http://svn.scipy.org/svn/scipy/trunk scipy
+
+    ipython:    svn co http://ipython.scipy.org/svn/ipython/ipython/trunk ipython
+
+    matplotlib: svn co https://svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib matplotlib 
+
+  
+    Important commands:
+
+        svn up   : update the repo
+
+        svn log  : see the log messages with the commits
+
+        svn diff : see the changes since the last commit - useful for
+                   making patches
+

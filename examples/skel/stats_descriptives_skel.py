@@ -4,6 +4,7 @@ from matplotlib.mlab import detrend_linear, load
 import numpy
 import pylab
 
+XXX = None
 
 class Descriptives:
     """
@@ -11,16 +12,16 @@ class Descriptives:
     """
     def __init__(self, samples):
         self.samples = numpy.asarray(samples)
-        self.N = len(samples)
-        self.median = stats.median(samples)
-        self.min = numpy.amin(samples)
-        self.max = numpy.amax(samples)
-        self.mean = stats.mean(samples)
-        self.std = stats.std(samples)
-        self.var = self.std**2.
-        self.skew = stats.skew(samples)
-        self.kurtosis = stats.kurtosis(samples)
-        self.range = self.max - self.min
+        self.N = XXX        # the number of samples
+        self.median = XXX   # sample median 
+        self.min = XXX      # sample min
+        self.max = XXX      # sample max
+        self.mean = XXX     # sample mean
+        self.std = XXX      # sample standard deviation
+        self.var = XXX      # sample variance
+        self.skew = XXX     # the sample skewness
+        self.kurtosis = XXX # the sample kurtosis 
+        self.range = XXX    # the sample range max-min
 
     def __repr__(self):
         """
@@ -32,15 +33,8 @@ class Descriptives:
         
         descriptives = (
             'N        = %d'        % self.N,
-            'Mean     = %1.4f' % self.mean,
-            'Median   = %1.4f'   % self.median,
-            'Min      = %1.4f'  % self.min,
-            'Max      = %1.4f'  % self.max,
-            'Range    = %1.4f'  % self.range,                        
-            'Std      = %1.4f' % self.std,            
-            'Skew     = %1.4f'     % self.skew,
-            'Kurtosis = %1.4f' % self.kurtosis,           
-        )
+            XXX # the rest here
+            )
         return '\n'.join(descriptives)
 
     def plots(self, figfunc, maxlags=20, Fs=1, detrend=detrend_linear, fmt='bo'):
@@ -75,18 +69,9 @@ class Descriptives:
         ax = c.ax1 = fig.add_subplot(N,1,1)
         c.plot = ax.plot(data, fmt)
 
-        ax = c.ax2 = fig.add_subplot(N,1,2)
-        c.hist = ax.hist(data, 100)
+        # XXX the rest of the plot funtions here
 
-
-        ax = c.ax3 = fig.add_subplot(N,1,3)
-        c.acorr = ax.acorr(data, detrend=detrend, usevlines=True, maxlags=maxlags)
-
-        ax = c.ax4 = fig.add_subplot(N,1,4)
-        c.psd = ax.psd(data, Fs=Fs, detrend=detrend)
-
-        ax = c.ax5 = fig.add_subplot(N,1,5)
-        c.specgtram = ax.specgram(data, Fs=Fs, detrend=detrend)
+        
         return c
 
 
@@ -101,10 +86,8 @@ if __name__=='__main__':
     for line in file(fname):
         line = line.strip()
         if not line: continue
-        vals = line.split()
-        val = vals[0]
-        data.append(float(val))
-
+        # XXX convert to float and add to data here
+        
     desc = Descriptives(data)
     print desc
     c = desc.plots(pylab.figure, Fs=12, fmt='-o')

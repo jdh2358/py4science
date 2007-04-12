@@ -1382,9 +1382,9 @@ PMV: the Python Molecule Viewer
 \end_layout
 
 \begin_layout Subsection
-MayaVi: data visualization
+MayaVi: customizable data visualization
 \begin_inset OptArg
-status collapsed
+status open
 
 \begin_layout Standard
 MayaVi
@@ -1521,6 +1521,10 @@ C++: excellent rendering performance, fully hardware-accelerated OpenGL.
 \end_layout
 
 \end_deeper
+\begin_layout Pause
+
+\end_layout
+
 \begin_layout Standard
 
 \series bold
@@ -1533,23 +1537,40 @@ The punchline:
 \end_layout
 
 \begin_layout BeginPlainFrame
-FluidLab: a MayaVi-based CFD visualization tool
+FluidLab: a MayaVi based CFD visualization tool
 \end_layout
 
 \begin_layout Standard
 With: K.
  Julien, P.
  Schmitt and B.
- Barrow at U.
- Colorado (Applied Math).
+ Barrow (Applied Math, U.
+ Colorado).
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename fig/pmv.png
+	filename fig/Fluidlab5.png
 	lyxscale 50
-	width 100text%
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Volumetric rendering with FluidLab
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/Fluidlab6.png
+	lyxscale 50
+	width 90text%
 	keepAspectRatio
 
 \end_inset

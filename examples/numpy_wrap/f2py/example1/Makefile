@@ -1,11 +1,16 @@
+
+F2PY=f2py2.4
+
+#F2PY=/usr/local/txpython/local/Frameworks/Python.framework/Versions/2.5/bin/f2py
+
 clean:
 	rm -f fib.pyf example.so
 
 fib.pyf: fib.f
 	rm -f fib.pyf
-	f2py fib.f -h fib.pyf -m example
+	$(F2PY) fib.f -h fib.pyf -m example
 
 example: fib.pyf
-	f2py -c fib.pyf fib.f
+	$(F2PY) -c fib.pyf fib.f
 
 

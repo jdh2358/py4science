@@ -73,23 +73,36 @@ def par_pi(n,num_engines=1):
                      map(wpi_nd,part_range(1,n+1,num_engines)))
     return 2.0*(num/den)
     
-    
+
+# This part only executes when the code is run as a script, not when it is
+# imported as a library
 if __name__ == '__main__':
     # Simple convergence demo.
 
+    # A few modules we need
     import pylab as P
     import numpy as N
 
-    nrng = N.linspace(10,2000,20).astype(N.int_)
-    wpi = N.array(map(pi,nrng))
-    diff = N.absolute(wpi-N.pi)
-    # plot with lines
+    # Create a list of points 'nrange' where we'll compute Wallis' formula
+    nrange = N.linspace(10,2000,20).astype(int)
+    # Make an array of such values
+    wpi = N.array(map(pi,nrange))
+    # Compute the difference against the value of pi in numpy (standard
+    # 16-digit value)
+    diff = abs(wpi-N.pi)
+
+    # Make a new figure and build a semilog plot of the difference so we can
+    # see the quality of the convergence
+    
     P.figure()
-    P.semilogy(nrng,diff)
-    # and superimpose red circles
-    P.semilogy(nrng,diff,'ro')
-    P.title(r"Convergence of Wallis' product formula for pi")
+    # Line plot with red circles at the data points
+    P.semilogy(nrange,diff,'-o',mfc='red')
+
+    # A bit of labeling and a grid
+    P.title(r"Convergence of Wallis' product formula for $\pi$")
     P.xlabel('Number of terms')
-    P.ylabel(r'|Error}|')
+    P.ylabel(r'$|\rm{Error}|$')
     P.grid()
+
+    # Display the actual plot
     P.show()

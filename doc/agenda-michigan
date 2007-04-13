@@ -127,3 +127,6 @@ Unused examples and exercises, extra ideas
 * Spectral interpolation.
 
 * Steinman interpolation.
+
+* Extended precision root finding: manually implement newton's method using
+  clnum or mpfr.

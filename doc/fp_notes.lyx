@@ -168,7 +168,19 @@ Code skeleton
 \end_layout
 
 \begin_layout Standard
-MISSING
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+codelist{skel/wallis_pi_skel.py}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -188,7 +200,39 @@ Illustrates
 \series bold
 Task
 \series default
-: define a trapezoid rule integrator.
+: define a trapezoid rule integrator:
+\begin_inset Formula \[
+I=\int_{a}^{b}f(x)dx\approx\frac{1}{2}\sum_{i=1}^{N}(x_{i}-x_{i-1})(y_{i}+y_{i-1})\]
+
+\end_inset
+
+where 
+\begin_inset Formula $y_{i}=f(x_{i})$
+\end_inset
+
+, 
+\begin_inset Formula $x_{o}=a$
+\end_inset
+
+, 
+\begin_inset Formula $x_{N}=b$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Consider both the case where the input is given as a pair of arrays 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ and where the input is 
+\begin_inset Formula $(f,a,b,N)$
+\end_inset
+
+.
+ Write two separate functions.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -228,9 +272,13 @@ Illustrates:
 \series bold
 Task:
 \series default
- Find t such that
+ Find 
+\begin_inset Formula $t$
+\end_inset
+
+ such that
 \begin_inset Formula \[
-\int_{0}^{t}{f(s)ds}=u\]
+\int_{0}^{t}f(s)\, ds=u\]
 
 \end_inset
 
@@ -243,6 +291,15 @@ for a known, monotonically increasing
 \end_inset
 
 .
+ The example below uses 
+\begin_inset Formula $f(s)=s\cdot\sin^{2}(s)$
+\end_inset
+
+ and 
+\begin_inset Formula $u=1/4.$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -286,7 +343,7 @@ Task
 \end_layout
 
 \begin_layout Subsubsection*
-Code skeleton
+Code skeletonq
 \end_layout
 
 \begin_layout Standard

@@ -18,7 +18,7 @@ def plot_poly(x,y,roots):
 
 # Create the coefficients for a polynomial with nroots_minus1 at x=-1, one
 # root at -2 and one root at 1:
-nroots_minus1 = 10
+nroots_minus1 = 3
 coefs = reduce(N.convolve,[[1,1]]*nroots_minus1+[[1,2],[1,-1]])
 
 # Construct the polynomial and get its roots

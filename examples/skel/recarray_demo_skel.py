@@ -32,4 +32,7 @@ XXX
 # plot the adjusted closing price vs time since 2003 - hint, you must
 # use date2num to convert the date to a float for mpl.  Make two axes,
 # one for price and one for volume.  Use a bar chart for volume
+import matplotlib
+matplotlib.rcParams['usetex'] = False
+
 XXX

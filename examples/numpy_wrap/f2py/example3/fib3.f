@@ -28,7 +28,7 @@ C
       REAL*8 Y(N)
 Cf2py intent(in) x
 Cf2py intent(out) y
-Cf2py integer intent(hide),depend(X) :: n=shape(x,0) 
+Cf2py integer intent(hide),depend(X) :: n=len(x) 
       DO I=1,N
          IF (I.EQ.1) THEN
             Y(I) = X(I)

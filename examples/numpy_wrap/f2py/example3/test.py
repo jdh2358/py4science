@@ -1,3 +1,5 @@
+# See http://cens.ioc.ee/projects/f2py2e/usersguide/index.html for
+# f2py users guide
 import example
 import numpy
 

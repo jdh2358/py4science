@@ -62,8 +62,8 @@ class Descriptives:
         """
         data = self.samples
 
-        class C: pass
-        c = C()
+        class Bunch: pass
+        c = Bunch()
         N = 5
         fig = c.fig = figfunc()
         ax = c.ax1 = fig.add_subplot(N,1,1)

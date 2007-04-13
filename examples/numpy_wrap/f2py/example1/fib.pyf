@@ -10,5 +10,5 @@ python module example ! in
     end interface 
 end python module example
 
-! This file was auto-generated with f2py (version:2_3706).
+! This file was auto-generated with f2py (version:2_3681).
 ! See http://cens.ioc.ee/projects/f2py2e/

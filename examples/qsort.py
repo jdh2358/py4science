@@ -1,4 +1,9 @@
-"""Simple quicksort implementation."""
+"""
+Simple quicksort implementation.
+
+See http://en.wikipedia.org/wiki/Quicksort for algorithm, pseudocode
+and C implementation for comparison
+"""
 
 def qsort(lst):
     """Return a sorted copy of the input list."""

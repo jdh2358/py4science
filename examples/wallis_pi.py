@@ -6,8 +6,6 @@
 # in floating point.
 from __future__ import division
 
-from decimal import Decimal
-
 def pi(n):
     """Compute pi using n terms of Wallis' product.
 
@@ -101,7 +99,7 @@ if __name__ == '__main__':
     # A bit of labeling and a grid
     P.title(r"Convergence of Wallis' product formula for $\pi$")
     P.xlabel('Number of terms')
-    P.ylabel(r'$|\rm{Error}|$')
+    P.ylabel(r'|Error|')
     P.grid()
 
     # Display the actual plot

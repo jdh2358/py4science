@@ -323,6 +323,71 @@ codelist{skel/quad_newton_skel.py}
 \end_layout
 
 \begin_layout Section
+Wrapping Fortran codes
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Illustrates
+\series default
+: wrapping existing Fortran libraries, improving the call interface of Fortran
+ codes.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Task
+\series default
+: write a Fortran subroutine 
+\family typewriter
+cumsum(x,y,n)
+\family default
+ that computes the cumulative sums of entries of 
+\begin_inset Formula $x$
+\end_inset
+
+ and stores them in 
+\begin_inset Formula $y$
+\end_inset
+
+:
+\begin_inset Formula \[
+y_{j}=\sum_{i=1}^{j}x_{i},\; j=1,\ldots,n.\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Code skeleton
+\end_layout
+
+\begin_layout Standard
+The following skeleton contains a wrapper of another Fortran routine, a
+ simple Fibonacci number calculation, to illustrate the f2py syntax.
+ A Makefile and a test file are included as well.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+codelist{skel/fortran_wrap/fib3.f}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Univariate polynomials, root finding
 \end_layout
 

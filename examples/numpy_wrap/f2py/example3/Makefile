@@ -1,5 +1,7 @@
 
-F2PY=f2py
+#F2PY=f2py
+
+F2PY=f2py2.4
 
 #F2PY=/usr/local/txpython/local/Frameworks/Python.framework/Versions/2.5/bin/f2py
 

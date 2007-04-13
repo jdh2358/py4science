@@ -1584,6 +1584,37 @@ Volumetric rendering with FluidLab
 
 \end_layout
 
+\begin_layout Subsection
+SAGE: System for Algebra and Geometry Experimentation
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+SAGE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+SAGE
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/sage_notebook-medium.jpg
+	lyxscale 50
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection*
 Others
 \end_layout

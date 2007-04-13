@@ -18,4 +18,24 @@ Cf2py depend(n) a
          ENDIF
       ENDDO
       END
+
+      SUBROUTINE CUMSUM(X, Y, N)
+C
+C     COMPUTE THE CUMULATIVE SUM OF X
+C
+      INTEGER N
+      REAL*8 X(N)
+      REAL*8 Y(N)
+Cf2py intent(in) x
+Cf2py intent(out) y
+Cf2py integer intent(hide),depend(X) :: n=shape(x,0) 
+      DO I=1,N
+         IF (I.EQ.1) THEN
+            Y(I) = X(I)
+         ELSE 
+            Y(I) = X(I) + Y(I-1)
+         ENDIF
+      ENDDO
+      END
+
 C END FILE FIB3.F

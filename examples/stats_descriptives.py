@@ -43,7 +43,9 @@ class Descriptives:
         )
         return '\n'.join(descriptives)
 
-    def plots(self, figfunc, maxlags=20, Fs=1, detrend=detrend_linear, fmt='bo'):
+    def plots(self, figfunc, maxlags=20, Fs=1, detrend=detrend_linear,
+              fmt='bo', bins=100,
+              ):
         """
         plots the time series, histogram, autocorrelation and spectrogram
 
@@ -51,7 +53,7 @@ class Descriptives:
         
         return an object which stores plot axes and their return
         values from the plots.  Attributes of the return object are
-        'plot', 'hist', 'acorr', 'pdf', 'specgram' and these are the
+        'plot', 'hist', 'acorr', 'psd', 'specgram' and these are the
         return values from the corresponding plots.  Additionally, the
         axes instances are attached as c.ax1...c.ax5 and the figure is
         c.fig
@@ -65,6 +67,8 @@ class Descriptives:
           detrend : a function used to detrend the data for the correlation and spectral functions
 
           fmt     : the plot format string
+
+          bins : the bins argument to hist
         """
         data = self.samples
 
@@ -76,7 +80,7 @@ class Descriptives:
         c.plot = ax.plot(data, fmt)
 
         ax = c.ax2 = fig.add_subplot(N,1,2)
-        c.hist = ax.hist(data, 100)
+        c.hist = ax.hist(data, bins)
 
 
         ax = c.ax3 = fig.add_subplot(N,1,3)
@@ -105,8 +109,8 @@ if __name__=='__main__':
         val = vals[0]
         data.append(float(val))
 
-    desc = Descriptives(data)
-    print desc
-    c = desc.plots(pylab.figure, Fs=12, fmt='-o')
-    c.ax1.set_title(fname)
-    pylab.show()
+    #desc = Descriptives(data)
+    #print desc
+    #c = desc.plots(pylab.figure, Fs=12, fmt='-o')
+    #c.ax1.set_title(fname)
+    #pylab.show()

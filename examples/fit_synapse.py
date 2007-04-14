@@ -40,7 +40,8 @@ class Model(object):
         root-mean-square RMS error between actual spikes s and model m
         """
         m = self.model(self.t, pars)
-        err = numpy.sqrt(numpy.mean((self.s-m)**2.))
+        d = self.s-m
+        err = numpy.sqrt(numpy.mean(d*d))
         #print pars, err
         return err
 

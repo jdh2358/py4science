@@ -14,11 +14,10 @@ import pylab as P
 import numpy as N
 import scipy as S
 
-from imtools import ImageCollection, imshow2
+import scipy.linalg
 
-# Scipy has a special loading mechanism to import multiple subpackages into
-# its own namespace for convenience
-S.pkgload('linalg')
+
+from imtools import ImageCollection, imshow2
 
 # Functions for actual facial recognition
 class FaceClassifier(object):

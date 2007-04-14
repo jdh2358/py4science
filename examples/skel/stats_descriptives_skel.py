@@ -45,7 +45,7 @@ class Descriptives:
         
         return an object which stores plot axes and their return
         values from the plots.  Attributes of the return object are
-        'plot', 'hist', 'acorr', 'pdf', 'specgram' and these are the
+        'plot', 'hist', 'acorr', 'psd', 'specgram' and these are the
         return values from the corresponding plots.  Additionally, the
         axes instances are attached as c.ax1...c.ax5 and the figure is
         c.fig

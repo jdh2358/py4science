@@ -6,7 +6,7 @@ import numpy as N
 from pylab import rand
 
 #-----------------------------------------------------------------------------
-# Returning a scalar quantity computed from a Numeric array.
+# Returning a scalar quantity computed from an array.
 def trace(mat):
     """Return the trace of a matrix.
     """

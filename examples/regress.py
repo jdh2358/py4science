@@ -25,7 +25,7 @@ def regress(X,y):
     X = numpy.matrix(X)
     Y = numpy.matrix(y)
     Xt = X.T
-    Xt_X_i = numpy.matrix(la.inv(Xt*X) )
+    Xt_X_i = la.inv(Xt*X) 
     B = Xt_X_i*Xt*Y
 
     Ypred = B.T * Xt

@@ -5,32 +5,33 @@ import time, datetime, csv
 import dateutil.parser
 import numpy
 
-# create a csv reader to parse the file
-fh = file('data/ge.csv')
-reader = csv.reader(fh)
-header = reader.next()
+if 0:
+    # create a csv reader to parse the file
+    fh = file('data/ge.csv')
+    reader = csv.reader(fh)
+    header = reader.next()
 
-# iterate over the remaining rows and convert the data to date
-# objects, ints, or floats as approriate
-rows = []
-for date, open, high, low, close, volume, adjclose in reader:
-    date = dateutil.parser.parse(date).date()
-    volume = int(volume)
-    open, high, low, close, adjclose = map(float, (
-        open, high, low, close, adjclose))
-    rows.append((date, open, high, low, close, volume, adjclose))
+    # iterate over the remaining rows and convert the data to date
+    # objects, ints, or floats as approriate
+    rows = []
+    for date, open, high, low, close, volume, adjclose in reader:
+        date = dateutil.parser.parse(date).date()
+        volume = int(volume)
+        open, high, low, close, adjclose = map(float, (
+            open, high, low, close, adjclose))
+        rows.append((date, open, high, low, close, volume, adjclose))
 
-fh.close()
+    fh.close()
 
-# this is how you can use the function matplotlib.mlab.load to do the same
-#rows = load('data/ge.csv', skiprows=1, converters={0:datestr2num}, delimiter=',')
+    # this is how you can use the function matplotlib.mlab.load to do the same
+    #rows = load('data/ge.csv', skiprows=1, converters={0:datestr2num}, delimiter=',')
 
-r = numpy.rec.fromrecords(rows, names='date,open,high,low,close,volume,adjclose')
+    r = numpy.rec.fromrecords(rows, names='date,open,high,low,close,volume,adjclose')
 
 # compute the average approximate dollars traded over the last 10 days
 # hint: closing price * volume trades approx equals dollars trades
 recent = r[-10:]
-dollars = mean(recent.close * recent.volume)
+dollars = numpy.mean(recent.close * recent.volume)
 print '$%1.2fM'%(dollars/1e6)
 
 # plot the adjusted closing price vs time since 2003 - hint, you must
@@ -46,6 +47,7 @@ price = r.adjclose[mask]
 volume = r.volume[mask]
 
 fig = pylab.figure()
+fig.subplots_adjust(hspace=0)
 ax1 = fig.add_subplot(211)
 ax1.plot(date, price, '-');
 ax1.xaxis_date()

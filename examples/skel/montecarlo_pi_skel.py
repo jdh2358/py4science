@@ -12,7 +12,6 @@ To do:
 - binned numpy (to avoid creating a very large list,
 """
 
-import math
 import random
 
 import numpy as N
@@ -24,12 +23,8 @@ from scipy.weave import inline,converters
 def v1(n = 100000):
     """Approximate pi via monte carlo integration"""
 
-    rand = random.random
-    sqrt = math.sqrt
-    sm   = 0.0
-    for i in xrange(n):
-        sm += sqrt(1.0-rand()**2)
-    return 4.0*sm/n
+    XXX
+
     
 def v2(n = 100000):
     """Implement v1 above using weave for the C call"""
@@ -71,21 +66,21 @@ for(int i=0;i<nrow;i++) {
            type_converters = converters.blitz)
 
 
-# Returning a scalar quantity computed from an array.
+# Returning a scalar quantity computed from an array
 def trace(mat):
     """Return the trace of a matrix.
     """
     nrow,ncol = mat.shape
     code = \
 """ 
-double tr=0.0;
+// Here, compute the trace of 'mat' in C++, store it as variable 'tr'
 
-for(int i=0;i<nrow;++i)
-    tr += mat(i,i);
+// This sets the value returned by the function
 return_val = tr;
 """
     return inline(code,['mat','nrow','ncol'],
                   type_converters = converters.blitz)
+
 
 # In-place operations on arrays in general work without any problems
 def in_place_mult(num,mat):
@@ -94,13 +89,11 @@ def in_place_mult(num,mat):
     nrow,ncol = mat.shape
     code = \
 """
-for(int i=0;i<nrow;++i)
-    for(int j=0;j<ncol;++j)
-	mat(i,j) *= num;
 
 """
     inline(code,['num','mat','nrow','ncol'],
            type_converters = converters.blitz)
+
 
 if __name__ == '__main__':
 

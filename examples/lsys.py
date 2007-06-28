@@ -3,50 +3,77 @@
 
 See the class docstrings below for details on L-systems.
 
-You can run the module as a script with
+You can run the module as a script to generate examples.  See
 
-python lsys.py -e
+python lsys.py --help
 
-to execute its test suite and generate example graphics.
+for more information.
 
-DEPENDENCIES: this module requires the Python bindings to the Cairo
-library.  These are available as python-cairo on many Linux
-distributions; the project site is:
+Dependencies:
+=============
 
-    http://cairographics.org/pycairo
+This module has a number of plotting back-ends:
+
+Cairo:
+
+    Cairo requires the Python bindings available from
+
+        http://cairographics.org/pycairo
+
+    (on Linux systems, these are often packaged as python-cairo).
+    This backend is fast, and renders anti-aliased output to PNG.
+
+Matplotlib:
+-----------
+
+    Matplotlib is available from
+
+        http://matplotlib.sf.net
+
+    Renders anti-aliased output to many different formats.
+
+PyX:
+----
+
+    PyX is available from
+
+        http://pyx.sf.net
+
+    Renders output to EPS or PDF.
+
+Visual:
+-------
+
+    Visual Python is available from
+
+        http://vpython.org
+
+    Renders output on-screen in 3D.
+
 """
 
 __author__ = 'Stefan van der Walt <stefan@sun.ac.za>'
 __license__ = 'BSD'
 
-__all__ = ['Canvas','LSystem','Plotter']
+__all__ = ['LSystem','Plotter',
+           'CairoCanvas','MatplotlibCanvas','PyXCanvas','VisualCanvas']
+__canvas__ = 'visual'
 
 # Stdlib imports
 from math import cos, sin, pi, sqrt
 import string
+import sys
 
-# External imports
-try:
-    import cairo
-except ImportError:
-    # Since pycairo isn't very common, give some useful info to users
-    # in case they don't have it.
-    import sys
-    err = lambda s: sys.stderr.write(s+'\n')
-    err("ERROR: you need the Python bindings for Cairo")
-    err("available from: http://cairographics.org/pycairo")
-    err("")
-    err("In many Linux distributions, you can find it as a package named")
-    err("python-cairo which you can install.")
-    err("")
-    err("Aborting.")
-    sys.exit(1)
-
-###########################################################################
-# Normal code begins here
 class Canvas(object):
+    __description__ = 'Generic Canvas'
+    __save_extensions__ = ['.png']
+
+    # ----------------------------------------------------------
+    # Subclassed canvases should implement the following methods
+    # ----------------------------------------------------------
+
     def __init__(self, width=800, height=600):
-        """Create a Cairo canvas.
+        """Create a drawing canvas.
 
         :Parameters:
             width : int
@@ -56,6 +83,103 @@ class Canvas(object):
                 Height of the canvas.
 
         """
+        self.width = width
+        self.height = height
+        self.__palette = [(0,0,0),(0.0,0.2,0.4),(0.2,0.5,0.7),(0,0.2,0.5)]
+        self.__colour = 0
+        self.pos = (0,0)
+
+    def save_to_file(self,filename):
+        """Save the canvas to the given image file.
+
+        """
+        raise NotImplementedError
+
+    def move_to(self, (x,y)):
+        """Move the cursor to position (x,y).
+
+        """
+        raise NotImplementedError
+
+    def line_to(self, (x,y)):
+        """Draw a line from the current position to (x,y).
+
+        """
+        raise NotImplementedError
+
+    def text(self, text):
+        """Print the given text at the current position.
+
+        """
+        raise NotImplementedError
+
+    def set_colour_rgb(self, (r,g,b)):
+        """Set the current RGB colour to (r,g,b).
+
+        """
+        raise NotImplementedError
+
+    # --------------------------------------------
+    # The methods below do not need to be modified
+    # --------------------------------------------
+
+    def save(self, filename):
+        """Store the canvas as an image file.
+
+        This function calls save_to_file after determining
+        the correct filename.
+
+        """
+        default_ext = self.__save_extensions__[0]
+        self._filename = filename
+        for ext in self.__save_extensions__:
+            if filename.endswith(ext):
+                default_ext = ''
+        self._filename = self._filename + default_ext
+        self.save_to_file()
+
+    def set_palette(self, palette):
+        """Set the entries of the palette.  The palette must be a list
+        of 3-tuples, indicating R, G and B values, e.g.
+
+        [(0,0,0),(0,1,0),(1,0,0),(0,0,1)] which indicates
+
+        [black,green,red,blue]
+
+        """
+        self.__palette = palette
+
+    def get_palette(self):
+        """Return the current palette.
+
+        """
+        return self.__palette
+
+    palette = property(fset=set_palette,fget=get_palette)
+
+    def set_colour(self, c):
+        """Set the colour to entry nr c in the palette.
+
+        """
+        ignored,self.__colour = divmod(c,len(self.palette))
+        self.set_colour_rgb(self.palette[self.colour])
+
+    def get_colour(self):
+        """Return the current colour number.
+
+        """
+        return self.__colour
+
+    colour = property(fset=set_colour,fget=get_colour)
+    color = colour
+
+class CairoCanvas(Canvas):
+    __description__ = "Cairo (http://cairographics.org/pycairo)"
+
+    def __init__(self, width=800, height=600):
+        import cairo
+
+        Canvas.__init__(self,width,height)
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         ctx = cairo.Context(surface)
 
@@ -64,19 +188,156 @@ class Canvas(object):
         ctx.set_line_width(0.6)
         ctx.paint()
 
-        self.surface = surface
-        self.context = ctx
+        self._surface = surface
+        self._ctx = ctx
+        self.colour = 0
 
-    def to_png(self,filename):
-        """Store the canvas to PNG.
-
-        :Parameters:
-            filename : string
-                Name of PNG file.
+    def save_to_file(self):
+        """NOTE: Cairo only supports saving to PNG.
 
         """
-        assert filename.endswith('.png')
-        self.surface.write_to_png(filename)
+        self._surface.write_to_png(self._filename)
+
+    def move_to(self,(x,y)):
+        # Complete any undrawn lines before moving to new position
+        self._ctx.stroke()
+        self._ctx.move_to(x,y)
+
+    def line_to(self,(x,y)):
+        self._ctx.line_to(x,y)
+
+    def set_colour_rgb(self,(r,g,b)):
+        self._ctx.stroke()
+        self._ctx.set_source_rgb(r,g,b)
+
+    def text(self,text):
+        ctx = self._ctx
+        ctx.select_font_face("Sans")
+        ctx.set_font_size(20)
+        ctx.set_source_rgb(0.3,0.3,0.9)
+        ctx.text_path(text)
+        ctx.fill()
+
+class MatplotlibCanvas(Canvas):
+    __description__ = "Matplotlib (http://matplotlib.sf.net)"
+    __save_extensions__ = ['.png','.jpg','.png','.pdf','.ps','.svg']
+
+    def __init__(self, width=800, height=600):
+        import pylab
+        self.P = pylab
+
+        Canvas.__init__(self,width,height)
+
+        dpi = float(pylab.rcParams['savefig.dpi'])
+        pylab.rcParams['figure.figsize'] = (width/dpi,height/dpi)
+
+        pylab.figure()
+        pylab.axis([0,width,height,0])
+        pylab.axis('off')
+        pylab.axis('equal')
+
+        self._pos = 0,0
+        self._rgb = (0,0,0)
+
+    def save_to_file(self):
+        self.P.savefig(self._filename)
+
+    def move_to(self, (x,y)):
+        pass
+
+    def line_to(self, (x,y)):
+        x0,y0 = self.pos
+        self.P.plot([x0,x],[y0,y],color=self._rgb,
+                    linewidth=0.6)
+
+    def set_colour_rgb(self,(r,g,b)):
+        self._rgb = (r,g,b)
+
+    def text(self,text):
+        x,y = self.pos
+        self.P.figtext(x/float(self.width),1-y/float(self.height),
+                       text,color=self.palette[self.color])
+
+class PyXCanvas(Canvas):
+    __description__ = "PyX (http://pyx.sf.net)"
+    __save_extensions__ = ['.eps','.pdf']
+
+    def __init__(self,width=10,height=10):
+        import pyx
+        self.pyx = pyx
+
+        Canvas.__init__(self,width,height)
+        self._pyx_canvas = pyx.canvas.canvas()
+        self._path = []
+        self._rgb = pyx.color.rgb(0,0,0)
+
+    def save_to_file(self):
+        self.stroke()
+        self._pyx_canvas.writeEPSfile(self._filename)
+
+    def stroke(self):
+        if len(self._path) > 0:
+            self._pyx_canvas.stroke(self.pyx.path.path(*self._path),[self._rgb])
+        self._path = []
+
+    def move_to(self, (x,y)):
+        # Complete any undrawn lines before moving to new position
+        self.stroke()
+        self._path.append(self.pyx.path.moveto(*self.mapped_pos((x,y))))
+
+    def line_to(self, (x,y)):
+        self._path.append(self.pyx.path.lineto(*self.mapped_pos((x,y))))
+
+    def set_colour_rgb(self,(r,g,b)):
+        self.stroke()
+        self._rgb = self.pyx.color.rgb(r,g,b)
+
+    def text(self,text):
+        x,y = self.mapped_pos(self.pos)
+        self._pyx_canvas.text(x,y,self.pyx.text.escapestring(text),
+                              [self.pyx.text.halign.flushright,self._rgb])
+
+    def mapped_pos(self,(x,y)):
+        return x,self.height-y
+
+class VisualCanvas(Canvas):
+    __description__ = "Visual Python (http://vpython.org)"
+    _canvas = None
+
+    def __init__(self,*args,**kwargs):
+        import visual
+        self.V = visual
+
+        Canvas.__init__(self,*args,**kwargs)
+        self.scene = visual.display(height=self.height,width=self.width,
+                                    background=(1,1,1))
+        self.scene.center = (self.width/2.,self.height/2.,0)
+        self.scene.up = (0,-1,0)
+        self.scene.forward = (0,0,1)
+        self.scene.autoscale = True
+#        self.scene.scale = (2./self.width,2./self.height,1)
+        self._rgb = (0,0,0)
+
+    def save_to_file(self):
+        print "ERROR: VPython does not support saving to file"
+
+    def move_to(self,(x,y)):
+        self.pos = (x,y)
+        self.curve = self.V.curve(pos=[(x,y)])
+
+    def line_to(self,(x,y)):
+        self.curve.append((x,y),color=self._rgb)
+
+    def set_colour_rgb(self,(r,g,b)):
+        self._rgb = (r,g,b)
+
+    def text(self,text):
+        x,y = self.pos
+        self.V.label(pos=(x,y),text=text,opacity=0,
+                     color=self._rgb)
+
+    def __del__(self):
+        while (self.scene.kb.getkey() != 'q'): pass
 
 class _Vector(list):
     def normalise(self,width,height):
@@ -103,10 +364,10 @@ class _Vector(list):
         if max_x == min_x: max_x = min_x + 1
         if max_y == min_y: max_y = min_y + 1
 
-        scale = min((width-10)/float(max_x-min_x),(height-10)/float(max_y-min_y))
+        scale = min((79/80.*width)/float(max_x-min_x),(59/60.*height)/float(max_y-min_y))
         for k,stroke in enumerate(self):
             for i,(x,y) in enumerate(stroke):
-                self[k][i] = (5 + (x-min_x)*scale, 5 + (y-min_y)*scale)
+                self[k][i] = (1/160.*width + (x-min_x)*scale, 1/120.*height + (y-min_y)*scale)
 
 class LSystem(object):
     """L-System.
@@ -123,7 +384,7 @@ class LSystem(object):
       of Utrecht, Aristid Lindenmayer (1925–1989).
 
     """
-    def __init__(self,state,rules,angle=pi/2,name='lsys'):
+    def __init__(self,state='F',rules={},angle=pi/2,name='lsys'):
         """Initialise the L-System
 
         :Parameters:
@@ -149,33 +410,45 @@ class LSystem(object):
         """
         self.initial_state = state
         self.state = state
-        self.state_nr = 0
+        self._state_nr = 0
         self.rules = rules
         self.angle = angle
         self.name = name
 
     def set_level(self,N):
-        """Evolve N times.
+        """Evolve to level N.
 
         Previous state is taken to account, i.e. if N=5 and current
         state is N=4, only one iteration is done.
 
         """
-        if self.state_nr > N:
-            self.state = self.initial_state
-            self.state_nr = 0
+        if self._state_nr > N:
+            self._state = self.initial_state
+            self._state_nr = 0
 
-        while self.state_nr < N:
+        while self._state_nr < N:
             new_state = []
-            self.state_nr = self.state_nr + 1
-            for v in self.state:
+            self._state_nr = self._state_nr + 1
+            for v in self._state:
                 new_state += self.rules.get(v,v)
-            self.state = ''.join(new_state)
+            self._state = new_state
 
     def get_level(self):
-        return self.state_nr
+        return self._state_nr
 
     level = property(fget=get_level,fset=set_level)
+
+    def get_state(self):
+        return ''.join(self._state)
+
+    def set_state(self,state):
+        self._state = []
+        self._state.append(state)
+
+    state = property(fget=get_state,fset=set_state)
+
+    def __str__(self):
+        return self.name
 
 class Plotter(object):
     """Turtle graphics plotter for L-systems.
@@ -189,20 +462,21 @@ class Plotter(object):
         self._switch_turn = 1
         self._state_stack = []
 
-    def forward(self):
+    def forward(self,distance=None):
         """Move forward in the current direction.
 
         """
+        if distance is None: distance = self.delta
         x,y = self.vec[-1][-1]
-        x = x + self.delta*cos(self.direction)
-        y = y + self.delta*sin(self.direction)
+        x = x + distance*cos(self.direction)
+        y = y + distance*sin(self.direction)
         self.vec[-1].append((x,y))
 
-    def forward_no_draw(self):
+    def forward_no_draw(self,distance=None):
         """Move forward in the current direction but do not draw.
 
         """
-        self.forward()
+        self.forward(distance)
         pos = self.vec[-1][-1]
         del self.vec[-1][-1] # remove from list only -- does not clear pos
         self.vec.append([]) # start new stroke
@@ -267,7 +541,9 @@ class Plotter(object):
                     '[': self.push_state,
                     ']': self.pop_state,
                     '!': self.switch_turn,
-                    'G': self.forward_no_draw}
+                    'G': self.forward_no_draw,
+                    '>': (self.forward_no_draw,0)} # Start a new segment.
+                                                   # Hack to cycle the palette.
 
         read_forward = False
 
@@ -338,29 +614,38 @@ class Plotter(object):
         See also: vectorise.
 
         """
-        ctx = canvas.context
-        ctx.set_source_rgb(0,0,0)
+        canvas.colour = 0
         self.vectorise(lsys)
-        self.vec.normalise(canvas.surface.get_width(),
-                           canvas.surface.get_height())
+        self.vec.normalise(canvas.width,canvas.height)
         for stroke in self.vec:
             x0,y0 = stroke[0]
-            ctx.move_to(x0,y0)
+            canvas.move_to((x0,y0))
+            canvas.pos = x0,y0
             for (x,y) in stroke[1:]:
-                ctx.line_to(x,y)
-            ctx.stroke()
+                canvas.line_to((x,y))
+                canvas.pos = x,y
+            canvas.colour += 1
 
         # Print name of L-System
-        ctx.move_to(20, canvas.surface.get_height()-20)
-        ctx.select_font_face("Sans")
-        ctx.set_font_size(20)
-        ctx.set_source_rgb(0.3,0.3,0.9)
-        ctx.text_path(lsys.name)
-        ctx.fill()
+        canvas.colour = 1
+        pos = (1/40.*canvas.width,29/30.*canvas.height)
+        canvas.move_to(pos)
+        canvas.pos = pos
+        canvas.text(lsys.name)
+        filename = canvas.save(filename)
 
-        canvas.to_png(filename)
+        return canvas._filename
 
     __call__ = plot
+
+canvases = {}
+for cname in __all__:
+    try:
+        name = cname.replace('Canvas','').lower()
+        cls = eval(cname)
+        if issubclass(cls,Canvas): canvases[name] = cls
+    except:
+        pass
 
 systems = {'koch': LSystem('F',{'F':'F+F-F-F+F'},pi/2,
                            name='Koch'),
@@ -400,7 +685,7 @@ systems = {'koch': LSystem('F',{'F':'F+F-F-F+F'},pi/2,
                             'Alien'),
            }
 
-def _example(*args):
+def _demo(*args):
     plot = Plotter()
     example_params = {'koch': 5,
                       'sierpinski': 6,
@@ -411,31 +696,82 @@ def _example(*args):
                       'weed': 10,
                       'alien': 10}
 
-    for (sys,level) in example_params.iteritems():
-        c = Canvas(800,600)
-        s = systems[sys]
+    for (lsys,level) in example_params.iteritems():
+        # Generate list of canvases, with default canvas first
+        cvs = canvases.keys()
+        try:
+            i = cvs.index(__canvas__)
+        except:
+            print 'Invalid default canvas "%s".' % __canvas__
+            i = 0
+        cvs = [cvs[i]] + cvs[:i] + cvs[i+1:]
+
+        c = None
+        _announce_canvas = False
+        for cname in cvs:
+            try:
+                if _announce_canvas:
+                    print "Loading %s backend." % cname
+                c = canvases[cname]()
+                # Sucessfully loaded canvas.  Set as default.
+                globals()['__canvas__'] = cname
+                break
+            except ImportError, e:
+                print "Failed to load %s backend." % cname
+                _announce_canvas = True
+
+        if c is None:
+            print "Could not load any backends.  Exiting."
+            sys.exit(-1)
+
+        s = systems[lsys]
         print 'Generating %s...' % s.name,
         s.level = level
         name = s.name.replace(' ','').lower()
-        outfile = '%s_%i.png' % (name,s.level)
-        plot(s,c,outfile)
+        outfile = '%s_%i' % (name,s.level)
+        outfile = plot(s,c,outfile)
         print "%s saved." % outfile
 
-def _list_lsystems(*args):
-    max_len = max(len(sysname) for sysname in systems)
-    for s in systems:
-        print s.ljust(max_len), systems[s].name
+def _print_dict(*args,**kwargs):
+    d = args[-1]
+
+    header = kwargs.get('header','')
+    if header:
+        print header
+        print '='*len(header)
+
+    max_len = max(len(key) for key in d)
+    for k,v in d.iteritems():
+        print k.ljust(max_len+1), getattr(v,'__description__',v)
+    print
+
+def _set_default_canvas(option, opt, value, parser):
+    canvas = value
+    globals()['__canvas__'] = canvas
 
 ###########################################################################
 if __name__ == '__main__':
     import optparse
     parser = optparse.OptionParser()
-    parser.add_option('-e','--example',
-                      action='callback',callback=_example,
-                      help='generate example output files')
-    parser.add_option('-l','--list',
-                      action='callback',callback=_list_lsystems,
+    parser.add_option('--lb',
+                      action='callback',callback=_print_dict,
+                      callback_kwargs={'header': 'Graphical Canvases'},
+                      callback_args=(canvases,),
+                      help='list available backends')
+    parser.add_option('--ls',
+                      action='callback',callback=_print_dict,
+                      callback_kwargs={'header': 'L-Systems'},
+                      callback_args=(systems,),
                       help='list available L-systems')
+    parser.add_option('-q',action='store_true',dest='no_tests',
+                      help='do not run unit tests',default=False)
+    parser.add_option('-b','--backend',
+                      action='callback',callback=_set_default_canvas,
+                      type="string",nargs=1,
+                      help='Available backends: ' + ', '.join(canvases.keys()))
+    parser.add_option('-d','--demo',
+                      action='callback',callback=_demo,
+                      help='generate example output files')
     (options,args) = parser.parse_args()
 
     import unittest
@@ -510,8 +846,15 @@ if __name__ == '__main__':
             v_expected = [[(0,0),(10,0),(10,10)]]
             self.assertEqual(v,v_expected)
 
+        def testPaletteCycleHack(self):
+            lsys = LSystem('F>F',{})
+            v = self.plot.vectorise(lsys)
+            v_expected = [[(0,0),(10,0)],[(10,0),(20,0)]]
+            self.assertEqual(v,v_expected)
+
     # run unittests, but ignore command line arguments
-    import sys
-    sys.argc = 1
-    sys.argv = sys.argv[:1]
-    unittest.main()
+    if not options.no_tests:
+        import sys
+        sys.argc = 1
+        sys.argv = sys.argv[:1]
+        unittest.main()

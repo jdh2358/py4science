@@ -64,7 +64,9 @@
 
     matplotlib: svn co https://svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib matplotlib 
 
-  
+    py4science: svn co https://svn.sourceforge.net/svnroot/matplotlib/trunk/py4science py4science
+
+    
     Important commands:
 
         svn up   : update the repo

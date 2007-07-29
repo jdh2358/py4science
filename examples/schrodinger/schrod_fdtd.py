@@ -88,7 +88,7 @@ def barrier(npts,v0,thickness):
 N    = 1200     #  Number of spatial points.
 T    = 5*N      #  Number of time steps.  5*N is a nice value for terminating
                 #  before anything reaches the boundaries.
-Tp   = 40       #  Number of time steps to increment before updating the plot.
+Tp   = 50       #  Number of time steps to increment before updating the plot.
 dx   = 1.0e0    #  Spatial resolution
 m    = 1.0e0    #  Particle mass
 hbar = 1.0e0    #  Plank's constant
@@ -98,7 +98,7 @@ X    = dx*np.linspace(0,N,N)        #  Spatial axis.
 # and thickness (for barriers), you'll see the various transmission/reflection
 # regimes of quantum mechanical tunneling.
 V0   = 1.0e-2   #  Potential amplitude (used for steps and barriers)
-THCK = 10       # "Thickness" of the potential barrier (if appropriate
+THCK = 15       # "Thickness" of the potential barrier (if appropriate
                 # V-function is chosen)
 
 # Uncomment the potential type you want to use here:
@@ -108,18 +108,23 @@ THCK = 10       # "Thickness" of the potential barrier (if appropriate
 
 # Potential step.  The height (V0) of the potential chosen above will determine
 # the amount of reflection/transmission you'll observe
-#POTENTIAL = 'step'
+POTENTIAL = 'step'
 
 # Potential barrier.  Note that BOTH the potential height (V0) and thickness
 # of the barrier (THCK) affect the amount of tunneling vs reflection you'll
 # observe. 
-POTENTIAL = 'barrier'
+#POTENTIAL = 'barrier'
 
 #  Initial wave function constants
 sigma = 40.0 # Standard deviation on the Gaussian envelope (remember Heisenberg
              #  uncertainty).
 x0 = round(N/2) - 5*sigma # Time shift
 k0 = np.pi/20 # Wavenumber (note that energy is a function of k)
+
+# Energy for a localized gaussian wavepacket interacting with a localized
+# potential (so the interaction term can be neglected by computing the energy
+# integral over a region where V=0)
+E = (hbar**2/2.0/m)*(k0**2+0.5/sigma**2)
 
 #=============================================================================
 # Code begins
@@ -140,7 +145,7 @@ else:
 
 #  More simulation parameters.  The maximum stable time step is a function of
 #  the potential, V.
-Vmax = max(V)            #  Maximum potential of the domain.
+Vmax = V.max()            #  Maximum potential of the domain.
 dt   = hbar/(2*hbar**2/(m*dx**2)+Vmax)         #  Critical time step.
 c1   = hbar*dt/(m*dx**2)                       #  Constant coefficient 1.
 c2   = 2*dt/hbar                               #  Constant coefficient 2.
@@ -148,6 +153,7 @@ c2V  = c2*V  # pre-compute outside of update loop
 
 # Print summary info
 print 'One-dimensional Schrodinger equation - time evolution'
+print 'Wavepacket energy:   ',E
 print 'Potential type:      ',POTENTIAL
 print 'Potential height V0: ',V0
 print 'Barrier thickness:   ',THCK
@@ -190,29 +196,39 @@ psi_p /= P
 
 #  Initialize the figure and axes.
 pylab.figure()
+xmin = X.min()
+xmax = X.max()
 ymax = 1.5*(psi_r[PR]).max()
-pylab.axis([X.min(),X.max(),-ymax,ymax])
+pylab.axis([xmin,xmax,-ymax,ymax])
 
 #  Initialize the plots with their own line objects.  The figures plot MUCH
 #  faster if you simply update the lines as opposed to redrawing the entire
 #  figure.  For reference, include the potential function as well.
-lineR, = pylab.plot(X,psi_r[PR],'b',alpha=0.7)        #  "Real" line
-lineI, = pylab.plot(X,psi_i[PR],'r',alpha=0.7)        #  "Imag" line.
-lineP, = pylab.plot(X,psi_p,'k')               #  "Probability" line
+lineR, = pylab.plot(X,psi_r[PR],'b',alpha=0.7,label='Real')
+lineI, = pylab.plot(X,psi_i[PR],'r',alpha=0.7,label='Imag')
+lineP, = pylab.plot(X,6*psi_p,'k',label='Prob')
 pylab.title('Potential height: %.2e' % V0)
-pylab.legend(('Real','Imag','Prob'))
 
 # For non-zero potentials, plot them and shade the classically forbidden region
-# in light red
-if V.max() !=0 :
-    V_plot = V/V.max()*ymax/2
+# in light red, as well as drawing a green line at the wavepacket's total
+# energy, in the same units the potential is being plotted.
+if Vmax !=0 :
+    Efac = ymax/2.0/Vmax
+    V_plot = V*Efac
     pylab.plot(X,V_plot,':k',zorder=0)   #  Potential line.
     # reverse x and y2 so the polygon fills in order
     y1 = free(N)  # lower boundary for polygon drawing
     x = np.concatenate( (X,X[::-1]) )
     y = np.concatenate( (y1,V_plot[::-1]) )
     pylab.fill(x, y, facecolor='y', alpha=0.2,zorder=0)
+    # Plot the wavefunction energy, in the same scale as the potential
+    pylab.axhline(E*Efac,color='g',label='Energy',zorder=1)
+pylab.legend(loc='lower right')
 pylab.draw()
+
+# I think there's a problem with pylab, because it resets the xlim after
+# plotting the E line.  Fix it back manually.
+pylab.xlim(xmin,xmax)
 
 #  Direct index assignment is MUCH faster than using a spatial FOR loop, so
 #  these constants are used in the update equations.  Remember that Python uses

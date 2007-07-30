@@ -80,6 +80,16 @@ def barrier(npts,v0,thickness):
     v[npts/2:npts/2+thickness] = v0
     return v
 
+def fillax(x,y,*args,**kw):
+    """Fill the space between an array of y values and the x axis.
+
+    All args/kwargs are passed to the pylab.fill function.
+    Returns the value of the pylab.fill() call.
+    """
+    xx = np.concatenate((x,np.array([x[-1],x[0]],x.dtype)))
+    yy = np.concatenate((y,np.zeros(2,y.dtype)))
+    return pylab.fill(xx, yy, *args,**kw)
+    
 #=============================================================================
 #
 #  Simulation Constants.  Be sure to include decimal points on appropriate
@@ -213,14 +223,12 @@ pylab.title('Potential height: %.2e' % V0)
 # in light red, as well as drawing a green line at the wavepacket's total
 # energy, in the same units the potential is being plotted.
 if Vmax !=0 :
+    # Scaling factor for energies, so they fit in the same plot as the
+    # wavefunctions
     Efac = ymax/2.0/Vmax
     V_plot = V*Efac
     pylab.plot(X,V_plot,':k',zorder=0)   #  Potential line.
-    # reverse x and y2 so the polygon fills in order
-    y1 = free(N)  # lower boundary for polygon drawing
-    x = np.concatenate( (X,X[::-1]) )
-    y = np.concatenate( (y1,V_plot[::-1]) )
-    pylab.fill(x, y, facecolor='y', alpha=0.2,zorder=0)
+    fillax(X,V_plot, facecolor='y', alpha=0.2,zorder=0)
     # Plot the wavefunction energy, in the same scale as the potential
     pylab.axhline(E*Efac,color='g',label='Energy',zorder=1)
 pylab.legend(loc='lower right')

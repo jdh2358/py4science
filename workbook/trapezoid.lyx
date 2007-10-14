@@ -120,7 +120,7 @@ One frequently receives the function values already precomputed,
 
 ) becomes 
 \begin_inset Formula \begin{equation}
-\int_{a}^{b}f(x)dx\approx\frac{1}{2}\sum_{i=1}^{n}\left(x_{i}-x_{i-1}\right)\left(y_{i}+y_{i+1}\right).\label{eq:trapz}\end{equation}
+\int_{a}^{b}f(x)dx\approx\frac{1}{2}\sum_{i=1}^{n}\left(x_{i}-x_{i-1}\right)\left(y_{i}+y_{i-1}\right).\label{eq:trapz}\end{equation}
 
 \end_inset
 

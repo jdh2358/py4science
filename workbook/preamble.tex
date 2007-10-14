@@ -1,0 +1,70 @@
+% Common preamble for all included files.  If writing them in LyX, simply set
+% in the preamble the line:
+% \input{preamble.tex}
+% This will allow you to compile/view any individual file without having to
+% recompile starting from the entire master.
+
+% This gives us a better font in URL links (otherwise the default 
+% MonoSpace font is bitmapped, and it looks horrible in PDF)
+\usepackage{courier}
+
+% Special-purpose color definitions
+\usepackage{color}
+\definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+
+% The hyperref package gives us a pdf with properly built 
+% internal navigation ('pdf bookmarks' for the table of contents,
+% internal cross-reference links, web links for URLs, etc.)
+
+% A few colors to replace the defaults for certain link types
+\definecolor{darkorange}{rgb}{.71,0.21,0.01}
+\definecolor{darkgreen}{rgb}{.12,.54,.11}
+
+\usepackage[pdftex,  % needed for pdflatex
+  breaklinks=true,  % so long urls are correctly broken across lines
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=darkorange,
+  citecolor=darkgreen,
+  ]{hyperref}
+
+% This helps prevent overly long lines that stretch beyond the margins
+\sloppy
+
+% Use and configure listings package for nicely formatted code
+\usepackage{listings}
+\lstset{
+  language=Python,
+  basicstyle=\small\ttfamily,
+  commentstyle=\ttfamily\color{blue},
+  stringstyle=\ttfamily\color{darkorange},
+  showstringspaces=false,
+  breaklines=true,
+  postbreak = \space\dots
+}
+
+% Some extra commands
+
+\newcommand{\fig}[4]
+{\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=#1]{#2}
+\caption{\label{#4} #3}
+\end{center}
+\end{figure}}
+
+\newcommand{\matlab}[0]{matlab{\texttrademark}}
+\newcommand{\fname}[1]{{\tt #1}}
+\newcommand{\func}[1]{{\tt #1}}
+\newcommand{\class}[1]{{\tt #1}}
+\newcommand{\mpldoc}[1]{{\tt #1}}
+
+\newcommand{\code}[1]{{\tt #1}}
+\newcommand{\prompt}[1]{\code{>>> #1}}
+\newcommand{\carg}[1]{\textit{#1}} % command argument
+\newcommand{\val}[1]{\textit{#1}}
+\newcommand{\rc}[1]{{\tt #1}}
+
+% no-op for a sequence that was created when importing the
+% mayavi chapter.  This prevents latex errors.
+\newcommand{\dbz}{ }

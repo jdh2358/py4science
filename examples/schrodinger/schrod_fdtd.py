@@ -118,12 +118,12 @@ THCK = 15       # "Thickness" of the potential barrier (if appropriate
 
 # Potential step.  The height (V0) of the potential chosen above will determine
 # the amount of reflection/transmission you'll observe
-POTENTIAL = 'step'
+#POTENTIAL = 'step'
 
 # Potential barrier.  Note that BOTH the potential height (V0) and thickness
 # of the barrier (THCK) affect the amount of tunneling vs reflection you'll
 # observe. 
-#POTENTIAL = 'barrier'
+POTENTIAL = 'barrier'
 
 #  Initial wave function constants
 sigma = 40.0 # Standard deviation on the Gaussian envelope (remember Heisenberg

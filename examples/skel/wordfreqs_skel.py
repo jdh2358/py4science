@@ -24,7 +24,7 @@ def freq_summ(freqs,n=10):
       - freqs: a dictionary of word frequencies.
 
     Optional inputs:
-      - n: the number of """
+      - n: the number of items to print"""
 
     words,counts = # XXX look at the keys and values methods of dicts
     # Sort by count

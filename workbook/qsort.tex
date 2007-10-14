@@ -1,0 +1,41 @@
+
+\section{Sorting quickly with QuickSort }
+
+Quicksort is one of the best known, and probably the simplest, fast
+algorithm for sorting $n$ items. It is fast in the sense that it
+requires on average $\mathcal{O}(n\log n)$ comparisons instead of
+$\mathcal{O}(n^{2})$, although a naive implementation does have quadratic
+worst-case behavior.
+
+The algorithm uses a simple divide and conquer strategy, and its implementation
+is naturally recursive. Its basic steps are:
+
+\begin{enumerate}
+\item Pick an element from the list, called the pivot $p$ (any choice works).
+\item Select from the rest of the list those elements smaller and those
+greater than the pivot, and store them in separate lists $S$ and
+$G$.
+\item Recursively apply the algorithm \texttt{}to $S$ and $G$. The final
+result can be written as $\sigma(S)+[p]+\sigma(G)$, where $\sigma$
+represents the sorting operation, $+$ indicates list concatenation
+and $[p]$ is the list containing the pivot as its single element.
+\end{enumerate}
+The listing~\ref{code:qsort_skel} contains a skeleton with no implementation
+but with tests already written (in the form of \emph{unit tests},
+as described in the introduction).
+
+\lstinputlisting[label=code:qsort_skel,caption={IGNORED}]{skel/qsort_skel.py}
+
+
+\subsection*{Hints}
+
+\begin{itemize}
+\item Python has no particular syntactic requirements for implementing recursion,
+but it does have a maximum recursion depth. This value can be queried
+via the function \texttt{sys.getrecursionlimit()}, and it can be changed
+with \texttt{sys.setrecursionlimit(new\_value)}. 
+\item Like in all recursive problems, don't forget to implement an exit
+condition!
+\item If \texttt{L} is a list, the call \texttt{len(L)} provides its length.
+\end{itemize}
+

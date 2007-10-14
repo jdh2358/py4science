@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+"""Root finding using SciPy's Newton's method routines.
 """
-"""
+
 from math import sin
 
 import scipy, scipy.integrate, scipy.optimize
@@ -35,4 +36,4 @@ t1 = newton(gn,tguess,f)
 print "t1, g(t1) =",t1,g(t1)
 
 print
-print "Mathematica gives t==1.06601 for this problem"
+print "To six digits, the answer in this case is t==1.06601."

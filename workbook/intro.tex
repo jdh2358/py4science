@@ -1,0 +1,38 @@
+This document contains a set of small problems, drawn from many different
+fields, meant to illustrate commonly useful techniques for using Python
+in scientific computing.
+
+All problems are presented in a similar fashion: the task is explained
+including any necessary mathematical background and a `code skeleton'
+is provided that is meant to serve as a starting point for the solution
+of the exercise. In some cases, some example output of the expected
+solution, figures or additional hints may be provided as well. 
+
+The accompanying source download for this workbook contains the complete
+solutions, which are not part of this document for the sake of brevity.
+
+For several examples, the provided skeleton contains pre-written tests
+which validate the correctness of the expected answers. When you have
+completed the exercise successfully, you should be able to run it
+from within IPython and see something like this (illustrated using
+a trapezoidal rule problem, whose solution is in the file \texttt{trapezoid.py}):
+
+\begin{lstlisting}
+In [7]: run trapezoid.py
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+OK
+\end{lstlisting}
+
+This message tells you that 4 automatic tests were successfully executed.
+The idea of including automatic tests in your code is a common one
+in modern software development, and Python includes in its standard
+library two modules for automatic testing, with slightly different
+functionality: \texttt{unittest} and \texttt{doctest}. These tests
+were written using the \texttt{unittest} system, whose complete documentation
+can be found here: \url{http://docs.python.org/lib/module-unittest.html}. 
+
+Other exercises will illustrate the use of the \texttt{doctest} system,
+since it provides complementary functionality.

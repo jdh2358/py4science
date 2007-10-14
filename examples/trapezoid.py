@@ -38,12 +38,16 @@ def trapzf(f,a,b,npts=100):
 
     Output:
       - The value of the trapezoid-rule approximation to the integral."""
-    
+
+    # Generate an equally spaced grid to sample the function at
     x = N.linspace(a,b,npts)
-    dx = x[1:] - x[:-1] # Could also use N.diff(x), this avoids a fn. call
+    # For an equispaced grid, the x spacing can just be read off from the first
+    # two points and factored out of the summation.
+    dx = x[1]-x[0]
+    # Sample the input function at all values of x
     y = N.array(map(f,x))
-    #return 0.5*(dx*(y[1:]+y[:-1])).sum()
-    return 0.5*N.dot(dx,(y[1:]+y[:-1]))
+    # Compute the trapezoid rule sum for the final result
+    return 0.5*dx*(y[1:]+y[:-1]).sum()
 
 if __name__ == '__main__':
     # Simple tests for trapezoid integrator, when this module is called as a

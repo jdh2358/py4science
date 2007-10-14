@@ -1,0 +1,34 @@
+
+\section{Newton's method}
+
+Consider the problem of solving for $t$ in\begin{equation}
+\int_{o}^{t}f(s)ds=u\end{equation}
+ where $f(s)$ is a monotonically increasing function of $s$ and
+$u>0$.
+
+This problem can be simply solved if seen as a root finding question.
+Let\begin{equation}
+g(t)=\int_{o}^{t}f(s)ds-u,\end{equation}
+then we just need to find the root for $g(t),$ which is guaranteed
+to be unique given the conditions above. 
+
+The SciPy library includes an optimization package that contains a
+Newton-Raphson solver called \texttt{scipy.optimize.newton.} This
+solver can optionally take a known derivative for the function whose
+roots are being sought, and in this case the derivative is simply
+\begin{equation}
+\frac{dg(t)}{dt}=f(t).\end{equation}
+
+
+For this exercise, implement the solution for the test function\[
+f(t)=t\sin^{2}(t),\]
+ using \[
+u=\frac{1}{4}.\]
+
+
+The listing~\ref{code:quad_newton_skel} contains a skeleton that
+includes for comparison the correct numerical value.
+
+\lstinputlisting[label=code:quad_newton_skel,caption={IGNORED}]{skel/quad_newton_skel.py}
+
+

@@ -1,13 +1,36 @@
-#LyX 1.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 221
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
 \textclass amsbook
 \begin_preamble
-\usepackage{ae,aecompl}
-\usepackage{hyperref}
-%\usepackage{html}
-\usepackage{color}
+% This gives us a better font in URL links (otherwise the default 
+% MonoSpace font is bitmapped, and it looks horrible in PDF)
+\usepackage{courier}
 
+% Special-purpose color definitions
+\usepackage{color}
 \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+
+% The hyperref package gives us a pdf with properly built 
+% internal navigation ('pdf bookmarks' for the table of contents,
+% internal cross-reference links, web links for URLs, etc.)
+
+% A few colors to replace the defaults for certain link types
+\definecolor{darkorange}{rgb}{.71,0.21,0.01}
+\definecolor{darkgreen}{rgb}{.12,.54,.11}
+
+\usepackage[pdftex,  % needed for pdflatex
+  breaklinks=true,  % so long urls are correctly broken across lines
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=darkorange,
+  citecolor=darkgreen,
+  ]{hyperref}
+
+% This helps prevent overly long lines that stretch beyond the margins
+\sloppy
+
 % Use and configure listings package for nicely formatted code
 \usepackage{listings}
 \lstset{
@@ -41,19 +64,22 @@
 \newcommand{\carg}[1]{\textit{#1}} % command argument
 \newcommand{\val}[1]{\textit{#1}}
 \newcommand{\rc}[1]{{\tt #1}}
+
+% no-op for a sequence that was created when importing the
+% mayavi chapter.  This prevents latex errors.
+\newcommand{\dbz}{ }
 \end_preamble
 \language english
 \inputencoding auto
 \fontscheme default
 \graphics default
 \paperfontsize default
-\spacing single 
+\spacing single
 \papersize letterpaper
-\paperpackage a4
-\use_geometry 1
-\use_amsmath 1
-\use_natbib 0
-\use_numerical_citations 0
+\use_geometry true
+\use_amsmath 2
+\cite_engine basic
+\use_bibtopic false
 \paperorientation portrait
 \leftmargin 1.15in
 \topmargin 1in
@@ -64,186 +90,187 @@
 \paragraph_separation indent
 \defskip medskip
 \quotes_language english
-\quotes_times 2
 \papercolumns 1
 \papersides 2
 \paperpagestyle fancy
+\tracking_changes false
+\output_changes true
+\end_header
 
-\layout Title
+\begin_body
 
-
+\begin_layout Title
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
-vspace{3cm}
-\end_inset 
+ 
+\backslash
+vspace{3cm} 
+\end_layout
 
+\end_inset
 
-\newline 
 Practical Scientific Computing
-\newline 
+\newline
 in Python
-\layout Author
+\end_layout
 
-
+\begin_layout Author
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
-vspace{1cm}
-\end_inset 
+ 
+\backslash
+vspace{1cm} 
+\end_layout
 
+\end_inset
 
-\newline 
 John D.
  Hunter
-\newline 
-Fernando P
+\newline
+Fernando Pérez
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
-'{e}
-\end_inset 
+ 
+\backslash
+vspace{1cm} 
+\end_layout
 
-rez
-\newline 
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\backslash 
-vspace{1cm}
-\end_inset 
+\end_inset
 
 
-\newline 
+\newline
 with contributions from
-\newline 
-
 \begin_inset ERT
-status Collapsed
+status collapsed
 
-\layout Standard
+\begin_layout Standard
 
-\backslash 
-vspace{1cm}
-\end_inset 
+ 
+\backslash
+vspace{1cm} 
+\end_layout
+
+\end_inset
 
 
-\newline 
+\newline
 Perry Greenfield
-\newline 
+\newline
 Travis E.
  Oliphant
-\newline 
+\newline
 Prabhu Ramachandran
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset LatexCommand \tableofcontents{}
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-\layout Standard
+\begin_layout Standard
 
+\end_layout
 
+\begin_layout Standard
 \begin_inset Include \input{why_python.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{intro_to_python.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{ipython_tut.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{numeric_tut.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{matplotlib_tut.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{scipy_tour.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{mayavi_tut.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{vtk_tut.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
 
-
+\begin_layout Standard
 \begin_inset Include \input{wrapping.lyx}
 preview false
 
-\end_inset 
+\end_inset
 
 
-\layout Standard
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \bibtex[plain]{python,python2,cyber}
+
+\end_inset
 
 
-\begin_inset LatexCommand \BibTeX[plain]{python,python2,cyber}
+\end_layout
 
-\end_inset 
-
-
-\the_end
+\end_body
+\end_document

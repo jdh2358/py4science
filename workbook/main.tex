@@ -1,0 +1,57 @@
+%% LyX 1.4.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{amsbook}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,letterpaper,tmargin=1in,bmargin=1in,lmargin=1.3in,rmargin=1.3in}
+\pagestyle{headings}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\IfFileExists{url.sty}{\usepackage{url}}
+                      {\newcommand{\url}{\texttt}}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+ \theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\input{preamble.tex}
+
+\usepackage{babel}
+\makeatother
+\begin{document}
+
+\title{ \vspace{3cm} Practical Scientific Computing\\
+in Python\\
+A Workbook}
+
+
+\author{ \vspace{1cm} John D. Hunter\\
+Fernando Pérez \vspace{1cm} }
+
+\maketitle
+\tableofcontents{}
+
+
+\chapter{Introduction}
+
+\input{intro.tex}
+
+
+\chapter{Simple non-numerical problems}
+
+\input{qsort.tex}
+
+\input{wordfreqs.tex}
+
+
+\chapter{Elementary Numerics}
+
+\input{wallis_pi.tex}
+
+\input{trapezoid.tex}
+
+\input{quad_newton.tex}
+\end{document}

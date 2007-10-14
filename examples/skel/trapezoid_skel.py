@@ -35,12 +35,7 @@ def trapzf(f,a,b,npts=100):
 
 if __name__ == '__main__':
     # Simple tests for trapezoid integrator, when this module is called as a
-    # script from the command line.  From ipython, run it via:
-    #
-    # run -e trapezoid
-    #
-    # so that ipython ignores the SystemExit exception automatically raised by
-    # the unittest module at the end.
+    # script from the command line.
 
     import unittest
     import numpy.testing as ntest

@@ -4,7 +4,7 @@ normal distributions by simulating waiting times from a radioactive
 source using the random number generator.  Verify the numerical
 results by plotting the analytical density functions from scipy.stats
 """
-import numpy
+import numpy as npy
 import scipy.stats
 from pylab import figure, show, close
 
@@ -18,14 +18,14 @@ uninse = uniform.rvs(N)          # the random variates
 
 # in each time interval, the probability of an emission 
 rate = 20.  # the emission rate in Hz
-dx = 0.001  # the sampling interval in seconds
-t = numpy.arange(N)*dx  # the time vector
+dt = 0.001  # the sampling interval in seconds
+t = npy.arange(N)*dt  # the time vector
 
 # the probability of an emission is proportionate to the rate and the interval
-emit_times = t[uninse < rate*dx]
+emit_times = t[uninse < rate*dt]
 
 # the difference in the emission times is the wait time
-wait_times = numpy.diff(emit_times)  
+wait_times = npy.diff(emit_times)  
 
 # plot the distribution of waiting times and the expected exponential
 # density function lambda exp( lambda wt) where lambda is the rate
@@ -37,7 +37,7 @@ wait_times = numpy.diff(emit_times)
 fig = figure()
 ax = fig.add_subplot(111)
 p, bins, patches = ax.hist(wait_times, 100, normed=True)
-l1, = ax.plot(bins, rate*numpy.exp(-rate * bins), lw=2, color='red')
+l1, = ax.plot(bins, rate*npy.exp(-rate * bins), lw=2, color='red')
 l2, = ax.plot(bins, scipy.stats.expon.pdf(bins, 0, 1./rate),
         lw=2, ls='--', color='green')
 ax.set_xlabel('waiting time')
@@ -53,7 +53,7 @@ ax.legend((patches[0], l1, l2), ('simulated', 'analytic', 'scipy.stats.expon'))
 # gamma distribution.  Use scipy.stats.gamma to compare the fits.
 # Hint: you can stride your emission times array to get every 2nd
 # emission
-wait_times2 = numpy.diff(emit_times[::2])
+wait_times2 = npy.diff(emit_times[::2])
 fig = figure()
 ax = fig.add_subplot(111)
 p, bins, patches = ax.hist(wait_times2, 100, normed=True)
@@ -79,8 +79,8 @@ ax.legend((patches[0], l1), ('simulated', 'scipy.stats.gamma'))
 # variance
 expon_mean, expon_var = scipy.stats.expon(0, 1./rate).stats()
 mu, var = 10*expon_mean, 10*expon_var
-sigma = numpy.sqrt(var)
-wait_times10 = numpy.diff(emit_times[::10])
+sigma = npy.sqrt(var)
+wait_times10 = npy.diff(emit_times[::10])
 fig = figure()
 ax = fig.add_subplot(111)
 p, bins, patches = ax.hist(wait_times10, 100, normed=True)

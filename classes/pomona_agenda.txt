@@ -1,0 +1,45 @@
+DAY 1:
+
+Introduction:
+
+  35 min : Scientific computing in python (standard overhead talk)
+
+  45 min: The core tools -- ipython, numpy, matplotlib and scipy.  (type along)
+
+Break: 15 min
+
+Exercises session 1:
+
+  45 min: Working with data files, web based resources, date handling,
+          CSV files, and record arrays.  Word counting exercise.
+          (urllib, csv, dateutils, matplotlib.mlab)
+
+  45 min: Numerical integration, trapz and Newton's quadrature (scipy.integrate)
+
+Lunch Break:  45 min
+
+Exercises session 2:
+
+  45 min: Linear algebra: Moire Glass patterns
+
+  45 min: Statisical distributions, random numbers, central limit theorem (scipy.stats)
+
+  45 min: Descriptive statistics and graphs: mean, variance, skew,
+          kurtosis, histograms, autocorrelation, power spectra,
+          spectrogram (scipy.stats, matplotlib.mlab and pylab)
+
+Break:  15 min
+
+Exercises session 3:
+
+  60 min: Interpolation, data modeling and optimization  (scipy.interpolate and scipy.optimize)
+
+  45 min: Using code from other languages (FORTRAN, C, C++) --
+          Presentation (pyrex, weave, f2py, ctypes)
+
+
+DAY 2:
+
+Exercise Session 4:
+
+  45 minutes: screen scraping - extracting data from web pages (BeautifulSoup)

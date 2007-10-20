@@ -202,3 +202,96 @@ The graph will look something like Figure~\ref{fig:stock_records}.
   since 2003}
 \end{figure}
 \par\end{center}
+
+
+\subsection{Loading and saving binary data}
+\label{sec:binary_data}
+
+ASCII is bloated and slow for working with large arrays, and so binary
+data should be used if performance is a consideration.  To save an
+array \texttt{X} in binary form, you can use the numpy
+\texttt{tostring} method
+
+\begin{lstlisting}
+In [16]: import numpy
+
+# create some random numbers
+In [17]: x = numpy.random.rand(5,2)
+
+In [19]: print x
+[[ 0.56331918  0.519582  ]
+ [ 0.22685429  0.18371135]
+ [ 0.19384767  0.27367054]
+ [ 0.35935445  0.95795884]
+ [ 0.37646642  0.14431089]]
+
+# save it to a data file in binary
+In [20]: x.tofile(file('myx.dat', 'wb'))
+
+# load it into a new array
+In [21]: y = numpy.fromfile(file('myx.dat', 'rb'))
+
+# the shape is not preserved, so we will have to reshape it
+In [22]: print y
+[ 0.56331918  0.519582    0.22685429  0.18371135  0.19384767
+0.27367054
+  0.35935445  0.95795884  0.37646642  0.14431089]
+
+In [23]: y.shape
+Out[23]: (10,)
+
+# restore the original shape
+In [24]: y.shape = 5, 2
+
+In [25]: print y
+[[ 0.56331918  0.519582  ]
+ [ 0.22685429  0.18371135]
+ [ 0.19384767  0.27367054]
+ [ 0.35935445  0.95795884]
+ [ 0.37646642  0.14431089]]
+\end{lstlisting}
+
+The advantage of numpy \texttt{tofile} and \texttt{fromfile} over
+ASCII data is that the data storage is compact and the read and write
+are very fast.  It is a bit of a pain that that meta ata like array
+datatype and shape are not stored.  In this format, just the raw binary
+numeric data is stored, so you will have to keep track of the data
+type and shape by other means.  This is a good solution if you need to
+port binary data files between different packages, but if you know you
+will always be working in python, you can use the python pickle
+function to preserve all metadata (pickle also works with all standard
+python data types, but has the disadvantage that other programs and
+applications cannot easily read it)
+
+\begin{lstlisting}
+# create a 6,3 array of random integers
+In [36]: x = (256*numpy.random.rand(6,3)).astype(numpy.int)
+
+In [37]: print x
+[[173  38   2]
+ [243 207 155]
+ [127  62 140]
+ [ 46  29  98]
+ [  0  46 156]
+ [ 20 177  36]]
+
+# use pickle to save the data to a file myint.dat
+In [38]: import cPickle
+
+In [39]: cPickle.dump(x, file('myint.dat', 'wb'))
+
+# load the data into a new array
+In [40]: y = cPickle.load(file('myint.dat', 'rb'))
+
+# the array type and share are preserved
+In [41]: print y
+[[173  38   2]
+ [243 207 155]
+ [127  62 140]
+ [ 46  29  98]
+ [  0  46 156]
+ [ 20 177  36]]
+\end{lstlisting}
+
+
+

@@ -36,10 +36,10 @@ X1 = XXX
 name =  'saddle'
 #sx, sy, angle = XXX
 
-#name = 'focus'
+#name = 'center'
 #sx, sy, angle = XXX
 
-#name = 'center'
+#name = 'stable focus'  # spiral
 #sx, sy, angle = XXX
 
 name= 'spiral'

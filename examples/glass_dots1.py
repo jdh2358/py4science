@@ -42,16 +42,13 @@ def myeig(M):
 X1 = matrix(npy.random.rand(2,2000))-0.5
 
 name =  'saddle'
-#sx, sy, angle = 1.05, 0.95, 0.
-
-#name = 'focus'
-#sx, sy, angle = 1.05, 0.95, 2.6
+sx, sy, angle = 1.05, 0.95, 0.
 
 #name = 'center'
 #sx, sy, angle = 1., 1., 2.5
 
-name= 'spiral'
-sx, sy, angle = 0.95, 0.95, 2.5
+#name= 'stable focus'  # spiral
+#sx, sy, angle = 0.95, 0.95, 2.5
 
 theta = angle * pi/180.
 
@@ -72,7 +69,7 @@ print 'numpy eigenvalues', vals
 avals = myeig(M)
 print 'analytic eigenvalues', avals
 
-# transform X by the matrix
+# transform X1 by the matrix
 X2 = M*X1
 
 # plot the original x,y as green dots and the transformed x, y as red

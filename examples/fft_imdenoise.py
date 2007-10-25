@@ -14,16 +14,18 @@ def mag_phase(F):
 
 def plot_spectrum(F, amplify=1000):
     """Normalise, amplify and plot an amplitude spectrum."""
-    M = mag_phase(F)[0]
+    M, Phase = mag_phase(F)
     M *= amplify/M.max()
     M[M > 1] = 1
-    
+
+    print M.shape, M.dtype
     P.imshow(M, P.cm.Blues)
 
 try:
     # Read in original image, convert to floating point for further
-    # manipulation
-    im = S.misc.pilutil.imread('data/moonlanding.jpg').astype(float)
+    # manipulation; imread returns a MxNx4 RGBA image.  Since the
+    # image is grayscale, just extrac the 1st channel
+    im = P.imread('data/moonlanding.png').astype(float)[:,:,0]
 except:
     print "Could not open image."
     sys.exit(-1)

@@ -67,6 +67,6 @@ for g, ticker in data:
     print '%s: %1.1f%%'%(ticker, 100*g)
 
 
-p.savefig('fig/stock_records.png', dpi=100)
-p.savefig('fig/stock_records.eps')
+p.savefig('stock_records.png', dpi=100)
+p.savefig('stock_records.eps')
 p.show()

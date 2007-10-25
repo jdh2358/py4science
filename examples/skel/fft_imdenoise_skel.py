@@ -31,8 +31,10 @@ def plot_spectrum(F, amplify=1000):
 # 'main' script
 
 
-im = # XXX make an image array from the file 'moonlanding.jpg', using the
-     # imread() function from scipy.misc.pilutil.
+im = # XXX make an image array from the file 'moonlanding.png', using the
+     # pylab imread() function.  You will need to just extract the red
+     # channel from the MxNx4 RGBA matrix to represent the grayscale
+     # intensities
 
 F = # Compute the 2d FFT of the input image.  Look for a 2-d FFT in N.dft
 

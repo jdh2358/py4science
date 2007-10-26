@@ -37,7 +37,7 @@ def fetch_stock(ticker):
     r.sort()
     return r
 
-tickers = 'INTC', 'MSFT', 'YHOO', 'GOOG', 'GE', 'WMT', 'AAPL'
+tickers = 'SPY', 'QQQQ', 'INTC', 'MSFT', 'YHOO', 'GOOG', 'GE', 'WMT', 'AAPL'
 
 # we want to compute returns since 2003, so define the start date
 startdate = datetime.datetime(2003,1,1)

@@ -73,4 +73,6 @@ P.subplot(223)
 P.title('Reconstructed Image')
 P.imshow(im_new, P.cm.gray)
 
+P.savefig('fft_imdenoise.png', dpi=150)
+P.savefig('fft_imdenoise.eps')
 P.show()

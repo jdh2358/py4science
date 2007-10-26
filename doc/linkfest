@@ -62,9 +62,9 @@
 
     ipython:    svn co http://ipython.scipy.org/svn/ipython/ipython/trunk ipython
 
-    matplotlib: svn co https://svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib matplotlib 
+    matplotlib:  svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib 
 
-    py4science: svn co https://svn.sourceforge.net/svnroot/matplotlib/trunk/py4science py4science
+    py4science: svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/py4science
 
     
     Important commands:

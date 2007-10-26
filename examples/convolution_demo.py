@@ -71,4 +71,6 @@ ax3.set_xlabel('time (s)')
 ax2.plot(t, yi, label='fft')
 ax2.legend(loc='best')
 
+fig.savefig('convolution_demo.png', dpi=150)
+fig.savefig('convolution_demo.eps')
 show()

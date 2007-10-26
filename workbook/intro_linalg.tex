@@ -1,0 +1,49 @@
+Like matlab, numpy and scipy have support for fast linear algebra
+built upon the highly optimized LAPACK, BLAS and ATLAS fortran linear
+algebra libraries.  Unlike Matlab, in which everything is a matrix or
+vector, and the '*' operator always means matrix multiple, the default
+object in numpy is an \texttt{array}, and the '*' operator on arrays means
+element-wise multiplication.  
+
+Instead, numpy provides a \texttt{matrix} class if you want to do
+standard matrix-matrix multiplication with the '*' operator, or the
+\texttt{dot} function if you want to do matrix multiplies with plain
+arrays.  The basic linear algebra functionality is found in
+\texttt{numpy.linalg}
+
+\begin{lstlisting}
+In [1]: import numpy as npy
+In [2]: import numpy.linalg as linalg
+
+# X and Y are arrays
+In [3]: X = npy.random.rand(3,3)
+In [4]: Y = npy.random.rand(3,3)
+
+# * operator is element wise multiplication, not matrix matrix
+In [5]: print X*Y
+[[ 0.00973215  0.18086148  0.05539387]
+ [ 0.00817516  0.63354021  0.2017993 ]
+ [ 0.34287698  0.25788149  0.15508982]]
+
+# the dot function will use optimized LAPACK to do matrix-matix
+# multiply
+In [6]: print npy.dot(X, Y)
+[[ 0.10670678  0.68340331  0.39236388]
+ [ 0.27840642  1.14561885  0.62192324]
+ [ 0.48192134  1.32314856  0.51188578]]
+
+# the matrix class will create matrix objects that support matrix
+# multiplication with *
+In [7]: Xm = npy.matrix(X)
+In [8]: Ym = npy.matrix(Y)
+In [9]: print Xm*Ym
+[[ 0.10670678  0.68340331  0.39236388]
+ [ 0.27840642  1.14561885  0.62192324]
+ [ 0.48192134  1.32314856  0.51188578]]
+
+# the linalg module provides functions to compute eigenvalues,
+# determinants, etc.  See help(linalg) for more info
+In [10]: print linalg.eigvals(X)
+[ 1.46131600+0.j          0.46329211+0.16501143j  0.46329211-0.16501143j]
+
+\end{lstlisting}

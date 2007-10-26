@@ -43,6 +43,6 @@ ax.plot(t, y1+y2+y3, color='black', lw=2, label='sum')
 ax.set_ylabel('output')
 #ax.legend(loc='best')
 
-fig.savefig('../fig/convolve_inputs.png', dpi=150)
-fig.savefig('../fig/convolve_inputs.eps')
+fig.savefig('../fig/convolve_explain.png', dpi=150)
+fig.savefig('../fig/convolve_explain.eps')
 show()

@@ -76,21 +76,27 @@ class Descriptives:
         c = C()
         N = 5
         fig = c.fig = figfunc()
+	fig.subplots_adjust(hspace=0.3)
         ax = c.ax1 = fig.add_subplot(N,1,1)
         c.plot = ax.plot(data, fmt)
+	ax.set_ylabel('data')
 
         ax = c.ax2 = fig.add_subplot(N,1,2)
         c.hist = ax.hist(data, bins)
-
+	ax.set_ylabel('hist')
 
         ax = c.ax3 = fig.add_subplot(N,1,3)
-        c.acorr = ax.acorr(data, detrend=detrend, usevlines=True, maxlags=maxlags)
+        c.acorr = ax.acorr(data, detrend=detrend, usevlines=True, 
+	  maxlags=maxlags, normed=True)
+	ax.set_ylabel('acorr')
 
         ax = c.ax4 = fig.add_subplot(N,1,4)
         c.psd = ax.psd(data, Fs=Fs, detrend=detrend)
+	ax.set_ylabel('psd')
 
         ax = c.ax5 = fig.add_subplot(N,1,5)
         c.specgtram = ax.specgram(data, Fs=Fs, detrend=detrend)
+	ax.set_ylabel('specgram')
         return c
 
 
@@ -111,6 +117,9 @@ if __name__=='__main__':
 
     desc = Descriptives(data)
     print desc
-    c = desc.plots(pylab.figure, Fs=12, fmt='-o')
+    c = desc.plots(pylab.figure, Fs=12, fmt='-')
     c.ax1.set_title(fname)
+
+    c.fig.savefig('stats_descriptives.png', dpi=150)    
+    c.fig.savefig('stats_descriptives.eps')    
     pylab.show()

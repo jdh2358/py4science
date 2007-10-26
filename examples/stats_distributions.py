@@ -35,16 +35,16 @@ wait_times = numpy.diff(emit_times)
 # 1/lambda.  Plot all three on the same graph and make a legend.
 # Decorate your graphs with an xlabel, ylabel and title
 fig = figure()
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(311)
 p, bins, patches = ax.hist(wait_times, 100, normed=True)
 l1, = ax.plot(bins, rate*numpy.exp(-rate * bins), lw=2, color='red')
 l2, = ax.plot(bins, scipy.stats.expon.pdf(bins, 0, 1./rate),
         lw=2, ls='--', color='green')
-ax.set_xlabel('waiting time')
-ax.set_ylabel('PDF')
-ax.set_title('waiting time density of a %dHz Poisson emitter'%rate)
-ax.legend((patches[0], l1, l2), ('simulated', 'analytic', 'scipy.stats.expon'))
 
+ax.set_ylabel('PDF')
+ax.set_title('waiting time densities of a %dHz Poisson emitter'%rate)
+ax.text(0.05, 0.9, 'one interval', transform=ax.transAxes)
+ax.legend((patches[0], l1, l2), ('simulated', 'analytic', 'scipy.stats.expon'))
 
 
 # plot the distribution of waiting times for two events; the
@@ -54,16 +54,14 @@ ax.legend((patches[0], l1, l2), ('simulated', 'analytic', 'scipy.stats.expon'))
 # Hint: you can stride your emission times array to get every 2nd
 # emission
 wait_times2 = numpy.diff(emit_times[::2])
-fig = figure()
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(312)
 p, bins, patches = ax.hist(wait_times2, 100, normed=True)
 l1, = ax.plot(bins, scipy.stats.gamma.pdf(bins, 2, 0, 1./rate),
         lw=2, ls='-', color='red')
-ax.set_xlabel('2 event waiting time 2 events')
-ax.set_ylabel('PDF')
-ax.set_title('waiting time density of a %dHz Poisson emitter'%rate)
-ax.legend((patches[0], l1), ('simulated', 'scipy.stats.gamma'))
 
+ax.set_ylabel('PDF')
+ax.text(0.05, 0.9, 'two intervals', transform=ax.transAxes)
+ax.legend((patches[0], l1), ('simulated', 'scipy.stats.gamma'))
 
 # plot the distribution of waiting times for 10 events; again the
 # distribution will be a 10th order gamma distribution so plot that
@@ -81,19 +79,20 @@ expon_mean, expon_var = scipy.stats.expon(0, 1./rate).stats()
 mu, var = 10*expon_mean, 10*expon_var
 sigma = numpy.sqrt(var)
 wait_times10 = numpy.diff(emit_times[::10])
-fig = figure()
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(313)
 p, bins, patches = ax.hist(wait_times10, 100, normed=True)
 l1, = ax.plot(bins, scipy.stats.gamma.pdf(bins, 10, 0, 1./rate),
         lw=2, ls='-', color='red')
 l2, = ax.plot(bins, scipy.stats.norm.pdf(bins, mu, sigma),
         lw=2, ls='--', color='green')
 
-ax.set_xlabel('waiting time 10 events')
+ax.set_xlabel('waiting times')
 ax.set_ylabel('PDF')
-ax.set_title('10 event waiting time density of a %dHz Poisson emitter'%rate)
+ax.text(0.1, 0.9, 'ten intervals', transform=ax.transAxes)
 ax.legend((patches[0], l1, l2), ('simulated', 'scipy.stats.gamma', 'normal approx'))
 
+fig.savefig('stats_distributions.png', dpi=150)
+fig.savefig('stats_distributions.eps')
 
 
 show()

@@ -101,7 +101,7 @@ if __name__=='__main__':
     # will have to do some extra parsing
     data = []
     fname = 'data/nm560.dat'  # tree rings in New Mexico 837-1987
-    #fname = 'data/hsales.dat'  # home sales
+    fname = 'data/hsales.dat'  # home sales
     for line in file(fname):
         line = line.strip()
         if not line: continue
@@ -109,8 +109,8 @@ if __name__=='__main__':
         val = vals[0]
         data.append(float(val))
 
-    #desc = Descriptives(data)
-    #print desc
-    #c = desc.plots(pylab.figure, Fs=12, fmt='-o')
-    #c.ax1.set_title(fname)
-    #pylab.show()
+    desc = Descriptives(data)
+    print desc
+    c = desc.plots(pylab.figure, Fs=12, fmt='-o')
+    c.ax1.set_title(fname)
+    pylab.show()

@@ -40,7 +40,7 @@ for(int i=0;i<nrow;++i)
 def main():
     zz = N.zeros([10,10])
     print 'tr(zz)=',trace(zz)
-    oo = N.ones([4,4],N.Float)
+    oo = N.ones([4,4],N.float)
     print 'tr(oo)=',trace(oo)
     aa = rand(128,128)
     print 'tr(aa)=',trace(aa)

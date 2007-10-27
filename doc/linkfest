@@ -76,3 +76,6 @@
         svn diff : see the changes since the last commit - useful for
                    making patches
 
+= mailing list =
+
+  py4science: http://code.astraw.com/cgi-bin/mailman/listinfo/py4science

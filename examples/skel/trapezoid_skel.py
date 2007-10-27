@@ -14,6 +14,7 @@ def trapz(x, y):
       y[i] = f(x[i]) for some function f to be integrated.
 
     Minimally modified from matplotlib.mlab."""
+
     raise NotImplementedError
 
 
@@ -31,6 +32,11 @@ def trapzf(f,a,b,npts=100):
 
     Output:
       - The value of the trapezoid-rule approximation to the integral."""
+
+    # you will need to apply the function f to easch element of the
+    # vector x.  What are several ways to do this?  Can you profile
+    # them to see what differences in timings result for long vectors
+    # x?
     raise NotImplementedError
 
 if __name__ == '__main__':

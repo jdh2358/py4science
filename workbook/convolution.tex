@@ -4,7 +4,7 @@
 The output of a linear system is given by the convolution of its
 impulse response function with the input.  Mathematically
 \[
-  y(t) = \int_0^\t x(\tau)r(t-\tau)d\tau
+  y(t) = \int_0^t x(\tau)r(t-\tau)d\tau
 \]
 This fundamental relationship lies at the heart of linear systems
 analysis.  It is used to model the dynamics of calcium buffers in
@@ -85,7 +85,7 @@ Thus, we can get deeper insight into the effects of impulse response
 function $r$ by studying the amplitude and phase spectrum of its
 transform $R$.  In the example below, however, we simply use the
 multiplication property to perform the same convolution in Fourier
-space to confirm the numerical result from \textt{numpy.convolve}.
+space to confirm the numerical result from \texttt{numpy.convolve}.
 
 \lstinputlisting[label=code:convolution_demo,caption={IGNORED}]{skel/convolution_demo_skel.py}
 

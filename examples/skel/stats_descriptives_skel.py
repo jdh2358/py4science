@@ -56,14 +56,27 @@ class Descriptives:
 
           maxlags : max number of lags for the autocorr
 
-          detrend : a function used to detrend the data for the correlation and spectral functions
+          detrend : a function used to detrend the data for the
+          correlation and spectral functions
 
           fmt     : the plot format string
         """
         data = self.samples
 
-        class Bunch: pass
-        c = Bunch()
+	# Here we use a rather strange idiom: we create an empty do
+        # nothing class C and simply attach attributes to it for
+        # return value (which we carefully describe in the docstring).
+        # The alternative is either to return a tuple a,b,c,d or a
+        # dictionary {'a':someval, 'b':someotherval} but both of these
+        # methods have problems.  If you return a tuple, and later
+        # want to return something new, you have to change all the
+        # code that calls this function.  Dictionaries work fine, but
+        # I find the client code harder to use d['a'] vesus d.a.  The
+        # final alternative, which is most suitable for production
+        # code, is to define a custom class to store (and pretty
+        # print) your return object
+        class C: pass
+        c = C()
         N = 5
         fig = c.fig = figfunc()
         ax = c.ax1 = fig.add_subplot(N,1,1)

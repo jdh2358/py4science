@@ -40,7 +40,7 @@ x = XXX   # gaussian white noise
 # evaluate the impulse response function, and numerically convolve it
 # with the input x
 r = XXX # evaluate the impulse function
-y = XXX # convultion of x with r
+y = XXX # convolution of x with r
 y = XXX # extract just the length Nt part
 
 # compute y by applying F^-1[F(x) * F(r)].  The fft assumes the signal

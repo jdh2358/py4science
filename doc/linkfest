@@ -64,7 +64,7 @@
 
     matplotlib:  svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/matplotlib 
 
-    py4science workbook: svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/py4science/workbook
+    py4science: svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/py4science
 
     Important commands:
 

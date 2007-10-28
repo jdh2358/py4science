@@ -33,5 +33,7 @@ if __name__ == '__main__':
             rseq = range(10)
             random.shuffle(rseq)
             sseq = qsort(rseq)
+            print tseq
+            print sseq
             self.assertEqual(tseq,sseq)
     main()

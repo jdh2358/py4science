@@ -48,12 +48,12 @@ y = XXX # extract just the length Nt part
 # to the length of r + x do avoid circular convolution artifacts
 R = XXX  # the zero padded FFT of r
 X = XXX  # the zero padded FFT of x
-Y = XXX  # the product of R and S 
+Y = XXX  # the product of R and X 
 
 # now inverse fft and extract the real part, just the part up to
 # len(x)
 yi = XXX
 
-# plot t vs x, t vs y and yi, and t vs r in three subplots
+# plot x vs t, y and yi vs t, and r vs t in three subplots
 XXX
 show()

@@ -1,0 +1,52 @@
+How to submit a patch for the py4science course materials
+
+
+1) get an svn checkout of the py4science dir.  
+   
+    > svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/py4science
+
+  If you already have a checkout (eg on the machine we worked on in
+  the classroom), you just need to do
+
+  > svn up
+
+  If you are a windows user, you may want to checkout TortoiseSVN at
+  http://tortoisesvn.tigris.org.
+
+2) Find something to fix or contribute.  You can fix a typo in the
+   workbook, some code in the examples or skeletons, add your own
+   examples, write better explanations or comments in the workbbok,
+   examples, or skeletons, or even fix this document you are reading
+   now, which lives in doc/py4science.patches in the svn repository.
+   Make the changes in your local repository.
+
+3) If you fix something, test it.  If you mkodify an example, make
+   sure it still runs and generates the desired output and figures.
+   If you modify the TeX source of the workbook, make sure you can
+   compile it with pdflatex and view the output main.pdf.  Once you
+   patch is accepted, it will affect py4science users worldwide, so
+   try and get it right!
+
+4) Do an svn diff to create a patch file.  Try and make the patch name
+   meaningful, eg if you are creating a patch for the FFT denoising
+   explanation in the workbook, do something like
+
+   > svn diff > fft_denoise.patch
+
+5) Send the patch to the py4science mailing list by mailing
+   py4science@code.astraw.com.  If you are not already subscribed, you
+   can do so at
+
+   http://code.astraw.com/cgi-bin/mailman/listinfo/py4science    
+
+   (after you subscribe, you will get a confirmation email and you
+   will need to click on the confirm link).  When sending your patch,
+   send a brief explanation of the problemand solution with a helpful
+   subject header, and *attach* your patch rather than paste it into
+   the email browser.  If you don't get any response on your patch
+   (eg, "Thanks, I've committed this to svn revision 4096" or "I don't
+   think this patch is a good idea because blah blah") then email
+   again in a few days to remind us to deal with it.
+
+6) Congratulations, you are now open source contributors.  Don't
+   forget to pad your resume as needed.

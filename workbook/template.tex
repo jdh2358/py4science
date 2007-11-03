@@ -1,0 +1,37 @@
+\section{Your Example}
+\label{sec:your_example}
+
+This is your introduction.  Refer to python packages like
+\texttt{numpy} and \texttt{matplotlib}, as well as functions like
+\texttt{n.arange}, with ``texttt''.
+
+Refer to figures like Figure~\ref{fig:your_figure}.  Your example code
+should be included like.  
+
+\lstinputlisting[label=code:your_example,caption={IGNORED}]{examples/your_example.py}
+
+and your figures should be saved in the \textff{fig} subdirectory with
+a PNG and EPS version. You should include it like
+
+\begin{figure}
+\begin{centering}\includegraphics[width=4in]{fig/your_example}\par\end{centering}
+
+\caption{\label{fig:your_example}Your figure caption here}
+\end{figure}
+
+If you want to include python code inline, including ipython sessions use the following environment.  I sometimes decorate ipython sessions with comments.
+
+\begin{listing}
+# use namespaces!
+In [1]: import numpy as n
+
+In [2]: x = n.random.rand(10)
+
+In [3]: x**2
+Out[3]: 
+array([ 0.08694464,  0.99225328,  0.05017794,  0.44827437,  0.25938905,
+        0.10617795,  0.27397649,  0.33391573,  0.27975237,  0.06808894])
+
+In [4]: 
+
+\end{listing}

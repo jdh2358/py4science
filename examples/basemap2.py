@@ -7,9 +7,9 @@ fig = pylab.figure()
 fig.add_axes([0.1,0.1,0.8,0.8],axisbg='aqua')
 # create map by specifying width and height in km.
 resolution = 'l'
+projection = 'lcc'
 lon_0 = -50
 lat_0 = 60
-projection = 'lcc'
 width = 12000000
 height = 0.75*width
 m = Basemap(lon_0=lon_0,lat_0=lat_0,\

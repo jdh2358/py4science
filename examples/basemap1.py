@@ -7,12 +7,12 @@ fig = pylab.figure()
 fig.add_axes([0.1,0.1,0.8,0.8],axisbg='aqua')
 # create map by specifying lat/lon values at corners.
 resolution = 'l'
-lon_0 = -50
-lat_0 = 60
 projection = 'lcc'
+lat_0 = 60
+lon_0 = -50
 llcrnrlat, llcrnrlon = 8, -92
 urcrnrlat, urcrnrlon  = 39, 63
-m = Basemap(lon_0=lon_0,lat_0=lat_0,\
+m = Basemap(lat_0=lat_0,lon_0=lon_0,\
             llcrnrlat=llcrnrlat,llcrnrlon=llcrnrlon,\
             urcrnrlat=urcrnrlat,urcrnrlon=urcrnrlon,\
             resolution=resolution,projection=projection)

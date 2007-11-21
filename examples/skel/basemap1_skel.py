@@ -8,9 +8,9 @@ fig.add_axes([0.1,0.1,0.8,0.8],axisbg='aqua')
 # create map by specifying lat/lon values at corners.
 projection = 'lcc' # map projection 
 resolution = XX # resolution of boundaries ('c','l','i',or 'h')
-lon_0=XX # longitude of origin of map projection domain.
+lon_0=XX # longitude of origin of map projection domain (degrees).
 lat_0=XX # standard parallel/latitude of origin of map projection domain.
-llcrnrlat, llcrnrlon = XX, XX # lat/lon of lower left corner of map
+llcrnrlat, llcrnrlon = XX, XX # lat/lon of lower left corner of map (degrees)
 urcrnrlat, urcrnrlon  = XX, XX # lat/lon of upper right corner of map
 m = Basemap(lon_0=lon_0,lat_0=lat_0,\
             llcrnrlat=llcrnrlat,llcrnrlon=llcrnrlon,\

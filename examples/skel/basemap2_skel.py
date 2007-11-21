@@ -8,7 +8,7 @@ fig.add_axes([0.1,0.1,0.8,0.8],axisbg='aqua')
 # create map by specifying width and height in km.
 projection = 'lcc' # map projection 
 resolution = XX # resolution of boundaries ('c','l','i',or 'h')
-lon_0=XX # longitude of origin of map projection domain.
+lon_0=XX # longitude of origin of map projection domain (degrees).
 lat_0=XX # standard parallel/latitude of origin of map projection domain.
 width = XX # width of map projecton domain in km.
 height = XX # height of map projection domain in km.
@@ -23,5 +23,4 @@ m.fillcontinents(color='coral')
 m.drawcountries()
 m.drawstates()
 pylab.title('map region specified using width and height')
-pylab.savefig('basemap2.eps')
-pylab.savefig('basemap2.png')
+pylab.show()

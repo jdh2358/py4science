@@ -1,15 +1,16 @@
 import pylab, numpy
-from matplotlib.toolkits.basemap import Basemap
+from matplotlib.toolkits.basemap import Basemap, supported_projections
 
 # create figure.
 # background color will be used for 'wet' areas.
 fig = pylab.figure()
 fig.add_axes([0.1,0.1,0.8,0.8],axisbg='aqua')
 # create map by specifying width and height in km.
-projection = 'lcc' # map projection 
+projection = XX # map projection  ('lcc','stere','laea','aea' etc)
+                # 'print supported_projections' gives a list
 resolution = XX # resolution of boundaries ('c','l','i',or 'h')
-lon_0=XX # longitude of origin of map projection domain (degrees).
-lat_0=XX # standard parallel/latitude of origin of map projection domain.
+lon_0= XX # longitude of origin of map projection domain (degrees).
+lat_0= XX # standard parallel/latitude of origin of map projection domain.
 width = XX # width of map projecton domain in km.
 height = XX # height of map projection domain in km.
 m = Basemap(lon_0=lon_0,lat_0=lat_0,\

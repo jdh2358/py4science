@@ -16,7 +16,12 @@ lon_0 = lons.mean()
 lat_0 = lats.mean()
 # set colormap
 cmap = pylab.cm.gist_ncar
+# set so masked values in an image will be black
+# (i.e. continents will be painted this color)
+cmap.set_bad('k')
 # create Basemap instance for mollweide projection.
+# coastlines not used, so resolution set to None to skip
+# continent processing (this speeds things up a bit)
 m = Basemap(projection='moll',lon_0=lon_0,lat_0=lat_0,resolution='l')
 # compute map projection coordinates of grid.
 x, y = m(*numpy.meshgrid(lons, lats))
@@ -25,9 +30,7 @@ x, y = m(*numpy.meshgrid(lons, lats))
 #CS = m.contourf(x,y,sst,20,cmap=cmap)
 # plot with pcolor
 im = m.pcolormesh(x,y,sst,shading='flat',cmap=cmap)
-# fill the continents (data is not defined there).
-m.fillcontinents(color='k',lake_color='k')
-# draw parallels and meridians.
+# draw parallels and meridians, but don't bother labelling them.
 m.drawparallels(numpy.arange(-90.,120.,30.))
 m.drawmeridians(numpy.arange(0.,420.,60.))
 # draw line around map projection limb.

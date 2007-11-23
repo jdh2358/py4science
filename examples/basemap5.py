@@ -22,12 +22,9 @@ cmap.set_bad('k')
 # create Basemap instance for mollweide projection.
 # coastlines not used, so resolution set to None to skip
 # continent processing (this speeds things up a bit)
-m = Basemap(projection='moll',lon_0=lon_0,lat_0=lat_0,resolution='l')
+m = Basemap(projection='moll',lon_0=lon_0,lat_0=lat_0,resolution=None)
 # compute map projection coordinates of grid.
 x, y = m(*numpy.meshgrid(lons, lats))
-# plot with contour
-#CS = m.contour(x,y,sst,20,linewidths=0.5,colors='k')
-#CS = m.contourf(x,y,sst,20,cmap=cmap)
 # plot with pcolor
 im = m.pcolormesh(x,y,sst,shading='flat',cmap=cmap)
 # draw parallels and meridians, but don't bother labelling them.

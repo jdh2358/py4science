@@ -12,7 +12,7 @@ JW  - Jeff Whitaker
 Day 1 (Friday December 7)
 =========================
 
-830-900 Installation
+830-900 Installation and configuration (optional)
 This half hour will be spent helping with installation issues, before the
 real workshop begins.  If you've already set things up on your system
 (meaning you have ipython, numpy, matplotlib and scipy installed and
@@ -21,10 +21,15 @@ running), feel free to skip this.
 900-905 Introduction 
 Official start of the workshop, introduce instructors.
 
-905-945 FP: Python for scientific computing
+905-945 JDH: Python for scientific computing
 A high-level overview of the topic of Python in a scientific context.
 
-950-1045 JDH: Workflow.
+950-1045 FP: Workflow, guided by a simple example: trapezoid integration.
+
+This section will be used to illustrate basic workflow for students, by having
+them 'type along' a very simple exercise, trapezoid rule integration.  We'll
+discuss the basics of numpy arrays and will solve the trapezoid integration
+exercise together.
 
 Editor: (X)Emacs, Vi(m), etc.
 
@@ -41,96 +46,104 @@ Getting help:
   - The open source process: mailing lists, wikis, svn.  Python
   cookbook. Participate!
 
-
 Basic setup:
   - ipython
   - matplotlib (latex, etc).
   - Modules: import/reload, PYTHONPATH.
 
+ToDo: Add numerical error measure of trapezoid rule.
+
+ToDo Add in workflow comparison with scipy's integration. compare timing and
+    eror.
 
 1045:1100 --- Coffee break ---
 
 
-1100:1215 FP: Introductory examples.
+1100:1145 FP: Introductory examples.
 
-* Qsort: lists, recursion.
+We'll have two exercises, so students who finish the first one early don't get
+bored and can do a second one.
 
-* Define a simple function: Wallis' product for pi.  Illustrates arbitrary
-size integers.
+FFTs: 2-d image denoising via FFT.
 
-* Define a trapezoid rule integrator: function objects, arrays.
-
-1215:1315 --- Lunch Break ---
-
-1315:1400 JDH: Basic numpy/pylab
-
-* Record arrays
-
-* Timeseries
-
-1400:1430 FP: Numerical integration and root finding: Find t such that
+Numerical integration and root finding: Find t such that
 
  \int_0^t{ f(s) ds} = u
 
 for a known, monotonically increasing f(s) and a fixed u.
 
+1145:12:30 --- Lunch Break ---
 
-1430:1500 FP: Univariate polynomials, root finding: poly1d objects,
-convolutions, plotting.
+1300:1400 JDH: Basic numpy/pylab
 
-1500:1515 --- Coffee break ---
+* Glass2 demo: linear algebra, event handling in interactive plots.
+* Glass1 exercise: simplified version of the above as an exercise.
+* ODEs - Lotka Volterra equations.
 
-1515:1700: JDH/FP - Optional material (there's a Christmas party)
+1400:1500 JW, Basemap: geographical datasets.
 
-* Word frequencies: use of dictionaries and text processing.
+1500 --- End of main work for Friday ---
 
-* Getbibtex: fetching bibliographic information from the net (networking,
-  regular expressions, command-line scripting).
+1500:1700: Optional material (there's a Christmas party)
 
-* Beautiful soup: screen-scraping HTML for data extraction.
-
-* Possible 3d demos (not user exercises) using VPython and VTK/MayaVi.
+Web-based data sources, tabular data and record arrays, illustrated with Yahoo
+Finance scraping, or PyDAP/OpenDAP.
 
 
 Day 2 (Saturday December 8)
 ===========================
 
-900:945 JDH: Data fitting/smoothing: least squares, cubic splines, polynomial
-fitting.  Basic linear algebra.
+900:930 FP: Traits, Mayavi2 demo.  Automatic GUI generation, VTK library, the
+MayaVi visualization application.  This is a demo of capabilities, not an
+exercise.
 
-945:1030 FP: FFTs: 2-d image denoising via FFT.
+930:1030 FP - Lightweight tools for low-level code reuse
+
+f2py: Fortran code wrapping exercise.
+weave: C/C++ inlining exercise.
 
 1030:1045 --- Coffee break ---
 
-1045:1130 JDH: Logistic map
+1045:1200 JDH - Other tools for C/C++ code reuse, demos/slides.
 
-1130:1200 FP: Bessel functions: special functions library, array manipulations
-to check recursion relation.
-
+* ctypes: easy access to dynamically linked libraries.
+* pyrex: blend of python/C for automatic generation of native code.
+* SWIG: automatic wrapping of C/C++ libraries.
+* Boost.Python: automatic wrapping of C++ libraries with template support.
+* A tour of scipy's code base, which uses several of these techniques.
+ 
 1200:1300 --- Lunch break ---
 
-1300:1345 JDH: Statistics & distributions
+1300:1500 Menu of options:
 
-1345:1445 FP:
+* Data fitting/smoothing: least squares, cubic splines, polynomial fitting.
+Basic linear algebra (30 min).
 
-* Montecarlo integration to compute pi.
+* Bessel functions: special functions library, array manipulations to check
+recursion relation (30 min).
 
-* Speed: weave.blitz, weave.inline.
+* Descriptive statistics, statistical distributions (1 hr).
 
-1445:1500 Wrapup, discussion, questions, coffee.
+* SVD/eigenfaces (1 hr).
 
+* Logistic map (1 hr).
+
+* Sage intro/demo (20-30 min).
+
+* Beautiful soup: screen-scraping HTML for data extraction (30 min).
+
+* Word frequencies: use of dictionaries and text processing (20 min).
+
+* Prime numbers: the Sieve of Erathostenes.  Illustrates lists and sets (30
+  min).
+  
+* Wallis' pi: arbitrary precision integers (30 min).
 
 
 Unused examples and exercises, extra ideas
 ==========================================
 
-* Prime numbers: the Sieve of Erathostenes.  Illustrates lists and sets.
-
 * Visual (VPython): Show some examples, explain.  Target shooting exercise.
-
-* Eigenfaces problem, part 1.
-
-* Eigenfaces problem, part 2.
 
 * One-dimensional FFT - Bode plot.
 

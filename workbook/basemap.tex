@@ -96,10 +96,16 @@ Running this script should produce a plot that looks like Figure 3.
 One of the most common uses of Basemap is to visualize earth science
 data, such as output from climate models. These data often come on
 latitude/longitude grids. One common data format for storing such
-grids is NetCDF. Basemap includes a NetCDF file reader (written in
-pure python by Roberto D'Almeida). There are python packages available
-for reading just about every other scientific data format imaginable,
-including HDF, GRIB, FITS and many others. Following is an example
+grids is NetCDF.  Basemap includes a NetCDF file reader (written in
+pure python by Roberto D'Almeida). 
+You can also access remote datasets over the web using the OPeNDAP
+protocol - just give the NetCDFFile function a URL instead of a local file name
+and Roberto's pydap module (\texttt{http://pydap.org}) will be used.
+The pydap client is included in Basemap.
+If the PyNIO module (\texttt{http://www.pyngl.ucar.edu/Nio.shtml}) is installed, the 
+NetCDFFile function can also be used to open the formats that 
+PyNIO supports, like GRIB and HDF.
+Following is an example
 of how to read sea-surface temperature data from a NetCDF file and
 plot it on a global mollweide projection.
 

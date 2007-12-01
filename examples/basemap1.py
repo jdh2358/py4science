@@ -2,9 +2,7 @@ import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap
 
 # create figure.
-# background color will be used for 'wet' areas.
 fig = pylab.figure()
-fig.add_axes([0.1,0.1,0.8,0.8],axisbg='aqua')
 # create map by specifying lat/lon values at corners.
 resolution = 'l'
 projection = 'lcc'
@@ -18,8 +16,10 @@ m = Basemap(lat_0=lat_0,lon_0=lon_0,\
             resolution=resolution,projection=projection)
 # draw coastlines. Make liness a little thinner than default.
 m.drawcoastlines(linewidth=0.5)
-# fill continents.
-m.fillcontinents(color='coral')
+# background fill color will show ocean areas.
+m.drawmapboundary(fill_color='aqua')
+# fill continents, lakes within continents.
+m.fillcontinents(color='coral',lake_color='aqua')
 # draw states and countries.
 m.drawcountries()
 m.drawstates()

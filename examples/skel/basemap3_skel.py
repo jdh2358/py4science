@@ -4,7 +4,6 @@ from matplotlib.toolkits.basemap import Basemap
 # create figure.
 # background color will be used for 'wet' areas.
 fig = pylab.figure()
-fig.add_axes([0.1,0.1,0.8,0.8],axisbg='aqua')
 # create map by specifying width and height in km.
 resolution = 'l'
 lon_0 = -50
@@ -39,7 +38,8 @@ pylab.text(x1-100000,y1+100000,name1,fontsize=12,\
 pylab.text(x2-100000,y2+100000,name2,fontsize=12,\
            color='k',horizontalalignment='right',fontweight='bold')
 m.drawcoastlines(linewidth=0.5)
-m.fillcontinents(color='coral')
+m.drawmapboundary(fill_color='aqua')
+m.fillcontinents(color='coral',lake_color='aqua')
 m.drawcountries()
 m.drawstates()
 pylab.title(name1+' to '+name2+' Great Circle')

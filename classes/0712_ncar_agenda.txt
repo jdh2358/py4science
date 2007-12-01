@@ -51,10 +51,14 @@ Basic setup:
   - matplotlib (latex, etc).
   - Modules: import/reload, PYTHONPATH.
 
+- Urllib Yahoo finance demo.
+  
 ToDo: Add numerical error measure of trapezoid rule.
 
 ToDo Add in workflow comparison with scipy's integration. compare timing and
     eror.
+
+ToDo: write cheat-sheet.
 
 1045:1100 --- Coffee break ---
 
@@ -86,8 +90,8 @@ for a known, monotonically increasing f(s) and a fixed u.
 
 1500:1700: Optional material (there's a Christmas party)
 
-Web-based data sources, tabular data and record arrays, illustrated with Yahoo
-Finance scraping, or PyDAP/OpenDAP.
+PyDAP/OpenDAP
+PyTables
 
 
 Day 2 (Saturday December 8)
@@ -114,30 +118,17 @@ weave: C/C++ inlining exercise.
  
 1200:1300 --- Lunch break ---
 
-1300:1500 Menu of options:
+1300:1330: JDH - SVN workflow, contributing to the workbook.  (optional mailing list
+  subscription)
 
-* Data fitting/smoothing: least squares, cubic splines, polynomial fitting.
-Basic linear algebra (30 min).
+1330:1400: JDH - Type along data smoothing, convolutions, scipy.filter
 
-* Bessel functions: special functions library, array manipulations to check
-recursion relation (30 min).
+1400:1430: FP - Basic data fitting, scipy.optimize
 
-* Descriptive statistics, statistical distributions (1 hr).
+1430:1500: FP - Sage intro/demo.
 
-* SVD/eigenfaces (1 hr).
+1500:1515 - Wrapup.
 
-* Logistic map (1 hr).
-
-* Sage intro/demo (20-30 min).
-
-* Beautiful soup: screen-scraping HTML for data extraction (30 min).
-
-* Word frequencies: use of dictionaries and text processing (20 min).
-
-* Prime numbers: the Sieve of Erathostenes.  Illustrates lists and sets (30
-  min).
-  
-* Wallis' pi: arbitrary precision integers (30 min).
 
 
 Unused examples and exercises, extra ideas
@@ -153,3 +144,21 @@ Unused examples and exercises, extra ideas
 
 * Extended precision root finding: manually implement newton's method using
   clnum or mpfr.
+
+* Bessel functions: special functions library, array manipulations to check
+recursion relation (30 min).
+
+* Descriptive statistics, statistical distributions (1 hr).
+
+* SVD/eigenfaces (1 hr).
+
+* Logistic map (1 hr).
+
+* Beautiful soup: screen-scraping HTML for data extraction (30 min).
+
+* Word frequencies: use of dictionaries and text processing (20 min).
+
+* Prime numbers: the Sieve of Erathostenes.  Illustrates lists and sets (30
+  min).
+  
+* Wallis' pi: arbitrary precision integers (30 min).

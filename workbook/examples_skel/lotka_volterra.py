@@ -1,1 +1,0 @@
-../../examples/skel/lotka_volterra_skel.py

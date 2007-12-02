@@ -1,1 +1,0 @@
-../../examples/skel/stock_records_skel.py

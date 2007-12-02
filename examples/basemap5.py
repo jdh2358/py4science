@@ -29,5 +29,4 @@ m.drawmeridians(numpy.arange(0.,420.,60.))
 m.drawmapboundary(fill_color='k')
 # draw horizontal colorbar.
 pylab.colorbar(orientation='horizontal')
-pylab.savefig('basemap5.pdf')
-pylab.savefig('basemap5.png')
+pylab.savefig('basemap5.png',dpi=600)

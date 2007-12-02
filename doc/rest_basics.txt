@@ -1,0 +1,172 @@
+=================================
+ reST (reSTructured Text) basics
+=================================k
+.. Author:  Fernando Perez
+.. Contact: Fernando.Perez@colorado.edu
+.. Time-stamp: "2007-08-29 15:50:06 fperez"
+
+.. contents::
+..
+    1  What is reST?
+    2  Markup summary
+    3  Emacs cheat sheet
+    4  Tests
+    5  Things I don't like
+
+
+What is reST?
+=============
+
+It's a simple  text markup format which can be converted easily into other
+formats (html, latex, pdf) while being easily readable in its plaintext
+version.  This document is a little example of reST basics for my own
+reference.
+
+As shown above, it's good practice to start any reST document with a title and
+simple metadata.  The two leading dots indicate a comment or special markup
+directive in reST.  The time stamp can be updated with the emacs command
+``time-stamp`` (these two back-quotes mean 'inline literal', which is normally
+rendered as monospace font).
+
+The metadata above was enclosed inside comment fields, so it won't be visible
+in the generated document.  You can instead use reST fields if you want these
+values to be automatically formatted in produced documents:
+
+:Author:  Fernando Perez
+:Contact: Fernando.Perez@colorado.edu
+:Date: January  4, 2007
+
+The table of contents is auto-updated by Emacs with 'C-c p u', and it is also
+rendered in HTML by the rst2html compiler.  This can be invoked from Emacs via
+the ``rst-compile`` command.  Additionally, Emacs makes each entry in the TOC
+an internal clickable link, which is great for navigation.
+
+This_ link is a quick reference to the reST markup (links are made by an
+underscore at the end of the word, and the same word following shortly with the
+underscore preceding it instead, and its target indicated after a colon).
+
+.. _This: http://docutils.sourceforge.net/docs/user/rst/quickref.html
+
+Making websites: look at http://www.voidspace.org.uk/python/rest2web
+
+
+Markup summary
+==============
+
+These are taken from the quickref mentioned above, and are just a small subset
+of the more common markup options.  See that document for more details.
+
+- *emphasis*: Normally rendered as italics.
+
+- **strong emphasis**: Normally rendered as boldface.
+
+- ``inline literal``: Normally rendered as monospaced text. Spaces should be
+  preserved, but line breaks will not be.  For multiline literal blocks, use
+  ``::`` preceding the literal block (if it's at the end of a sentence, it gets
+  converted into a single ':').
+
+- reference_: A simple, one-word hyperlink reference.
+
+- `phrase reference`_: A reference with spaces or punctuation.
+
+- footnote reference [1]_: See quickref for details.
+
+- citation reference [CIT2002]_: See quickref for details.
+
+Note: the above are listed using bullet list markup. reST also has markup for
+enumerated, options, definitions and fields lists.
+
+
+Emacs cheat sheet
+=================
+
+These are a few useful Emacs bindings, copied from the help and support source
+code.  C-= is by far the most common and useful one::
+
+    C-c p a (also C-=): rst-adjust
+
+       Updates or rotates the section title around point or promotes/demotes
+       the decorations within the region (see full details below).
+
+       Note that C-= is a good binding, since it allows you to specify a
+       negative arg easily with C-- C-= (easy to type), as well as ordinary
+       prefix arg with C-u C-=.
+
+    C-c p h: rst-display-decorations-hierarchy
+
+       Displays the level decorations that are available in the file.
+
+    C-c p t: rst-toc
+
+       Displays the hierarchical table-of-contents of the document and allows
+       you to jump to any section from it.
+
+    C-c p i: rst-toc-insert
+
+       Inserts a table-of-contents in the document at the column where the
+       cursor is.
+
+    C-c p u: rst-toc-insert-update
+
+       Finds an existing inserted table-of-contents in the document an
+       updates it.
+
+    C-c p p, C-c p n (C-c C-p, C-c C-n): rst-backward-section,
+    rst-forward-section
+
+       Navigate between section titles.
+
+    C-c p l, C-c p r (C-c C-l, C-c C-r): rst-shift-region-left,
+    rst-shift-region-right
+
+       Shift the region left or right by two-char increments, which is perfect
+       for bulleted lists.
+
+    M-S		center-paragraph
+
+    M-s		center-line
+
+
+Tests
+=====
+
+some text
+
+- a bulleted
+- list
+- without indentation
+
+more text
+
+* a bulleted
+
+* list that uses '*' for markers and leaves whitespace in between each item.
+  This is equally acceptable, and more legible when items are long.
+
+more text
+
+  - and another bullet list
+  - but indented in the plaintext source
+
+and more text.
+
+
+Trying block quotes::
+
+  foo bar
+
+  baz
+
+normal text
+
+
+Things I don't like
+===================
+
+- The fact that indented bulleted lists in the source end up double-indented in
+  the rendered doc.  Since the default rendering of bullet lists indents (in
+  html), then the source should be the same.
+
+- Requiring indentation for block literals.  This sucks for pasting code in and
+  out of reST docs.
+

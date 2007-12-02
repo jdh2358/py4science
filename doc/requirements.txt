@@ -1,0 +1,160 @@
+Core requirements
+=================
+
+The four python packages you will need for this course are
+
+    - ipython: an interactive python shell http://ipython.scipy.org
+
+    - numpy: high performance numerical arrays http://numpy.scipy.org
+
+    - scipy: algorithms and numerics http://scipy.org
+
+    - matplotlib: plotting http://matplotlib.sf.net
+
+With these four packages, you will be able to do about 90% of the
+exercises in the course.  In addition, to generate plot windows,
+matplotlib requires a user interface toolkit, for example Tk, GTK,
+wxPython or Qt. Tk comes with python, so that should work out of the
+box, but some of the other code we will be demoing work best with
+wxPython, so we also recommend you install wxPython
+(http://www.wxpython.org/)
+
+We will detail the optional packages that will be used in the workshop
+below.  It will be great if you can get all the optional packages as
+well, but since most of the workshop depends on these four
+requirements, make sure you have these four installed, configured and
+tested before turning to the optional packages.
+
+For those of you who do not succeed in getting a machine properly
+configured with the packages above, we will be providing an X11 server
+that you can log into to work on the exercises remotely.  If your
+machine supports ssh with X11 forwarding, you will be in good shape.
+If not, we will provide ubuntu boot CDs so you can reboot into linux
+and then ssh into the x11 server to run the exercises.
+
+
+Basic configuration
+===================
+
+You need to configure matplotlib to work with the user interface you
+have selected.  The configuration file is called matplotlibrc and it
+is installed in site-packages/matplotlib/mpl-data/matplotlibrc along
+with the rest of your matplotlib install.  Create a directory in your
+home directory called .matplotlib and copy this file into it (or
+simply edit in place in mpl-data) and change the line that starts with
+'backend' to
+
+  backend      : WXAgg
+
+for use with wxpython.
+
+Testing
+=======
+
+If you can execute the following commands w/o error, and have a plot
+window pop up, you have an installation that will work for 90% of the
+exercises in the workshop
+
+    > ipython -pylab
+    Python 2.5 (r25:51918, Sep 19 2006, 08:49:13)
+    Type "copyright", "credits" or "license" for more information.
+
+    IPython 0.8.3.svn.r2876 -- An enhanced Interactive Python.
+
+    In [1]: import numpy
+
+    In [2]: import scipy
+
+    In [3]: plot([1,2,3])
+    Out[3]: [<matplotlib.lines.Line2D instance at 0x4c9ae40>]
+
+Checking your versions
+======================
+
+It helps to have the most recent packages for the workshop.  We are
+recommending at least the following
+
+  - ipython >= 0.7.0
+
+  - numpy >= 1.01
+
+  - matplotlib >= 0.90.0
+
+  - scipy >= 0.5.2
+
+The example code below shows you how to check your versions:
+
+    In [4]: import numpy
+
+    In [5]: numpy.__version__
+    Out[5]: '1.0.4.dev4380'
+
+    In [6]: import scipy
+
+    In [7]: scipy.__version__
+    Out[7]: '0.7.0.dev3494'
+
+    In [8]: import IPython
+
+    In [9]: IPython.__version__
+    Out[9]: '0.8.3.svn.r2876'
+
+    In [10]: import matplotlib
+
+    In [11]: matplotlib.__version__
+    Out[11]: '0.91.1'
+
+Platform specific instructions
+==============================
+
+linux
+
+os x
+
+win32
+
+Optional packages
+=================
+
+We will be doing demos and exercises with a nmber of additional
+packages, which we will describe briefly below.  Because there are so
+many variations in operating systems and platforms, we will not
+attempt to provide details so consult the web sites and other
+resources if there is a package you are particularly interested in and
+want to make sure you are configured properly to do an exercise on
+your own machine.  We will be providing a properly configured server,
+so even if you do not have each of these packages installed, as long
+as your machine supports remote login with X11 forwarding to our
+server, you can long in to do the exercises if you are missing a
+package on your local machine.
+
+
+- pytables : a package for managing large datasets efficiently
+  http://www.pytables.org/moin (also requires hdf5)
+
+- pydap : a python implementation of the Data Access Protocol
+  (DAP). http://pydap.org.
+
+- enthought tool suite (ETS) : provides traits, a package for strong
+  typing in python that also facilitates automatic user interface
+  generation and more.  Also provides tvtk and mayavi2 for 3D
+  visualization. http://code.enthought.com/ets/
+
+- weave : a package for inlining C and C++ in your python code.  Comes
+  with scipy but requires a working compiler suite (eg gcc and g++)
+
+- f2py : comes with scipy but requires a working fortran compiler. See
+  http://scipy.org/Installing_SciPy for platform specific instructions
+
+- pyrex : lets you mix c and python for writing high performance
+  python extensions
+  http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+
+- basemap : a matplotlib toolkit for workin with geographic data and
+  map projections.  Available for download at the matplotlib downloa
+  page
+  http://sourceforge.net/project/platformdownload.php?group_id=80706
+  with documentation at
+  http://matplotlib.sourceforge.net/matplotlib.toolkits.basemap.basemap.html
+
+

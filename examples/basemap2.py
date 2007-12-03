@@ -1,6 +1,5 @@
 import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap
-
 # create figure.
 fig = pylab.figure()
 # create map by specifying width and height in km.
@@ -19,4 +18,4 @@ m.fillcontinents(color='coral',lake_color='aqua')
 m.drawcountries()
 m.drawstates()
 pylab.title('map region specified using width and height')
-pylab.savefig('basemap2.png',dpi=600)
+pylab.show()

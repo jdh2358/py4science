@@ -1,6 +1,5 @@
 import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap
-
 # create figure.
 fig = pylab.figure()
 # create map by specifying width and height in km.
@@ -40,4 +39,4 @@ m.fillcontinents(color='coral',lake_color='aqua')
 m.drawcountries()
 m.drawstates()
 pylab.title('NY to London Great Circle')
-pylab.savefig('basemap3.png',dpi=600)
+pylab.show()

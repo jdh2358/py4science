@@ -24,4 +24,4 @@ m.drawmeridians(numpy.arange(-180,181,20),labels=[1,1,0,1])
 # of the plot frame.
 m.drawparallels(numpy.arange(-80,81,20),labels=[1,1,1,0])
 pylab.title('labelled meridians and parallels',y=1.075)
-pylab.savefig('basemap4.png',dpi=600)
+pylab.show()

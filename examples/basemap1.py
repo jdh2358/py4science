@@ -1,6 +1,5 @@
 import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap
-
 # create figure.
 fig = pylab.figure()
 # create map by specifying lat/lon values at corners.
@@ -24,4 +23,4 @@ m.fillcontinents(color='coral',lake_color='aqua')
 m.drawcountries()
 m.drawstates()
 pylab.title('map region specified using corner lat/lon values')
-pylab.savefig('basemap1.png',dpi=600)
+pylab.show()

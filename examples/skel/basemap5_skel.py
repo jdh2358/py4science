@@ -5,10 +5,12 @@ import pylab, numpy
 # or (if PyNIO is installed) a GRIB or HDF file.
 # See http://nomads.ncdc.noaa.gov/ for some NOAA OPenDAP datasets.
 ncfile = NetCDFFile('data/sst.nc')
-# this will produce a very similar plot, but will read
+sst = ncfile.variables['analysed_sst'][:]
+# uncommenting the next two lines will 
+# produce a very similar plot, but will read
 # the data over the web instead of from a local file.
 #ncfile = NetCDFFile('http://nomads.ncdc.noaa.gov:8085/thredds/dodsC/oisst/2007/AVHRR/sst4-navy-eot.20071201.nc')
-sst = ncfile.variables['analysed_sst'][:]
+#sst = ncfile.variables['sst'][:]
 lats = ncfile.variables['lat'][:]
 lons = ncfile.variables['lon'][:]
 # Basemap comes with extra colormaps from Generic Mapping Tools
@@ -18,7 +20,7 @@ cmap = XX
 projection = XX # try moll, robin, sinu or ortho.
 # coastlines not used, so resolution set to None to skip
 # continent processing (this speeds things up a bit)
-m = Basemap(projection=projection,lon_0=0,lat_0=0,resolution=None)
+m = Basemap(projection=projection,lon_0=lons.mean(),lat_0=0,resolution=None)
 # compute map projection coordinates of grid.
 x, y = m(*numpy.meshgrid(lons, lats))
 # plot with pcolor

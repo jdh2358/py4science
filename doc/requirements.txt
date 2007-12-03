@@ -17,13 +17,13 @@ Core requirements
 
 The four python packages you will need for this course are
 
-    - ipython_: an interactive python shell 
+    - ipython_: an interactive python shell
 
     - numpy_: high performance numerical arrays
 
     - scipy_: algorithms and numerics
 
-    - matplotlib_: plotting 
+    - matplotlib_: plotting
 
 .. _ipython: http://ipython.scipy.org
 
@@ -31,7 +31,7 @@ The four python packages you will need for this course are
 
 .. _scipy: http://scipy.org
 
-.. _matplotlib: http://matplotlib.sf.net
+.. _matplotlib:	http://matplotlib.sf.net
 
 With these four packages, you will be able to do about 90% of the
 exercises in the course.  In addition, to generate plot windows,
@@ -151,32 +151,39 @@ as your machine supports remote login with X11 forwarding to our
 server, you can long in to do the exercises if you are missing a
 package on your local machine.
 
+- pytables_ : a package for managing large datasets efficiently
+  (also requires hdf5)
 
-- pytables : a package for managing large datasets efficiently
-  http://www.pytables.org/moin (also requires hdf5)
+- pydap_ : a python implementation of the Data Access Protocol
+  (DAP). 
 
-- pydap : a python implementation of the Data Access Protocol
-  (DAP). http://pydap.org.
-
-- enthought tool suite (ETS) : provides traits, a package for strong
+- `enthought tool suite`_ (ETS) : provides traits, a package for strong
   typing in python that also facilitates automatic user interface
   generation and more.  Also provides tvtk and mayavi2 for 3D
-  visualization. http://code.enthought.com/ets/
+  visualization. 
 
 - weave : a package for inlining C and C++ in your python code.  Comes
-  with scipy but requires a working compiler suite (eg gcc and g++)
+  with scipy but requires a working compiler suite (eg, gcc and g++)
 
 - f2py : comes with scipy but requires a working fortran compiler. See
   http://scipy.org/Installing_SciPy for platform specific instructions
 
-- pyrex : lets you mix c and python for writing high performance
+- pyrex_ : lets you mix c and python for writing high performance
   python extensions
-  http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+  
 
-- basemap : a matplotlib toolkit for workin with geographic data and
-  map projections.  Available for download at the matplotlib downloa
+- basemap_ : a matplotlib toolkit for workin with geographic data and
+  map projections.  Available for download at the matplotlib download
   page
   http://sourceforge.net/project/platformdownload.php?group_id=80706
-  with documentation at
-  http://matplotlib.sourceforge.net/matplotlib.toolkits.basemap.basemap.html
 
+  
+.. _pytables: http://www.pytables.org/moin 
+
+.. _basemap: http://matplotlib.sourceforge.net/matplotlib.toolkits.basemap.basemap.html
+
+.. _pyrex: http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+
+.. _`enthought tool suite`: http://code.enthought.com/ets/
+
+.. _pydap: http://pydap.org.

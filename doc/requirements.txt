@@ -1,3 +1,17 @@
+======================================
+ Requirements for the Python workshop
+======================================
+
+.. contents::
+..
+    1  Core requirements
+    2  Basic configuration
+    3  Testing
+    4  Checking your versions
+    5  Platform specific instructions
+    6  Optional packages
+
+
 Core requirements
 =================
 
@@ -42,7 +56,7 @@ is installed in site-packages/matplotlib/mpl-data/matplotlibrc along
 with the rest of your matplotlib install.  Create a directory in your
 home directory called .matplotlib and copy this file into it (or
 simply edit in place in mpl-data) and change the line that starts with
-'backend' to
+'backend' to::
 
   backend      : WXAgg
 
@@ -53,7 +67,7 @@ Testing
 
 If you can execute the following commands w/o error, and have a plot
 window pop up, you have an installation that will work for 90% of the
-exercises in the workshop
+exercises in the workshop::
 
     > ipython -pylab
     Python 2.5 (r25:51918, Sep 19 2006, 08:49:13)
@@ -82,7 +96,7 @@ recommending at least the following
 
   - scipy >= 0.5.2
 
-The example code below shows you how to check your versions:
+The example code below shows you how to check your versions::
 
     In [4]: import numpy
 
@@ -112,6 +126,7 @@ linux
 os x
 
 win32
+
 
 Optional packages
 =================
@@ -156,5 +171,4 @@ package on your local machine.
   http://sourceforge.net/project/platformdownload.php?group_id=80706
   with documentation at
   http://matplotlib.sourceforge.net/matplotlib.toolkits.basemap.basemap.html
-
 

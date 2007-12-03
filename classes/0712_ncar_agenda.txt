@@ -4,161 +4,149 @@
 
 Initials indicate who presents what:
 
-JDH - John D. Hunter
-FP  - Fernando Perez
-JW  - Jeff Whitaker
+ * JDH: John D. Hunter
+ * FP:  Fernando Perez
+ * JW: Jeff Whitaker
 
 
 Day 1 (Friday December 7)
 =========================
 
-830-900 Installation and configuration (optional)
-This half hour will be spent helping with installation issues, before the
-real workshop begins.  If you've already set things up on your system
-(meaning you have ipython, numpy, matplotlib and scipy installed and
-running), feel free to skip this.
+830-900: Installation and configuration (optional)
+  This half hour will be spent helping with installation issues, before the
+  real workshop begins.  If you've already set things up on your system
+  (meaning you have ipython, numpy, matplotlib and scipy installed and
+  running), feel free to skip this.
 
-900-905 Introduction 
-Official start of the workshop, introduce instructors.
+900-905: Introduction 
+  Official start of the workshop, introduce instructors.
 
-905-945 JDH: Python for scientific computing
-A high-level overview of the topic of Python in a scientific context.
+905-945 (JDH): Python for scientific computing
+  A high-level overview of the topic of Python in a scientific context.
 
-950-1045 FP: Workflow, guided by a simple example: trapezoid integration.
+950-1045 (FP): Workflow, guided by a simple examples.
+  This section will be used to illustrate basic workflow for students, by
+  having them 'type along' a very simple exercise, trapezoid rule integration.
+  We'll discuss the basics of numpy arrays and will solve the trapezoid
+  integration exercise together.
 
-This section will be used to illustrate basic workflow for students, by having
-them 'type along' a very simple exercise, trapezoid rule integration.  We'll
-discuss the basics of numpy arrays and will solve the trapezoid integration
-exercise together.
+----
 
-Editor: (X)Emacs, Vi(m), etc.
+1045-1100: Coffee break
 
-ipython.  Saving and reloading files, interactive use of variables, %run,
-%debug, %xmode verbose.
+----
 
-Getting help:
-  - pydoc (-g, -p)
+1100-1145 (FP): Introductory examples.
+  We'll have two exercises, so students who finish the first one early don't
+  get bored and can do a second one:
 
-  - The standard docs (bookmark them)
+  * FFTs: 2-d image denoising via FFT.
+  * Numerical integration and root finding.
 
-  - ipython ?/??, help(), the tab key.  numpy.*cos*? search.
+----
 
-  - The open source process: mailing lists, wikis, svn.  Python
-  cookbook. Participate!
+1145-1230: Lunch Break
 
-Basic setup:
-  - ipython
-  - matplotlib (latex, etc).
-  - Modules: import/reload, PYTHONPATH.
+----
 
-- Urllib Yahoo finance demo.
+1300-1400 (JDH): Basic numpy/pylab usage.
+  A linear algebra/2d data visualization demo using numpy and matplotlib will
+  then be extended as an exercise by the students.  If time allows, an ODE
+  example will be presented:
+
+  * Glass2 demo: linear algebra, event handling in interactive plots.
+  * Glass1 exercise: simplified version of the above as an exercise.
+  * ODEs - Lotka Volterra equations.
+
+1400-1500 (JW): Basemap: geographical datasets.
+  Basemap_ is a matplotlib toolkit that plots data on map projections (with
+  continental and political boundaries).
+
+.. _Basemap: http://matplotlib.sourceforge.net/matplotlib.toolkits.basemap.basemap.html
+
+----
+
+1500 End of main work for Friday
+
+----
+
+1500-1700: Open data access standards and protocols (optional material)
+  We realize there's a Christmas party, so we'll keep this part optional, feel
+  free to skip out as the needs for wine and cheese dictate.  We'll look at the
+  Python implementation of the OpenDAP protocol and a package for easy
+  construction and manipulation of HDF5 datsets:
+
+  * (FP) - OpenDAP_ via the PyDAP_ implementation.
+  * (JDH) - PyTables_: an HDF5 library.
+
+.. _OPenDAP:  http://pydap.org
+.. _PyDAP: http://opendap.org
+.. _PyTables: http://www.pytables.org
+
   
-ToDo: Add numerical error measure of trapezoid rule.
-
-ToDo Add in workflow comparison with scipy's integration. compare timing and
-    eror.
-
-ToDo: write cheat-sheet.
-
-1045:1100 --- Coffee break ---
-
-
-1100:1145 FP: Introductory examples.
-
-We'll have two exercises, so students who finish the first one early don't get
-bored and can do a second one.
-
-FFTs: 2-d image denoising via FFT.
-
-Numerical integration and root finding: Find t such that
-
- \int_0^t{ f(s) ds} = u
-
-for a known, monotonically increasing f(s) and a fixed u.
-
-1145:12:30 --- Lunch Break ---
-
-1300:1400 JDH: Basic numpy/pylab
-
-* Glass2 demo: linear algebra, event handling in interactive plots.
-* Glass1 exercise: simplified version of the above as an exercise.
-* ODEs - Lotka Volterra equations.
-
-1400:1500 JW, Basemap: geographical datasets.
-
-1500 --- End of main work for Friday ---
-
-1500:1700: Optional material (there's a Christmas party)
-
-PyDAP/OpenDAP
-PyTables
-
-
 Day 2 (Saturday December 8)
 ===========================
 
-900:930 FP: Traits, Mayavi2 demo.  Automatic GUI generation, VTK library, the
-MayaVi visualization application.  This is a demo of capabilities, not an
-exercise.
+900-930 (FP): Traits_, TVTK_ and MayaVi2_
+  Automatic GUI generation, VTK library, the MayaVi visualization application.
+  This is a demo of capabilities, not an exercise.
 
-930:1030 FP - Lightweight tools for low-level code reuse
-
-f2py: Fortran code wrapping exercise.
-weave: C/C++ inlining exercise.
-
-1030:1045 --- Coffee break ---
-
-1045:1200 JDH - Other tools for C/C++ code reuse, demos/slides.
-
-* ctypes: easy access to dynamically linked libraries.
-* pyrex: blend of python/C for automatic generation of native code.
-* SWIG: automatic wrapping of C/C++ libraries.
-* Boost.Python: automatic wrapping of C++ libraries with template support.
-* A tour of scipy's code base, which uses several of these techniques.
- 
-1200:1300 --- Lunch break ---
-
-1300:1330: JDH - SVN workflow, contributing to the workbook.  (optional mailing list
-  subscription)
-
-1330:1400: JDH - Type along data smoothing, convolutions, scipy.filter
-
-1400:1430: FP - Basic data fitting, scipy.optimize
-
-1430:1500: FP - Sage intro/demo.
-
-1500:1515 - Wrapup.
-
-
-
-Unused examples and exercises, extra ideas
-==========================================
-
-* Visual (VPython): Show some examples, explain.  Target shooting exercise.
-
-* One-dimensional FFT - Bode plot.
-
-* Spectral interpolation.
-
-* Steinman interpolation.
-
-* Extended precision root finding: manually implement newton's method using
-  clnum or mpfr.
-
-* Bessel functions: special functions library, array manipulations to check
-recursion relation (30 min).
-
-* Descriptive statistics, statistical distributions (1 hr).
-
-* SVD/eigenfaces (1 hr).
-
-* Logistic map (1 hr).
-
-* Beautiful soup: screen-scraping HTML for data extraction (30 min).
-
-* Word frequencies: use of dictionaries and text processing (20 min).
-
-* Prime numbers: the Sieve of Erathostenes.  Illustrates lists and sets (30
-  min).
+.. _Traits: http://code.enthought.com/traits
+.. _TVTK: https://svn.enthought.com/enthought/wiki/TVTK
+.. _MayaVi2: http://code.enthought.com/mayavi2
   
-* Wallis' pi: arbitrary precision integers (30 min).
+9300-1030 (FP): - Lightweight tools for low-level code reuse
+  These two tools ship by default with NumPy (f2py) and SciPy (weave), and
+  allow you to easily access low-level codes or optimize numerical hotspots:
+  
+  * f2py: Fortran code wrapping exercise.
+  * weave: C/C++ inlining exercise.
+
+----
+
+1030-1045: Coffee break
+
+----
+
+1045-1200 (JDH): Other tools for C/C++ code reuse
+  This will be a demo of a number of other tools that exist in Python for
+  accessing C and C++ codes, each with its own set of strengths:
+  
+  * ctypes_: easy access to dynamically linked libraries.
+  * pyrex_: blend of python/C for automatic generation of native code.
+  * SWIG_: automatic wrapping of C/C++ libraries.
+  * `Boost.Python`_: automatic wrapping of C++ libraries with template support.
+  * A tour of scipy's code base, which uses several of these techniques.
+
+.. _ctypes: http://python.net/crew/theller/ctypes
+.. _pyrex: http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex
+.. _SWIG: http://www.swig.org
+.. _`Boost.Python`: http://www.boost.org/libs/python/doc
+
+----
+
+1200-1300: Lunch break
+
+----
+
+1300-1330 (JDH): Participating in the open source process
+  We'll discuss the SVN workflow, contributing to the workbook and the projects
+  used in this course, etc.
+
+1330-1400 (JDH): Data smoothing
+  Type along data smoothing, convolutions, scipy.filter
+
+1400-1430 (FP): Fitting
+  Basic data fitting, scipy.optimize exercise.
+
+1430-1500 (FP): SAGE
+  An overview and brief demo of the Sage_ project, an ambitious and rapidly
+  growing Python project to offer free mathematical software (as well as
+  integration with commercial systems).
+
+.. _Sage: http://sagemath.org
+
+1500-1515: Wrapup
+  We'll have a bit of time for discussion, feedback and any questions that may
+  have been left.
+  

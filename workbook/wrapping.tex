@@ -125,8 +125,8 @@ areas are causing a performance problem. The \texttt{cache} directive
 causes f2py to keep cached copies of the scratch areas, so no unnecessary
 mallocs should be triggered.
 
-Since f2py relies on Numeric arrays, all dimensions can be determined
-from the arrays themselves and it is not necessary to pass them explicitly.
+Since f2py relies on NumPy arrays, all dimensions can be determined from the
+arrays themselves and it is not necessary to pass them explicitly.
 
 With all this, the resulting f2py-generated docstring becomes: 
 
@@ -232,7 +232,7 @@ Finally, in Python:
 \subsection{Passing offset arrays to Fortran routines}
 
 It is possible to pass offset arrays (like pointers to the middle
-of other arrays) by using Numeric's slice notation.
+of other arrays) by using NumPy's slice notation.
 
 The print\_dvec function below simply prints its argument as \char`\"{}print{*},'x',x\char`\"{}.
 We show some examples of how it behaves with both 1 and 2-d arrays: 
@@ -339,7 +339,7 @@ In~{[}14]:~tf.print\_dvec(A{[}1:,1:])
 
 \subsection{On matrix ordering and in-memory copies}
 
-Numeric (which f2py relies on) is C-based, and therefore its arrays
+NumPy (which f2py relies on) is C-based, and therefore its arrays
 are stored in row-major order. Fortran stores its arrays in column-major
 order. This means that copying issues must be dealt with. Below we
 reproduce some comments from Pearu on this topic given in the f2py
@@ -348,7 +348,7 @@ mailing list in June/2002:
 \begin{quote}
 To avoid copying, you should create array that has internally Fortran
 data ordering. This is achived, for example, by reading/creating your
-data in Fortran ordering to Numeric array and then doing Numeric.transpose
+data in Fortran ordering to NumPy array and then doing numpy.transpose
 on that. Every f2py generated extension module provides also function 
 
 has\_column\_major\_storage
@@ -360,7 +360,7 @@ cource).
 
 Also note that copying done by f2py generated interface is carried
 out in C on the raw data and therefore it is extremely fast compared
-to if you would make a copy in Python, even when using Numeric. Tests
+to if you would make a copy in Python, even when using NumPy. Tests
 with say 1000x1000 matrices show that there is no noticable performance
 hit when copying is carried out, in fact, sometimes making a copy
 may speed up things a bit -- I was quite surprised about that myself.

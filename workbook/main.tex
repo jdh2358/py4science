@@ -45,6 +45,9 @@
 
 \usepackage{babel}
 \makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Begin main document - front matter
+
 \begin{document}
 
 \title{ \vspace{3cm} 
@@ -67,10 +70,15 @@ Jeff Whitaker\\
 \tableofcontents{}
 
 
-\part{Discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Main document - body
+
+\input{introduction.tex}
+
+\part{General Discussion}
 
 % In this part, each tex file is a chapter by itself, since it is more or less
 % meant to be used in whole.
+
 \input{why_python.tex}
 
 \input{intro_to_python.tex}
@@ -83,7 +91,8 @@ Jeff Whitaker\\
 
 
 
-\part{Workbook}
+\part{Workbook\\
+A Problem Collection}
 
 % This part specifies the chapter declarations in the main file, while the
 % chapters are made of individual TeX files which themselves should be written
@@ -91,26 +100,19 @@ Jeff Whitaker\\
 % few closely related topics, and to allow users to build them with as many or
 % as few actual sections as desired for a given audience.
 
-\chapter{Introduction}
-
+\chapter{Introduction to the workbook}
 \input{intro.tex}
 
-\chapter{Simple non-numerical problems}
-
+\chapter{Simple non-numerical Problems}
 \input{qsort.tex}
-
 \input{wordfreqs.tex}
 
 \chapter{Working with files, the internet, and numpy arrays}
-
 \input{files_etc.tex}
 
-\chapter{Elementary Numerics}
-
+\chapter{Elementary numerics}
 \input{wallis_pi.tex}
-
 \input{trapezoid.tex}
-
 \input{quad_newton.tex}
 
 \chapter{Linear algebra}
@@ -122,7 +124,7 @@ Jeff Whitaker\\
 \input{convolution.tex}
 \input{fft_imdenoise.tex}
 
-\chapter{Dynamical Systems}
+\chapter{Dynamical systems}
 \input{intro_dynsys.tex}
 \input{lotka_volterra.tex}
 
@@ -131,8 +133,10 @@ Jeff Whitaker\\
 \input{stats_descriptives.tex}
 \input{stats_distributions.tex}
 
-\chapter{Plotting on Maps}
+\chapter{Plotting on maps}
 \input{basemap.tex}
+
+%%% Bibliography section
 
 \bibliographystyle{plain}
 \bibliography{python,python2}

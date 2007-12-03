@@ -6,17 +6,16 @@
 
 matplotlib is a library for making 2D plots of arrays in python.%
 \footnote{This short guide is not meant as a complete guide or tutorial. There
-is a more comprehensive user's guide and tutorial on the matplotlib
-web-site at http://matplotlib.sf.net.%
-} Although it has its origins in emulating the Matlab graphics commands,
-it does not require matlab, and has a pure, object oriented API. Although
-matplotlib is written primarily in python, it makes heavy use of Numeric/numarray
-and other extension code to provide good performance even for large
-arrays. matplotlib is designed with the philosophy that you should
-be able to create simple plots with just a few commands, or just one!
-If you want to see a histogram of your data, you shouldn't need to
-instantiate objects, call methods, set properties, and so on; it should
-just work. 
+  is a more comprehensive user's guide and tutorial on the matplotlib web-site
+  at http://matplotlib.sf.net.%
+} Although it has its origins in emulating the Matlab graphics commands, it
+does not require matlab, and has a pure, object oriented API. Although
+matplotlib is written primarily in python, it makes heavy use of NumPy and
+other extension code to provide good performance even for large
+arrays. matplotlib is designed with the philosophy that you should be able to
+create simple plots with just a few commands, or just one!  If you want to see
+a histogram of your data, you shouldn't need to instantiate objects, call
+methods, set properties, and so on; it should just work.
 
 The matplotlib code is divided into three parts: the \textit{pylab
 interface} is the set of functions provided by the \texttt{pylab}
@@ -355,67 +354,6 @@ the results of this command on the xlabel are shown in Figure\ref{fig:mpl_setget
 In~{[}25]:~set(t,~fontsize=20,~color='darkslategray')~
 \end{lyxcode}
 
-\section[numerix]{A common interface to Numeric and numarray}
-
-Currently the python computing community is in a state of having too
-many array pacakges, none of which satisfy everyone's needs. Although
-Numeric and numarray both provide the same set of core functions,
-they are organized differently, and matplotlib provides a compatibility
-later so you can use either one in your matplotlib scripts without
-having to change your code.
-
-Several numarray/Numeric developers are codevelopers of matplotlib,
-giving matplotlib full Numeric and numarray compatibility, thanks
-in large part to Todd Miller's \texttt{matplotlib.numerix} module
-and the numarray compatibility layer for extension code. This allows
-you to choose between Numeric or numarray at the prompt or in a config
-file. Thus when you do
-
-\begin{lyxcode}
-\textcolor{blue}{\#~import~matplotlib~and~all~the~numerix~functions}
-
-from~pylab~import~{*}
-\end{lyxcode}
-you'll not only get all the matplotlib pylab interface commands, but
-most of the Numeric or numarray package as well (depending on your
-\texttt{numerix} setting). All of the array creation and manipulation
-functions are imported, such as \texttt{array}, \texttt{arange}, \texttt{take},
-\texttt{where}, etc, as are the external module functions which reside
-in \texttt{mlab, fft} and \texttt{linear\_algebra.} 
-
-Even if you don't want to import all of the numerix symbols from the
-pytlab interface, to make your matplotlib scripts as portable as possible
-with respect to your choice of array packages, it is advised not to
-explicitly import Numeric or numarray. Rather, you should use \texttt{matplotlib.numerix}
-where possible, either by using the functions imported by \texttt{pylab},
-or by explicitly importing the \texttt{numerix} module, as in 
-
-\begin{lyxcode}
-\textcolor{blue}{\#~create~a~numerix~namespace}
-
-import~matplotlib.numerix~as~n
-
-from~matplotlib.numerix.mlab~import~mean
-
-x~=~n.arange(100)
-
-y~=~n.take(x,~range(10,20))
-
-print~mean(y)
-\end{lyxcode}
-For the remainder of this manual, the term \texttt{numerix} is used
-to mean either the Numeric or numarray package. To select numarray
-or Numeric from the prompt, run your matplotlib script with
-
-\begin{lyxcode}
-~~>~python~myscript.py~-{}-numarray~~\textcolor{blue}{\#~use~numarray}
-
-~~>~python~myscript.py~-{}-Numeric~~~\textcolor{blue}{\#~use~Numeric}
-\end{lyxcode}
-Typically, however, users will choose one or the other and make this
-setting in their rc file using either \texttt{numerix : Numeric} or
-\texttt{numerix : numarray}. 
-
 
 \section[matplotlibrc]{Customizing the default behavior with the rc file}
 
@@ -436,12 +374,12 @@ into your install path. Typical locations for this file are
 \begin{lyxcode}
 C:\textbackslash{}Python23\textbackslash{}share\textbackslash{}matplotlib\textbackslash{}.matplotlibrc~\textcolor{blue}{\#~windows}~/usr/share/matplotlib/.matplotlibrc~~\textcolor{blue}{\#~linux}
 \end{lyxcode}
-By default, the installer will overwrite the existing file in the
-install path, so if you want to preserve your's, please move it to
-your \texttt{HOME} dir and set the environment variable if necessary.
-In the rc file, you can set your backend , your numerix setting ,
-whether you'll be working interactively and default values for most
-of the figure properties. 
+
+By default, the installer will overwrite the existing file in the install path,
+so if you want to preserve yours, please move it to your \texttt{HOME} dir and
+set the environment variable if necessary.  In the rc file, you can set your
+backend, whether you'll be working interactively and default values for most of
+the figure properties.
 
 In the RC file, blank lines, or lines starting with a comment symbol,
 are ignored, as are trailing comments. Other lines must have the format

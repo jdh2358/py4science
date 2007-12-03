@@ -43,7 +43,7 @@ parallel hardware \cite{Huttley2004,Butterfield2004}. Michel Sanner's
 group at the Scripps Research Institute uses Python extensively to
 build a suite of applications for molecular visualization and exploration
 of drug/molecule interactions using virtual reality and 3D printing
-technology\cite{Sanner2005a,Sanner2005b}. Engineers at Google use
+technology \cite{Sanner2005a,Sanner2005b}. Engineers at Google use
 Python in automation, control and tuning of their computational grid,
 and use \texttt{SWIG} generated Python of their in-house C++ libraries
 in virtually all facets of their work \cite{Beazley1998,Stein2005}.
@@ -116,7 +116,7 @@ for line in urlopen('http://yahoo.com').readlines():
 Complementing these built-in features, Python is also readily extensible,
 giving it a wealth of libraries for scientific computing that have
 been in development for many years \cite{Dubois1996b,Dubois1996c}.
-\texttt{Numeric Python} supports large array manipulations, math,
+\texttt{NumPy} supports large array manipulations, math,
 optimized linear algebra, efficient Fourier transforms and random
 numbers. \texttt{scipy} is a collection of Python wrappers of high
 performance FORTRAN code (eg LAPACK, ODEPACK) for numerical analysis
@@ -239,8 +239,8 @@ we have some image data in raw binary string format. The image is
 256x256 pixels, and each pixel is a 2 byte integer. We read this into
 a string using python's \texttt{file} function -- the 'rb' flag says
 to open the file in \texttt{read/binary} mode. We can then use the
-numerix \texttt{fromstring} method to convert this to an array, passing
-the type of the data (\texttt{Int16}) as an argument. We reshape the
+numpy \texttt{fromstring} method to convert this to an array, passing
+the type of the data (\texttt{int16}) as an argument. We reshape the
 array by changing the array shape attribute to 256 by 256, and pass
 this off to the matplotlib pylab command \texttt{imshow} for plotting.
 matplotlib has a number of colormaps, and the default one is jet;
@@ -277,7 +277,7 @@ obtain arrays from data files such
 \end{lyxcode}
 creates a 20x30 array of zeros (default integer type; details on how
 to specify other types will follow). Note that the dimensions ({}``shape''
-in numarray parlance) are specified by giving the dimensions as a
+in numpy parlance) are specified by giving the dimensions as a
 comma-separated list within parentheses. The parentheses aren't necessary
 for a single dimension. As an aside, the parentheses used this way
 are being used to specify a Python tuple; more will be said about
@@ -333,36 +333,35 @@ For now, just mimic the syntax used here.
 
 \subsection{Array numeric types}
 
-numarray supports all standard numeric types. The default integer
+numpy supports all standard numeric types. The default integer
 matches what Python uses for integers, usually 32 bit integers or
-what numarray calls \texttt{Int32}. The same is true for floats, i.e.,
-generally 64-bit doubles called \texttt{Float64} in numarray. The
-default complex type is \texttt{Complex64}. Many of the functions
+what numpy calls \texttt{int32}. The same is true for floats, i.e.,
+generally 64-bit doubles called \texttt{float64} in numpy. The
+default complex type is \texttt{complex64}. Many of the functions
 accept a type argument. For example
 
 \begin{lyxcode}
->\,{}>\,{}>~zeros(3,~Int8)~\#~Signed~byte
+>\,{}>\,{}>~zeros(3,~int8)~\#~Signed~byte
 
->\,{}>\,{}>~zeros(3,~type=UInt8)~\#~Unsigned~byte
+>\,{}>\,{}>~zeros(3,~dtype=uint8)~\#~Unsigned~byte
 
->\,{}>\,{}>~array({[}2,3],~type=Float32)
+>\,{}>\,{}>~array({[}2,3],~dtype=float32)
 
->\,{}>\,{}>~arange(4,~type=Complex64)
+>\,{}>\,{}>~arange(4,~dtype=complex64)
 \end{lyxcode}
-The possible types are \texttt{Int8, UInt8, Int16, UInt16, Int32,
-UInt32, Int64, UInt64, Float32, Float64, Complex32, Complex64.} To
-find out the type of an array use the .type() method. E.g.,
+The possible types are \texttt{int8, uint8, int16, uint16, int32,
+uint32, int64, uint64, float32, float64, complex32, complex64.} To
+find out the type of an array use the .dtype() method. E.g.,
 
 \begin{lyxcode}
->\,{}>\,{}>~arr.type()
-
-Float32
+>\,{}>\,{}>~arr.dtype()
+dtype('float32')
 \end{lyxcode}
 To convert an array to a different type use the \texttt{astype()}
 method, e.g,
 
 \begin{lyxcode}
->\,{}>\,{}>~a~=~arr.astype(Float64)
+>\,{}>\,{}>~a~=~arr.astype(float64)
 \end{lyxcode}
 
 \subsection{Printing arrays}
@@ -537,7 +536,7 @@ and since there is no index for the column, the whole row is selected.
 All of the indexing tools available for 1-D arrays apply to \emph{n}-dimensional
 arrays as well (though combining index arrays with slices is not currently
 permitted). To understand all the indexing options in their full detail,
-read sections 4.6, 4.7 and 6 of the numarray manual.
+read sections 4.6, 4.7 and 6 of the numpy manual.
 
 
 \subsection{Compatibility of dimensions}
@@ -711,7 +710,7 @@ ufuncs!}
 \subsection{Array functions}
 
 There are many array utility functions. The following lists the more
-useful ones with a one line description. See the numarray manual for
+useful ones with a one line description. See the numpy manual for
 details on how they are used. Arguments shown with argument=value
 indicate what the default value is if called without a value for that
 argument.
@@ -858,9 +857,7 @@ of same type and size (data uninitialized)
 \item [{\texttt{\emph{a}}\texttt{.repeat}\textmd{(a,repeats,axis=0):}}]~
 \item [{\texttt{\emph{a}}\texttt{.resize}\textmd{(shape):}}]~
 \item [{\texttt{\emph{a}}\texttt{.size}\textmd{():}}] same as nelements
-\item [{\texttt{\emph{a}}\texttt{.type}\textmd{():}}] returns type of array
-\item [{\texttt{\emph{a}}\texttt{.typecode}\textmd{():}}] returns corresponding
-typecode character used by Numeric 
+\item [{\texttt{\emph{a}}\texttt{.dtype}\textmd{():}}] returns type of array
 \item [{\texttt{\emph{a}}\texttt{.tofile}\textmd{(}\textmd{\emph{file}}\textmd{):}}] write
 binary data to file
 \item [{\texttt{\emph{a}}\texttt{.tolist}\textmd{():}}] convert data to

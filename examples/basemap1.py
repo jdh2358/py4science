@@ -1,12 +1,8 @@
 import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap
-# create figure.
-fig = pylab.figure()
 # create map by specifying lat/lon values at corners.
-resolution = 'l'
-projection = 'lcc'
-lat_0 = 60
-lon_0 = -50
+resolution = 'l'; projection = 'lcc'
+lat_0 = 60; lon_0 = -50
 llcrnrlat, llcrnrlon = 8, -92
 urcrnrlat, urcrnrlon  = 39, 63
 m = Basemap(lat_0=lat_0,lon_0=lon_0,\

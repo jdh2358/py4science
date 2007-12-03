@@ -7,8 +7,6 @@ ncfile = NetCDFFile('data/sst.nc')
 sst = ncfile.variables['analysed_sst'][:]
 lats = ncfile.variables['lat'][:]
 lons = ncfile.variables['lon'][:]
-# set colormap
-cmap = pylab.cm.gist_ncar
 # create Basemap instance for mollweide projection.
 # coastlines not used, so resolution set to None to skip
 # continent processing (this speeds things up a bit)
@@ -16,7 +14,7 @@ m = Basemap(projection='moll',lon_0=0,lat_0=0,resolution=None)
 # compute map projection coordinates of grid.
 x, y = m(*numpy.meshgrid(lons, lats))
 # plot with pcolor
-im = m.pcolormesh(x,y,sst,shading='flat',cmap=cmap)
+im = m.pcolormesh(x,y,sst,shading='flat',cmap=pylab.cm.gist_ncar)
 # draw parallels and meridians, but don't bother labelling them.
 m.drawparallels(numpy.arange(-90.,120.,30.))
 m.drawmeridians(numpy.arange(0.,420.,60.))

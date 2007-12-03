@@ -4,14 +4,12 @@ file.  To make a new unit, copy template.tex to yourfile.tex and fill
 it in.  We use the latex listing package for including python source
 code.
 
-For every unit, create an example in ../examples/your_example.py, a
-skeleton in ../examples/your_example_skel.py, and a symlink from
-../examples/your_example_skel.py -> examples_skel/your_example.py
-(../examples is in the top level of the py4science repository).  If
-there are any figures, you should create a PNG and EPS version of each
-and add them to the fig subdirectory of the workbook directory.  You
-will need to svn add your tex file, example, skeleton, skeleton
-symlink, and figures.
+For every unit, create an example in
+../problems_solved/your_problem.py, and a skeleton in
+../problems_skel/your_problem_skel.py.  If there are any figures, you
+should create a PNG and EPS version of each and add them to the fig
+subdirectory of the workbook directory.  You will need to svn add your
+tex file, problem, skeleton, skeleton symlink, and figures.
 
 You can build the workbook in skeleton form with
 

@@ -1,8 +1,5 @@
 import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap, supported_projections
-
-# create figure.
-fig = pylab.figure()
 # create map by specifying width and height in km.
 projection = XX # map projection  ('lcc','stere','laea','aea' etc)
                 # 'print supported_projections' gives a list

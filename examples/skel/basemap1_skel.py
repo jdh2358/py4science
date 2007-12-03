@@ -1,8 +1,5 @@
 import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap
-
-# create figure.
-fig = pylab.figure()
 # create map by specifying lat/lon values at corners.
 projection = 'lcc' # map projection 
 resolution = XX # resolution of boundaries ('c','l','i',or 'h')

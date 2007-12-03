@@ -1,27 +1,15 @@
 import pylab, numpy
 from matplotlib.toolkits.basemap import Basemap
-
-# create figure.
-# background color will be used for 'wet' areas.
-fig = pylab.figure()
 # create map by specifying width and height in km.
-resolution = 'l'
-lon_0 = -50
-lat_0 = 60
-projection = 'lcc'
-width = 12000000
-height = 0.75*width
-m = Basemap(lon_0=lon_0,lat_0=lat_0,\
-            width=width,height=height,\
+resolution = 'l'; projection='lcc'
+lon_0 = -50; lat_0 = 60.
+width = 12000000; height = 0.75*width
+m = Basemap(lon_0=lon_0,lat_0=lat_0,width=width,height=height,\
             resolution=resolution,projection=projection)
 # lat/lon and name of location 1.
-lat1 = XX
-lon1 = XX
-name1 = XX
+lat1 = XX; lon1 = XX; name = XX
 # ditto for location 2.
-lat2 = XX
-lon2 = XX
-name2 = XX
+lat2 = XX; lon2 = XX; name2 = XX
 # convert these points to map projection coordinates
 # (using __call__ method of Basemap instance)
 x1, y1 = m(lon1, lat1)

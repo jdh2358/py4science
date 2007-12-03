@@ -1,6 +1,5 @@
 from matplotlib.toolkits.basemap import Basemap, NetCDFFile
 import pylab, numpy
-
 # read in netCDF sea-surface temperature data
 # can be a local file, a URL for a remote opendap dataset,
 # or (if PyNIO is installed) a GRIB or HDF file.
@@ -8,9 +7,6 @@ ncfile = NetCDFFile('data/sst.nc')
 sst = ncfile.variables['analysed_sst'][:]
 lats = ncfile.variables['lat'][:]
 lons = ncfile.variables['lon'][:]
-
-print sst.shape, sst.min(), sst.max()
-
 # set colormap
 cmap = pylab.cm.gist_ncar
 # create Basemap instance for mollweide projection.

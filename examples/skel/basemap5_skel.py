@@ -5,12 +5,10 @@ import pylab, numpy
 # or (if PyNIO is installed) a GRIB or HDF file.
 # See http://nomads.ncdc.noaa.gov/ for some NOAA OPenDAP datasets.
 ncfile = NetCDFFile('data/sst.nc')
-sst = ncfile.variables['analysed_sst'][:]
-# uncommenting the next two lines will 
-# produce a very similar plot, but will read
-# the data over the web instead of from a local file.
+# uncommenting the next line will produce a very similar plot,
+# but will read the data over the web instead of from a local file. 
 #ncfile = NetCDFFile('http://nomads.ncdc.noaa.gov:8085/thredds/dodsC/oisst/2007/AVHRR/sst4-navy-eot.20071201.nc')
-#sst = ncfile.variables['sst'][:]
+sst = ncfile.variables['sst'][:]
 lats = ncfile.variables['lat'][:]
 lons = ncfile.variables['lon'][:]
 # Basemap comes with extra colormaps from Generic Mapping Tools

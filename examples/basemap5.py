@@ -4,7 +4,7 @@ import pylab, numpy
 # can be a local file, a URL for a remote opendap dataset,
 # or (if PyNIO is installed) a GRIB or HDF file.
 ncfile = NetCDFFile('data/sst.nc')
-sst = ncfile.variables['analysed_sst'][:]
+sst = ncfile.variables['sst'][:]
 lats = ncfile.variables['lat'][:]
 lons = ncfile.variables['lon'][:]
 # create Basemap instance for mollweide projection.

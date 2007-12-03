@@ -17,13 +17,21 @@ Core requirements
 
 The four python packages you will need for this course are
 
-    - ipython: an interactive python shell http://ipython.scipy.org
+    - ipython_: an interactive python shell 
 
-    - numpy: high performance numerical arrays http://numpy.scipy.org
+    - numpy_: high performance numerical arrays
 
-    - scipy: algorithms and numerics http://scipy.org
+    - scipy_: algorithms and numerics
 
-    - matplotlib: plotting http://matplotlib.sf.net
+    - matplotlib_: plotting 
+
+.. _ipython: http://ipython.scipy.org
+
+.. _numpy: http://numpy.scipy.org
+
+.. _scipy: http://scipy.org
+
+.. _matplotlib: http://matplotlib.sf.net
 
 With these four packages, you will be able to do about 90% of the
 exercises in the course.  In addition, to generate plot windows,

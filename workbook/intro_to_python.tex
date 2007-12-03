@@ -1,0 +1,1474 @@
+
+\chapter[Python intro]{A whirlwind tour of python and the standard library}
+
+This is a quick-and-dirty introduction to the python language for
+the impatient scientist. There are many top notch, comprehensive introductions
+and tutorials for python. For absolute beginners, there is the \textit{Python
+Beginner's Guide}.%
+\footnote{http://www.python.org/moin/BeginnersGuide%
+} The official \textit{Python Tutorial} can be read online%
+\footnote{http://docs.python.org/tut/tut.html%
+} or downloaded%
+\footnote{http://docs.python.org/download.html%
+} in a variety of formats. There are over 100 python tutorials collected
+online.%
+\footnote{http://www.awaretek.com/tutorials.html%
+}
+
+There are also many excellent books. Targetting newbies is Mark Pilgrim's
+\textit{Dive into Python} which in available in print and for free
+online%
+\footnote{http://diveintopython.org/toc/index.html%
+}, though for absolute newbies even this may be too hard \cite{Dive}.
+For experienced programmers, David Beasley's \textit{Python Essential
+Reference} is an excellent introduction to python, but is a bit dated
+since it only covers python2.1 \cite{Beasley}. Likwise Alex Martelli's
+\textit{Python in a Nutshell} is highly regarded and a bit more current
+-- a 2nd edition is in the works\cite{Nutshell}. And \textit{The
+Python Cookbook} is an extremely useful collection of python idioms,
+tips and tricks \cite{Cookbook}.
+
+But the typical scientist I encounter wants to solve a specific problem,
+eg, to make a certain kind of graph, to numerically integrate an equation,
+or to fit some data to a parametric model, and doesn't have the time
+or interest to read several books or tutorials to get what they want.
+This guide is for them: a short overview of the language to help them
+get to what they want as quickly as possible. We get to advanced material
+pretty quickly, so it may be touch sledding if you are a python newbie.
+Take in what you can, and if you start getting dizzy, skip ahead to
+the next section; you can always come back to absorb more detail later,
+after you get your real work done.
+
+
+\section{Hello Python}
+
+Python is a dynamically typed, object oriented, interpreted language.
+Interpreted means that your program interacts with the python interpreter,
+similar to Matlab, Perl, Tcl and Java, and unlike FORTRAN, C, or C++
+which are compiled. So let's fire up the python interpreter and get
+started. I'm not going to cover installing python -- it's standard
+on most linux boxes and for windows there is a friendly GUI installer.
+To run the python interpreter, on windows, you can click \texttt{Start->All
+Programs->Python 2.4->Python (command line)} or better yet, install
+\texttt{ipython}, a python shell on steroids, and use that. On linux
+/ unix systems, you just need to type \texttt{python} or \texttt{ipython}
+at the command line. The \texttt{>\,{}>\,{}>} is the default python
+shell prompt, so don't type it in the examples below
+
+\begin{lyxcode}
+>\,{}>\,{}>~print~'hello~world'
+
+hello~world
+
+
+\end{lyxcode}
+As this example shows, \textit{hello world} in python is pretty easy
+-- one common phrase you hear in the python community is that {}``it
+fits your brain''. -- the basic idea is that coding in python feels
+natural. Compare python's version with \textit{hello world} in C++
+
+\begin{lyxcode}
+//~C++
+
+\#include~<iostream>
+
+int~main~()
+
+\{~~~
+
+~~std::cout~<\,{}<~\char`\"{}Hello~World\char`\"{}~<\,{}<~std::endl;
+
+~~return~0;
+
+\}
+\end{lyxcode}
+
+\section[Calculator]{\label{sec:into_calculator}Python is a calculator}
+
+Aside from my daughter's solar powered cash-register calculator, Python
+is the only calculator I use. From the python shell, you can type
+arbitrary arithmetic expressions.
+
+\begin{lyxcode}
+>\,{}>\,{}>~2+2
+
+4
+
+>\,{}>\,{}>~2{*}{*}10
+
+1024
+
+>\,{}>\,{}>~10/5
+
+2
+
+>\,{}>\,{}>~2+(24.3~+~.9)/.24
+
+107.0
+
+>\,{}>\,{}>~2/3
+
+0
+\end{lyxcode}
+The last line is a standard newbie gotcha -- if both the left and
+right operands are integers, python returns an integer. To do floating
+point division, make sure at least one of the numbers is a float
+
+\begin{lyxcode}
+>\,{}>\,{}>~2.0/3
+
+0.66666666666666663
+\end{lyxcode}
+The distinction between integer and floating point division is a common
+source of frustration among newbies and is slated for destruction
+in the mythical Python 3000.%
+\footnote{Python 3000 is a future python release that will clean up several
+things that Guido considers to be warts.%
+} Since default integer division will be removed in the future, you
+can invoke the time machine with the \texttt{from \_\_future\_\_}
+directives; these directives allow python programmers today to use
+features that will become standard in future releases but are not
+included by default because they would break existing code. From future
+directives should be among the first lines you type in your python
+code if you are going to use them, otherwise they may not work. The
+future division operator will assume floating point division by default,%
+\footnote{You may have noticed that 2/3 was represented as 0.66666666666666663
+and not 0.66666666666666666 as might be expected. This is because
+computers are binary calculators, and there is no exact binary representation
+of 2/3, just as there is no exact binary representation of 0.1
+
+\begin{lyxcode}
+>\,{}>\,{}>~0.1
+
+0.10000000000000001
+\end{lyxcode}
+Some languages try and hide this from you, but python is explicit.%
+}and provides another operator // to do classic integer division.
+
+\begin{lyxcode}
+>\,{}>\,{}>~from~\_\_future\_\_~import~division
+
+>\,{}>\,{}>~2/3
+
+0.66666666666666663
+
+>\,{}>\,{}>~2//3
+
+0
+\end{lyxcode}
+python has four basic numeric types: int, long, float and complex,
+but unlike C++, BASIC, FORTRAN or Java, you don't have to declare
+these types. python can infer them
+
+\begin{lyxcode}
+>\,{}>\,{}>~type(1)
+
+<type~'int'>
+
+>\,{}>\,{}>~type(1.0)
+
+<type~'float'>
+
+>\,{}>\,{}>~type(2{*}{*}200)
+
+<type~'long'>
+
+
+\end{lyxcode}
+$2^{200}$is a huge number!
+
+\begin{lyxcode}
+>\,{}>\,{}>~2{*}{*}200
+
+1606938044258990275541962092341162602522202993782792835301376L
+\end{lyxcode}
+but python will blithely compute it and much larger numbers for you
+as long as you have CPU and memory to handle them. The integer type,
+if it overflows, will automatically convert to a python \texttt{long}
+(as indicated by the appended \texttt{L} in the output above) and
+has no built-in upper bound on size, unlike C/C++ longs.
+
+Python has built in support for complex numbers. Eg, we can verify
+$i^{2}=-1$ 
+
+\begin{lyxcode}
+>\,{}>\,{}>~x~=~complex(0,1)
+
+>\,{}>\,{}>~x{*}x
+
+(-1+0j)
+\end{lyxcode}
+To access the real and imaginary parts of a complex number, use the
+\texttt{real} and \texttt{imag} attributes
+
+\begin{lyxcode}
+>\,{}>\,{}>~x.real
+
+0.0
+
+>\,{}>\,{}>~x.imag
+
+1.0
+\end{lyxcode}
+If you come from other languages like Matlab, the above may be new
+to you. In matlab, you might do something like this (>\,{}> is the
+standard matlab shell prompt)
+
+\begin{lyxcode}
+>\,{}>~x~=~0+j
+
+x~=
+
+~~~0.0000~+~1.0000i
+
+
+
+>\,{}>~real(x)
+
+ans~=
+
+~~~~~0
+
+
+
+>\,{}>~imag(x)
+
+ans~=
+
+~~~~~1
+
+
+
+
+\end{lyxcode}
+That is, in Matlab, you use a \textit{function} to access the real
+and imaginary parts of the data, but in python these are attributes
+of the complex object itself. This is a core feature of python and
+other object oriented languages: an object carries its data and methods
+around with it. One might say: {}``a complex number knows it's real
+and imaginary parts'' or {}``a complex number knows how to take
+its conjugate'', you don't need external functions for these operations
+
+\begin{lyxcode}
+>\,{}>\,{}>~x.conjugate
+
+<built-in~method~conjugate~of~complex~object~at~0xb6a62368>
+
+>\,{}>\,{}>~x.conjugate()
+
+-1j
+\end{lyxcode}
+On the first line, I just followed along from the example above with
+\texttt{real} and \texttt{imag} and typed \texttt{x.conjugate} and
+python printed the representation \texttt{<built-in method conjugate
+of complex object at 0xb6a62368>.} This means that \texttt{conjugate}
+is a \textit{method}, a.k.a a function, and in python we need to use
+parentheses to call a function. If the method has arguments, like
+the \texttt{x} in \texttt{sin(x)}, you place them inside the parentheses,
+and if it has no arguments, like \texttt{conjugate}, you simply provide
+the open and closing parentheses. \texttt{real}, \texttt{imag} and
+\texttt{conjugate} are attributes of the complex object, and \texttt{conjugate}
+is a \textit{callable} attribute, known as a \textit{method}.
+
+OK, now you are an object oriented programmer. There are several key
+ideas in object oriented programming, and this is one of them: an
+object carries around with it data (simple attributes) and methods
+(callable attributes) that provide additional information about the
+object and perform services. It's one stop shopping -- no need to
+go to external functions and libraries to deal with it -- the object
+knows how to deal with itself.
+
+
+\section[Standard Library]{Accessing the standard library}
+
+Arithmetic is fine, but before long you may find yourself tiring of
+it and wanting to compute logarithms and exponents, sines and cosines
+
+\begin{lyxcode}
+>\,{}>\,{}>~log(10)
+
+Traceback~(most~recent~call~last):
+
+~~File~\char`\"{}<stdin>\char`\"{},~line~1,~in~?
+
+NameError:~name~'log'~is~not~defined
+\end{lyxcode}
+These functions are not built into python, but don't despair, they
+are built into the python standard library. To access a function from
+the standard library, or an external library for that matter, you
+must import it.
+
+\begin{lyxcode}
+>\,{}>\,{}>~import~math
+
+>\,{}>\,{}>~math.log(10)
+
+2.3025850929940459
+
+>\,{}>\,{}>~math.sin(math.pi)
+
+1.2246063538223773e-16
+\end{lyxcode}
+Note that the default \texttt{log} function is a base 2 logarithm
+(use \texttt{math.log10} for base 10 logs) and that floating point
+math is inherently imprecise, since analytically$\sin(\pi)=0$.
+
+It's kind of a pain to keep typing \texttt{math.log} and \texttt{math.sin}
+and \texttt{math.p}i, and python is accomodating. There are additional
+forms of \texttt{import} that will let you save more or less typing
+depending on your desires
+
+\begin{lyxcode}
+\textcolor{blue}{\#~Appreviate~the~module~name:~m~is~an~alias}
+
+>\,{}>\,{}>~import~math~as~m
+
+>\,{}>\,{}>~m.cos(2{*}m.pi)
+
+1.0
+
+
+
+\textcolor{blue}{\#~Import~just~the~names~you~need}
+
+>\,{}>\,{}>~from~math~import~exp,~log
+
+>\,{}>\,{}>~log(exp(1))
+
+1.0
+
+
+
+\textcolor{blue}{\#~Import~everything~-~use~with~caution!}
+
+>\,{}>\,{}>~from~math~import~{*}
+
+>\,{}>\,{}>~sin(2{*}pi{*}10)
+
+-2.4492127076447545e-15
+\end{lyxcode}
+To help you learn more about what you can find in the math library,
+python has nice introspection capabilities -- introspection is a way
+of asking an object about itself. For example, to find out what is
+available in the math library, we can get a directory of everything
+available with the \texttt{dir} command%
+\footnote{In addition to the introdpection and help provided in the python interpreter,
+the official documentation of the python standard library is very
+good and up-to-date http://docs.python.org/lib/lib.html .%
+}
+
+\begin{lyxcode}
+>\,{}>\,{}>~dir(math)
+
+{[}'\_\_doc\_\_',~'\_\_file\_\_',~'\_\_name\_\_',~'acos',~'asin',~'atan',~'atan2',~'ceil',~'cos',~'cosh',~'degrees',~'e',~'exp',~'fabs',~'floor',~'fmod',~'frexp',~'hypot',~'ldexp',~'log',~'log10',~'modf',~'pi',~'pow',~'radians',~'sin',~'sinh',~'sqrt',~'tan',~'tanh']
+\end{lyxcode}
+This gives us just a listing of the names that are in the math module
+-- they are fairly self descriptive, but if you want more, you can
+call \texttt{help} on any of these functions for more information
+
+\begin{lyxcode}
+>\,{}>\,{}>~help(math.sin)~
+
+Help~on~built-in~function~sin:
+
+sin(...)
+
+sin(x)
+
+Return~the~sine~of~x~(measured~in~radians).
+\end{lyxcode}
+and for the whole math library
+
+\begin{lyxcode}
+>\,{}>\,{}>~help(math)~
+
+Help~on~module~math:
+
+~
+
+NAME
+
+~~~~math
+
+~
+
+FILE
+
+~~~~/usr/local/lib/python2.3/lib-dynload/math.so
+
+~
+
+DESCRIPTION
+
+~~~~This~module~is~always~available.~~It~provides~access~to~the
+
+~~~~mathematical~functions~defined~by~the~C~standard.
+
+~
+
+FUNCTIONS
+
+~~~~acos(...)
+
+~~~~~~~~acos(x)
+
+~~~~~~~~~
+
+~~~~~~~~Return~the~arc~cosine~(measured~in~radians)~of~x.
+
+~~~~~
+
+~~~~asin(...)
+
+~~~~~~~~asin(x)
+
+~~~~~~~~~
+
+~~~~~~~~Return~the~arc~sine~(measured~in~radians)~of~x.
+
+~~~~~
+\end{lyxcode}
+And much more which is snipped. Likewise, we can get information on
+the complex object in the same way
+
+\begin{lyxcode}
+>\,{}>\,{}>~x~=~complex(0,1)
+
+>\,{}>\,{}>~dir(x)
+
+{[}'\_\_abs\_\_',~'\_\_add\_\_',~'\_\_class\_\_',~'\_\_coerce\_\_',~'\_\_delattr\_\_',~'\_\_div\_\_',~'\_\_divmod\_\_',~'\_\_doc\_\_',~'\_\_eq\_\_',~'\_\_float\_\_',~'\_\_floordiv\_\_',~'\_\_ge\_\_',~'\_\_getattribute\_\_',~'\_\_getnewargs\_\_',~'\_\_gt\_\_',~'\_\_hash\_\_',~'\_\_init\_\_',~'\_\_int\_\_',~'\_\_le\_\_',~'\_\_long\_\_',~'\_\_lt\_\_',~'\_\_mod\_\_',~'\_\_mul\_\_',~'\_\_ne\_\_',~'\_\_neg\_\_',~'\_\_new\_\_',~'\_\_nonzero\_\_',~'\_\_pos\_\_',~'\_\_pow\_\_',~'\_\_radd\_\_',~'\_\_rdiv\_\_',~'\_\_rdivmod\_\_',~'\_\_reduce\_\_',~'\_\_reduce\_ex\_\_',~'\_\_repr\_\_',~'\_\_rfloordiv\_\_',~'\_\_rmod\_\_',~'\_\_rmul\_\_',~'\_\_rpow\_\_',~'\_\_rsub\_\_',~'\_\_rtruediv\_\_',~'\_\_setattr\_\_',~'\_\_str\_\_',~'\_\_sub\_\_',~'\_\_truediv\_\_',~'conjugate',~'imag',~'real']
+
+
+\end{lyxcode}
+Notice that called \texttt{dir} or \texttt{help} on the \texttt{math}
+\textit{module}, the \texttt{math.sin} \textit{function}, and the
+\texttt{complex} \textit{number} \texttt{x}. That's because modules,
+functions and numbers are all \textit{objects}, and we use the same
+object introspection and help capabilites on them. We can find out
+what type of object they are by calling \texttt{type} on them, which
+is another function in python's introspection arsenal
+
+\begin{lyxcode}
+>\,{}>\,{}>~type(math)
+
+<type~'module'>
+
+>\,{}>\,{}>~type(math.sin)
+
+<type~'builtin\_function\_or\_method'>
+
+>\,{}>\,{}>~type(x)
+
+<type~'complex'>
+
+
+\end{lyxcode}
+Now, you may be wondering: what were all those god-awful looking double
+underscore methods, like \texttt{\_\_abs\_\_} and \texttt{\_\_mul\_\_}
+in the \texttt{dir} listing of the complex object above? These are
+methods that define what it means to be a numeric type in python,
+and the complex object implements these methods so that complex numbers
+act like the way should, eg \texttt{\_\_mul\_\_} implements the rules
+of complex multiplication. The nice thing about this is that python
+specifies an application programming interface (API) that is the definition
+of what it means to be a number in python. And this means you can
+define your own numeric types, as long as you implement the required
+special double underscore methods for your custom type. double underscore
+methods are very important in python; although the typical newbie
+never sees them or thinks about them, they are there under the hood
+providing all the python magic, and more importantly, showing the
+way to let you make magic.
+
+
+\section{\label{sec:intro_string}Strings}
+
+We've encountered a number of types of objects above: int, float,
+long, complex, method/function and module. We'll continue our tour
+with an introduction to strings, which are critical components of
+almost every program. You can create strings in a number of different
+ways, with single quotes, double quotes, or triple quotes -- this
+diversity of methods makes it easy if you need to embed string characters
+in the string itself
+
+\begin{lyxcode}
+\textcolor{blue}{\#~single,~double~and~triple~quoted~strings}
+
+>\,{}>\,{}>~s~=~'Hi~Mom!'
+
+>\,{}>\,{}>~s~=~\char`\"{}Hi~Mom!\char`\"{}
+
+>\,{}>\,{}>~s~=~\char`\"{}\char`\"{}\char`\"{}Porky~said,~\char`\"{}That's~all~folks!\char`\"{}~\char`\"{}\char`\"{}\char`\"{}
+\end{lyxcode}
+You can add strings together to concatenate them
+
+\begin{lyxcode}
+\textcolor{blue}{\#~concatenating~strings}
+
+>\,{}>\,{}>~first~=~'John'
+
+>\,{}>\,{}>~last~=~'Hunter'
+
+>\,{}>\,{}>~first+last
+
+'JohnHunter'
+\end{lyxcode}
+or call string methods to process them: upcase them or downcase them,
+or replace one character with another
+
+\begin{lyxcode}
+\textcolor{blue}{\#~string~methods}
+
+>\,{}>\,{}>~last.lower()
+
+'hunter'
+
+>\,{}>\,{}>~last.upper()
+
+'HUNTER'
+
+>\,{}>\,{}>~last.replace('h',~'p')
+
+'Hunter'
+
+>\,{}>\,{}>~last.replace('H',~'P')
+
+'Punter'~
+\end{lyxcode}
+Note that in all of these examples, the string \texttt{last} is unchanged.
+All of these methods operate on the string and return a new string,
+leaving the original unchanged. In fact, python strings cannot be
+changed by any python code at all: they are \textit{immutable} (unchangeable).
+The concept of mutable and immutable objects in python is an important
+one, and it will come up again, because only immutable objects can
+be used as keys in python dictionaries and elements of python sets.
+
+You can access individual characters, or slices of the string (substrings),
+using indexing. A string in sequence of characters, and strings implement
+the sequence protocol in python -- we'll see more examples of python
+sequences later -- and all sequences have the same syntax for accessing
+their elements. Python uses 0 based indexing which means the first
+element is at index 0; you can use negative indices to access the
+last elements in the sequence
+
+\begin{lyxcode}
+\textcolor{blue}{\#~string~indexing}
+
+>\,{}>\,{}>~last~=~'Hunter'
+
+>\,{}>\,{}>~last{[}0]
+
+'H'
+
+>\,{}>\,{}>~last{[}1]
+
+'u'
+
+>\,{}>\,{}>~last{[}-1]~
+
+'r'~
+\end{lyxcode}
+To access substrings, or generically in terms of the sequence protocol,
+slices, you use a colon to indicate a range
+
+\begin{lyxcode}
+\textcolor{blue}{\#~string~slicing}
+
+>\,{}>\,{}>~last{[}0:2]
+
+'Hu'
+
+>\,{}>\,{}>~last{[}2:4]
+
+'nt'
+\end{lyxcode}
+As this example shows, python uses {}``one-past-the-end'' indexing
+when defining a range; eg, in the range \texttt{indmin:indmax}, the
+element of \texttt{imax} is not included. You can use negative indices
+when slicing too; eg, to get everything before the last character
+
+\begin{lyxcode}
+>\,{}>\,{}>~last{[}0:-1]
+
+'Hunte'
+\end{lyxcode}
+You can also leave out either the min or max indicator; if they are
+left out, 0 is assumed to be the \texttt{indmin} and one past the
+end of the sequence is assumed to be \texttt{indmax}
+
+\begin{lyxcode}
+>\,{}>\,{}>~last{[}:3]
+
+'Hun'
+
+>\,{}>\,{}>~last{[}3:]
+
+'ter'
+\end{lyxcode}
+There is a third number that can be placed in a slice, a step, with
+syntax indmin:indmax:step; eg, a step of 2 will skip every second
+letter
+
+\begin{lyxcode}
+>\,{}>\,{}>~last{[}1:6:2]
+
+'utr'
+\end{lyxcode}
+Although this may be more that you want to know about slicing strings,
+the time spent here is worthwhile. As mentioned above, all python
+sequences obey these rules. In addition to strings, lists and tuples,
+which are built-in python sequence data types and are discussed in
+the next section, the numeric arrays widely used in scientific computing
+also implement the sequence protocol, and thus have the same slicing
+rules.
+
+\begin{xca}
+What would you expect last{[}:] to return?
+\end{xca}
+One thing that comes up all the time is the need to create strings
+out of other strings and numbers, eg to create filenames from a combination
+of a base directory, some base filename, and some numbers. Scientists
+like to create lots of data files like and then write code to loop
+over these files and analyze them. We're going to show how to do that,
+starting with the newbie way and progressively building up to the
+way of python zen master. All of the methods below \textit{work},
+but the zen master way will more efficient, more scalable (eg to larger
+numbers of files) and cross-platform.%
+\footnote{{}``But it works'' is a common defense of bad code; my rejoinder
+to this is {}``A computer scientist is someone who fixes things that
+aren't broken''. %
+} Here's the newbie way: we also introduce the for-loop here in the
+spirit of diving into python -- note that python uses whitespace indentation
+to delimit the for-loop code block
+
+\begin{lyxcode}
+\textcolor{blue}{\#~The~newbie~way}
+
+for~i~in~(1,2,3,4):
+
+~~~~fname~=~'data/myexp0'~+~str(i)~+~'.dat'
+
+~~~~print~fname
+\end{lyxcode}
+Now as promised, this will print out the 4 file names above, but it
+has three flaws: it doesn't scale to 10 or more files, it is inefficient,
+and it is not cross platform. It doesn't scale because it hard-codes
+the '\texttt{0}' after \texttt{myexp}, it is inefficient because to
+add several strings requires the creation of temporary strings, and
+it is not cross-platform because it hard-codes the directory separator
+'/'.
+
+\begin{lyxcode}
+\textcolor{blue}{\#~On~the~path~to~elightenment}
+
+for~i~in~(1,2,3,4):
+
+~~~~fname~=~'data/myexp\%02d.dat'\%i
+
+~~~~print~fname
+\end{lyxcode}
+This example uses string interpolation, the funny \% thing. If you
+are familiar with C programming, this will be no surprise to you (on
+linux/unix systems do \texttt{man sprintf} at the unix shell). The
+percent character is a string formatting character: \texttt{\%02d}
+means to take an integer (the \texttt{d} part) and print it with two
+digits, padding zero on the left (the \texttt{\%02} part). There is
+more to be said about string interpolation, but let's finish the job
+at hand. This example is better than the newbie way because is scales
+up to files numbered 0-99, and it is more efficient because it avoids
+the creation of temporary strings. For the platform independent part,
+we go to the python standard library \texttt{os.path}, which provides
+a host of functions for platform-independent manipulations of filenames,
+extensions and paths. Here we use \texttt{os.path.join} to combine
+the directory with the filename in a platform independent way. On
+windows, it will use the windows path separator '\textbackslash{}'
+and on unix it will use '/'.
+
+\begin{lyxcode}
+\textcolor{blue}{\#~the~zen~master~approach}
+
+import~os
+
+for~i~in~(1,2,3,4):
+
+~~~~fname~=~os.path.join('data',~'myexp\%02d.dat'\%i)
+
+~~~~print~fname
+\end{lyxcode}
+\begin{xca}
+Suppose you have data files named like
+\end{xca}
+\begin{lyxcode}
+data/2005/exp0100.dat
+
+data/2005/exp0101.dat
+
+data/2005/exp0102.dat
+
+...
+
+data/2005/exp1000.dat
+\end{lyxcode}
+Write the python code that iterates over these files, constructing
+the filenames as strings in using \texttt{os.path.join} to construct
+the paths in a platform-independent way. \textit{Hint}: read the help
+for \texttt{os.path.join}!
+
+OK, I promised to torture you a bit more with string interpolation
+-- don't worry, I remembered. The ability to properly format your
+data when printing it is crucial in scientific endeavors: how many
+signficant digits do you want, do you want to use integer, floating
+point representation or exponential notation? These three choices
+are provided with \texttt{\%d}, \texttt{\%f} and \texttt{\%e}, with
+lots of variations on the theme to indicate precision and more
+
+\begin{lyxcode}
+>\,{}>\,{}>~'warm~for~\%d~minutes~at~\%1.1f~C'~\%~(30,~37.5)
+
+'warm~for~30~minutes~at~37.5~C'
+
+
+
+>\,{}>\,{}>~'The~mass~of~the~sun~is~\%1.4e~kg'\%~(1.98892{*}10{*}{*}30)
+
+'The~mass~of~the~sun~is~1.9889e+30~kg'
+
+
+\end{lyxcode}
+There are two string methods, \texttt{split} and \texttt{join}, that
+arise frequenctly in Numeric processing, specifically in the context
+of processing data files that have comma, tab, or space separated
+numbers in them. \texttt{split} takes a single string, and splits
+it on the indicated character to a sequence of strings. This is useful
+to take a single line of space or comma separated values and split
+them into individual numbers
+
+\begin{lyxcode}
+\textcolor{blue}{\#~s~is~a~single~string~and~we~split~it~into~a~list~of~strings}
+
+\textcolor{blue}{\#~for~further~processing}
+
+>\,{}>\,{}>~s~=~'1.0~2.0~3.0~4.0~5.0'
+
+>\,{}>\,{}>~s.split('~')
+
+{[}'1.0',~'2.0',~'3.0',~'4.0',~'5.0']
+\end{lyxcode}
+The return value, with square brackets, indicates that python has
+returned a list of strings. These individual strings need further
+processing to convert them into actual floats, but that is the first
+step.  The conversion to floats will be discussed in the next session,
+when we learn about list comprehensions. The converse method is join,
+which is often used to create string output to an ASCII file from
+a list of numbers. In this case you want to join a list of numbers
+into a single line for printing to a file. The example below will
+be clearer after the next section, in which lists are discussed
+
+\begin{lyxcode}
+\textcolor{blue}{\#~vals~is~a~list~of~floats~and~we~convert~it~to~a~single}
+
+\textcolor{blue}{\#~space~separated~string}
+
+>\,{}>\,{}>~vals~=~{[}1.0,~2.0,~3.0,~4.0,~5.0]
+
+>\,{}>\,{}>~'~'.join({[}str(val)~for~val~in~vals])
+
+'1.0~2.0~3.0~4.0~5.0'
+\end{lyxcode}
+There are two new things in the example above. One, we called the
+join method directly on a string itself, and not on a variable name.
+Eg, in the previous examples, we always used the name of the object
+when accessing attributes, eg \texttt{x.real} or \texttt{s.upper()}.
+In this example, we call the \texttt{join} method on the string which
+is a single space. The second new feature is that we use a list comprehension
+\texttt{{[}str(val) for val in vals]} as the argument to \texttt{join}.
+\texttt{join} requires a sequence of strings, and the list comprehension
+converts a list of floats to a strings. This can be confusing at first,
+so don't dispair if it is. But it is worth bringing up early because
+list comprehensions are a very useful feature of python. To help elucidate,
+compare \texttt{vals}, which is a list of floats, with the conversion
+of \texttt{vals} to a list of strings using list comprehensions in
+the next line
+
+\begin{lyxcode}
+\textcolor{blue}{\#~converting~a~list~of~floats~to~a~list~of~strings}
+
+>\,{}>\,{}>~vals
+
+{[}1.0,~2.0,~3.0,~4.0,~5.0]
+
+>\,{}>\,{}>~{[}str(val)~for~val~in~vals]~
+
+{[}'1.0',~'2.0',~'3.0',~'4.0',~'5.0']
+\end{lyxcode}
+
+\section[Data Structures]{The basic python data structures}
+
+Strings, covered in the last section, are sequences of characters.
+python has two additional built-in sequence types which can hold arbitrary
+elements: tuples and lists. tuples are created using parentheses,
+and lists are created using square brackets
+
+\begin{lyxcode}
+\textcolor{blue}{\#~a~tuple~and~a~list~of~elements~of~the~same~type}
+
+\textcolor{blue}{\#~(homogeneous)}
+
+>\,{}>\,{}>~t~=~(1,2,3,4)~~\#~tuple
+
+>\,{}>\,{}>~l~=~{[}1,2,3,4]~~\#~list
+\end{lyxcode}
+Both tuples and lists can also be used to hold elements of different
+types
+
+\begin{lyxcode}
+\textcolor{blue}{\#~a~tuple~and~list~of~int,~string,~float}
+
+>\,{}>\,{}>~t~=~(1,'john',~3.0)
+
+>\,{}>\,{}>~l~=~{[}1,'john',~3.0]
+\end{lyxcode}
+Tuples and lists have the same indexing and slicing rules as each
+other, and as string discussed above, because both implement the python
+sequence protocol, with the only difference being that tuple slices
+return tuples (indicated by the parentheses below) and list slices
+return lists (indicated by the square brackets)
+
+\begin{lyxcode}
+\#~indexing~and~slicing~tuples~and~lists
+
+>\,{}>\,{}>~t{[}0]
+
+1
+
+>\,{}>\,{}>~l{[}0]
+
+1
+
+>\,{}>\,{}>~t{[}:-1]
+
+(1,~'john')
+
+>\,{}>\,{}>~l{[}:-1]
+
+{[}1,~'john']
+\end{lyxcode}
+So why the difference between tuples and lists? A number of explanations
+have been offered on the mailing lists, but the only one that makes
+a difference to me is that tuples are immutable, like strings, and
+hence can be used as keys to python dictionaries and included as elements
+of sets, and lists are mutable, and cannot. So a tuple, once created,
+can never be changed, but a list can. For example, if we try to reassign
+the first element of the tuple above, we get an error
+
+\begin{lyxcode}
+>\,{}>\,{}>~t{[}0]~=~'why~not?'
+
+Traceback~(most~recent~call~last):
+
+~File~\char`\"{}<stdin>\char`\"{},~line~1,~in~?
+
+TypeError:~object~doesn't~support~item~assignment
+\end{lyxcode}
+But the same operation is perfectly accetable for lists
+
+\begin{lyxcode}
+>\,{}>\,{}>~l{[}0]~=~'why~not?'
+
+>\,{}>\,{}>~l
+
+{[}'why~not?',~'john',~3.0]
+\end{lyxcode}
+lists also have a lot of methods, tuples have none, save the special
+double underscore methods that are required for python objects and
+sequences
+
+\begin{lyxcode}
+\textcolor{blue}{\#~tuples~contain~only~{}``hidden''~double~underscore~methods}
+
+>\,{}>\,{}>~dir(t)
+
+{[}'\_\_add\_\_',~'\_\_class\_\_',~'\_\_contains\_\_',~'\_\_delattr\_\_',~'\_\_doc\_\_',~'\_\_eq\_\_',~'\_\_ge\_\_',~'\_\_getattribute\_\_',~'\_\_getitem\_\_',~'\_\_getnewargs\_\_',~'\_\_getslice\_\_',~'\_\_gt\_\_',~'\_\_hash\_\_',~'\_\_init\_\_',~'\_\_iter\_\_',~'\_\_le\_\_',~'\_\_len\_\_',~'\_\_lt\_\_',~'\_\_mul\_\_',~'\_\_ne\_\_',~'\_\_new\_\_',~'\_\_reduce\_\_',~'\_\_reduce\_ex\_\_',~'\_\_repr\_\_',~'\_\_rmul\_\_',~'\_\_setattr\_\_',~'\_\_str\_\_']
+
+
+
+\textcolor{blue}{\#~but~lists~contain~other~methods,~eg~append,~extend~and}
+
+\textcolor{blue}{\#~reverse}
+
+>\,{}>\,{}>~dir(l)
+
+{[}'\_\_add\_\_',~'\_\_class\_\_',~'\_\_contains\_\_',~'\_\_delattr\_\_',~'\_\_delitem\_\_',~'\_\_delslice\_\_',~'\_\_doc\_\_',~'\_\_eq\_\_',~'\_\_ge\_\_',~'\_\_getattribute\_\_',~'\_\_getitem\_\_',~'\_\_getslice\_\_',~'\_\_gt\_\_',~'\_\_hash\_\_',~'\_\_iadd\_\_',~'\_\_imul\_\_',~'\_\_init\_\_',~'\_\_iter\_\_',~'\_\_le\_\_',~'\_\_len\_\_',~'\_\_lt\_\_',~'\_\_mul\_\_',~'\_\_ne\_\_',~'\_\_new\_\_',~'\_\_reduce\_\_',~'\_\_reduce\_ex\_\_',~'\_\_repr\_\_',~'\_\_rmul\_\_',~'\_\_setattr\_\_',~'\_\_setitem\_\_',~'\_\_setslice\_\_',~'\_\_str\_\_',~'append',~'count',~'extend',~'index',~'insert',~'pop',~'remove',~'reverse',~'sort']
+\end{lyxcode}
+Many of these list methods change, or mutate, the list, eg append
+adds an element to the list\texttt{: extend} extends the list with
+a sequence of elements, \texttt{sort} sorts the list in place, \texttt{reverse}
+reverses it in place, \texttt{pop} takes an element off the list and
+returns it.
+
+We've seen a couple of examples of creating a list above -- let's
+look at some more using list methods
+
+\begin{lyxcode}
+>\,{}>\,{}>~x~=~{[}]~~~~~~~~~~~~~~~~~~~\textcolor{blue}{\#~create~the~empty~list}
+
+>\,{}>\,{}>~x.append(1)~~~~~~~~~~~~~~\textcolor{blue}{\#~add~the~integer~one~to~it}
+
+>\,{}>\,{}>~x.extend({[}'hi',~'mom'])~~\textcolor{blue}{\#~append~two~strings~to~it}
+
+>\,{}>\,{}>~x
+
+{[}1,~'hi',~'mom']
+
+>\,{}>\,{}>~x.reverse()~~~~~~~~~~~~~~\textcolor{blue}{\#~reverse~the~list,~in~place}
+
+>\,{}>\,{}>~x
+
+{[}'mom',~'hi',~1]
+
+>\,{}>\,{}>~len(x)
+
+3
+\end{lyxcode}
+We mentioned list comprehensions in the last section when discussing
+string methods.  List comprehensions are a way of creating a list
+using a for loop in a single line of python. Let's create a list of
+the perfect cubes from 1 to 10, first with a for loop and then with
+a list comprehension. The list comprehension code will not only be
+shorter and more elegant, it can be much faster (the dots are the
+indentation block indicator from the python shell and should not be
+typed)
+
+\begin{lyxcode}
+\textcolor{blue}{\#~a~list~of~perfect~cubes~using~a~for-loop}
+
+>\,{}>\,{}>~cubes~=~{[}]
+
+>\,{}>\,{}>~for~i~in~range(1,10):
+
+...~~~~~cubes.append(i{*}{*}3)
+
+...~
+
+>\,{}>\,{}>~cubes
+
+{[}1,~8,~27,~64,~125,~216,~343,~512,~729]
+
+
+
+\textcolor{blue}{\#~functionally~equivalent~code~using~list~comprehensions}
+
+>\,{}>\,{}>~cubes~=~{[}i{*}{*}3~for~i~in~range(1,10)]
+
+>\,{}>\,{}>~cubes
+
+{[}1,~8,~27,~64,~125,~216,~343,~512,~729]
+\end{lyxcode}
+The list comprehension code is faster because it all happens at the
+C level.  In the simple for-loop version, the python expression which
+appends the cube of \texttt{i} has to be evaluated by the python interpreter
+for each element of the loop. In the list comprehension example, the
+single line is parsed once and executed at the C level.  The difference
+in speed can be considerable, and the list comprehension example is
+shorter and more elegant to boot.
+
+The remaining essential built-in data strucuture in python is the
+dictionary, which is an associative array that maps arbitrary immutable
+objects to arbitrary objects. int, long, float, string and tuple are
+all immutable and can be used as keys; to a dictionary list and dict
+are mutable and cannot. A dictionary takes one kind of object as the
+key, and this key points to another object which is the value. In
+a contrived but easy to comprehent examples, one might map names to
+ages
+
+\begin{lyxcode}
+>\,{}>\,{}>~ages~=~\{\}~~~~~~~~~~~~\textcolor{blue}{\#~create~an~empty~dict}
+
+>\,{}>\,{}>~ages{[}'john']~=~36
+
+>\,{}>\,{}>~ages{[}'fernando']~=~33
+
+>\,{}>\,{}>~ages~~~~~~~~~~~~~~~~~\textcolor{blue}{\#~view~the~whole~dict}
+
+\{'john':~36,~'fernando':~33\}
+
+>\,{}>\,{}>~ages{[}'john']
+
+36
+
+>\,{}>\,{}>~ages{[}'john']~=~37~~~~\textcolor{blue}{\#~reassign~john's~age}
+
+>\,{}>\,{}>~ages{[}'john']
+
+37
+\end{lyxcode}
+Dictionary lookup is very fast; Tim Peter's once joked that any python
+program which uses a dictionary is automatically 10 times faster than
+any C program, which is of course false, but makes two worthy points
+in jest: dictionary lookup is fast, and dictionaries can be used for
+important optimizations, eg, creating a cache of frequently used values.
+As a simple eaxample, suppose you needed to compute the product of
+two numbers between 1 and 100 in an inner loop -- you could use a
+dictionary to cache the cube of all odd of numbers < 100; if you were
+inteterested in all numbers, you might simply use a list to store
+the cached cubes -- I am cacheing only the odd numbers to show you
+how a dictionary can be used to represent a sparse data structure
+
+\begin{lyxcode}
+
+
+>\,{}>\,{}>~cubes~=~dict({[}~(~i,~i{*}{*}3~)~for~i~in~range(1,100,2)])
+
+>\,{}>\,{}>~cubes{[}5]
+
+125
+\end{lyxcode}
+The last example is syntactically a bit challenging, but bears careful
+study.  We are initializing a dictionary with a list comprehension.
+ The list comprehension is made up of length 2 tuples \texttt{( i,
+i{*}{*}3} ).  When a dictionary is initialized with a sequence of
+length 2 tuples, it assumes the first element of the tuple \texttt{i}
+is the \textit{key} and the second element i{*}{*}3is the \textit{value}.
+ Thus we have a lookup table from odd integers to to cube.  Creating
+dictionaries from list comprehensions as in this example is something
+that hard-core python programmers do almost every day, and you should
+too.
+
+\begin{xca}
+Create a lookup table of the product of all pairs of numbers less
+than 100. The key will be a tuple of the two numbers \texttt{(i,j)}
+and the value will be the product. Hint: you can loop over multiple
+ranges in a list comprehension, eg \texttt{{[} something for i in
+range(Ni) for j in range(Nj)]}
+\end{xca}
+
+\section[Zen]{The Zen of Python}
+
+\begin{xca}
+\texttt{>\,{}>\,{}> import this}
+\end{xca}
+
+\section{Functions and classes}
+
+You can define functions just about anywhere in python code. The typical
+function definition takes zero or more arguments, zero or more keyword
+arguments, and is followed by a documentation string and the function
+definition, optionally returing a value. Here is a function to compute
+the hypoteneuse of a right triange
+
+\begin{lyxcode}
+def~hypot(base,~height):
+
+~~~'compute~the~hypoteneuse~of~a~right~triangle'
+
+~~~import~math
+
+~~~return~math.sqrt(base{*}{*}2~+~height{*}{*}2)
+\end{lyxcode}
+As in the case of the for-loop, leading white space is significant
+and is used to delimt the start and end of the function. In the example
+below, x = 1 is not in the function, because it is not indented
+
+\begin{lyxcode}
+def~growone(l):
+
+~~~'append~1~to~a~list~l'
+
+~~~l.append(1)
+
+x~=~1
+\end{lyxcode}
+Note that this function does not return anything, because the append
+method modifies the list that was passed in. You should be careful
+when designing functions that have side effects such as modifying
+the structures that are passed in; they should be named and documented
+in such a way that these side effects are clear.
+
+Python is pretty flexible with functions: you can define functions
+within function definitions (just be mindful of your indentation),
+you can attach attributes to functions (like other objects), you can
+pass functions as arguments to other functions. A function keyword
+argument defines a default value for a function that can be overridden.
+Below is an example which provides a normalize keyword argument. The
+default argument is \texttt{normalize=None}; the value None is a standard
+python idiom which usually means either do the default thing or do
+nothing. If \texttt{normalize} is not \texttt{None}, we assume it
+is a function that can be called to normalize our data
+
+\begin{lyxcode}
+def~psd(x,~normalize=None):
+
+~~~~'compute~the~power~spectral~density~of~x'
+
+~~~~if~normalize~is~not~None:~x~=~normalize(x)
+
+~~~\textcolor{blue}{~\#~compute~the~power~spectra~of~x~and~return~it}
+\end{lyxcode}
+This function could be called with or without a \texttt{normalize}
+keyword argument, since if the argument is not passed, the default
+of \texttt{None} is used and no normalization is done.
+
+\begin{lyxcode}
+
+
+\textcolor{blue}{\#~no~normalize~argument;~do~the~default~thing}
+
+>\,{}>\,{}>~psd(x)~~~
+
+
+
+\textcolor{blue}{\#~define~a~custom~normalize~function~unitstd~as~pass~it}
+
+\textcolor{blue}{\#~to~psd}
+
+>\,{}>\,{}>~def~unitstd(x):~return~x/std(x)
+
+>\,{}>\,{}>~psd(x,~normalize=unitstd)
+
+
+\end{lyxcode}
+In Section\ref{sec:into_calculator} we noticed that complex objects
+have the real and imag data attributes, and the conjugate method.
+An object is an instance of a class that defines it, and in python
+you can easily define your own classes. In that section, we emphasized
+that one of the important features of a classes/objects is that they
+carry around their data and methods in a single bundle. Let's look
+at the mechnics of defining classes, and creating instances (a.k.a.
+objects) of these classes. Classes have a special double underscore
+method \_\_init\_\_ that is used as the function to initialize the
+class. For this example, we'll continue with the normalize theme above,
+but in this case the normalization requires some data parameters.
+This example arises when you want to normalize an image which may
+range over 0-255 (8 bit image) or from 0-65535 (16 bit image) to the
+0-1 interval. For 16 bit images, you would normally divide everything
+by 65525, but you might want to configure this to a smaller number
+if your data doesn't use the whole intensity range to enhance contrast.
+For simplicitly, let's suppose our normalize class is only interested
+in the pixel maximum, and will divide all the data by that value.
+
+\begin{lyxcode}
+from~\_\_future\_\_~import~division~~\textcolor{blue}{\#~make~sure~we~do~float~division}
+
+class~Normalize:
+
+~~~~\char`\"{}\char`\"{}\char`\"{}
+
+~~~~A~class~to~normalize~data~by~dividing~it~by~a~maximum~value
+
+~~~~\char`\"{}\char`\"{}\char`\"{}
+
+~~~~def~\_\_init\_\_(self,~maxval):
+
+~~~~~~~~'maxval~will~be~mapped~to~1'
+
+~~~~~~~~self.maxval~=~maxval
+
+~~~~def~\_\_call\_\_(self,~data):
+
+~~~~~~~~'do~the~normalization'
+
+~~~~~~~~\textcolor{blue}{\#~in~real~life~you~would~also~want~to~clip~all~values~of}
+
+~\textcolor{blue}{~~~~~~~\#~data>maxval~so~that~the~returned~value~will~be~in~the~unit}
+
+~\textcolor{blue}{~~~~~~~\#~interval}
+
+~~~~~~~~return~data/self.maxval
+\end{lyxcode}
+The triple quoted string following the definition of class Normalize
+is the class documentation stringd, and it will bre shown to the user
+when they do \texttt{help(Normalize)}. A commonly used convention
+is to name classes with \textit{UpperCase}, but this is not required.
+self is a special variable that a class can use to refer to its own
+data and methods, and must be the first argument to all the class
+methods. The \texttt{\_\_init\_\_} method stores the normalization
+value maxval as a class attribute in \texttt{self.maxval}, and this
+value can later be reused by other class methods (as it is in \texttt{\_\_call\_\_})
+and it can be altered by the user of the class, as will illustrate
+below. The \texttt{\_\_call\_\_} method is another piece of python
+double underscore magic, it allows class instances to be used as \textit{functions},
+eg you can call them just like you can call any function. OK, now
+let's see how you could use this. 
+
+The first line use used to create an \textit{instance} of the \textit{class}
+\texttt{Normalize}, and the special method \texttt{\_\_init\_\_} is
+implicitly called. The second line implicitly calls the special \texttt{\_\_call\_\_}method
+
+\begin{lyxcode}
+>\,{}>\,{}>~norm~=~Normalize(65356)~\textcolor{blue}{\#~good~for~16~bit~images}
+
+>\,{}>\,{}>~norm(255)~~~~~~~~~~~~~~~\textcolor{blue}{\#~call~this~function}
+
+0.0039017075708427688
+
+
+
+\textcolor{blue}{\#~We~can~reset~the~maxval~attribute,~and~the~call~method~}
+
+\textcolor{blue}{\#~is~automagically~updated}
+
+>\,{}>\,{}>~norm.maxval~=~255~~~~~~~\textcolor{blue}{\#~reset~the~maxval}
+
+>\,{}>\,{}>~norm(255)~~~~~~~~~~~~~~~\textcolor{blue}{\#~and~call~it~again}
+
+1.0
+
+
+
+\textcolor{blue}{\#~We~can~pass~the~norm~instance~to~the~psd~function~we~defined~above,~which~}
+
+\textcolor{blue}{\#~is~expecting~a~function}
+
+>\,{}>\,{}>~pdf(X,~normalize=norm)~~~~~~~~~~~~
+\end{lyxcode}
+\begin{xca}
+Pretend that \texttt{complex} were not built-in to the python core,
+and write your own complex class \texttt{MyComplex}. Provide \texttt{real}
+and \texttt{imag} attributes and the \texttt{conjugate} method. Define
+\texttt{\_\_abs\_\_}, \texttt{\_\_mul\_\_} and \texttt{\_\_add\_\_}
+to implement the absolute value of complex numbers, multiplication
+of complex numbers and addition of complex numbers. See the API definition
+of the python number protocol; although this is written for C programmers,
+it contains information about the required function call signatures
+for each of the double underscore methods that define the number protocol
+in python; where they use \texttt{o1} on that page, you would use
+\texttt{self} in python, and where they use \texttt{o2} you might
+use \texttt{other} in python.%
+\footnote{http://www.python.org/doc/current/api/number.html%
+} To get you started, I'll show you what the \texttt{\_\_add\_\_} method
+should look like
+\end{xca}
+\begin{lyxcode}
+\textcolor{blue}{\#~An~example~double~underscore~method~required~in~your~MyComplex}
+
+\textcolor{blue}{\#~implementation}
+
+def~\_\_add\_\_(self,~other):
+
+~~~~'add~self~to~other~and~return~a~new~MyComplex~instance'
+
+~~~~r~=~self.real~+~other.real
+
+~~~~i~=~self.imag~+~other.imag
+
+~~~~return~MyComplex(r,i)
+
+
+
+\textcolor{blue}{\#~When~you~are~finished,~test~your~implementation~with~}
+
+>\,{}>\,{}>~x~=~MyComplex(2,3)
+
+>\,{}>\,{}>~y~=~MyComplex(0,1)
+
+>\,{}>\,{}>~x.real
+
+2.0
+
+>\,{}>\,{}>~y.imag
+
+1.0
+
+>\,{}>\,{}>~x.conjugate()
+
+(2-3j)
+
+>\,{}>\,{}>~x+y
+
+(2+4j)
+
+>\,{}>\,{}>~x{*}y
+
+(-3+2j)
+
+>\,{}>\,{}>~abs(x{*}y)
+
+3.6055512754639891
+
+
+\end{lyxcode}
+
+\section[Files]{Files and file like objects}
+
+Working with files is one of the most common and important things
+we do in scientific computing because that is usually where the data
+lives. In Section\ref{sec:intro_string}, we went through the mechanics
+of automatically building file names like
+
+\begin{lyxcode}
+data/myexp01.dat
+
+data/myexp02.dat
+
+data/myexp03.dat
+
+data/myexp04.dat
+\end{lyxcode}
+but we didn't actually do anything with these files. Here we'll show
+how to read in the data and do something with it. Python makes working
+with files easy and dare I say fun. The test data set lives in \texttt{data/family.csv}
+and is a standard comma separated value file that contains information
+about my family: first name, last name, age, height in cm, weight
+in kg and birthdate. We'll open this file and parse it -- note that
+python has a standard module for parsing CSV files that is much more
+sophisticated than what I am doing here. Nevertheless, it serves as
+an easy to understand example that is close enough to real life that
+it is worth doing. Here is what the data file looks like
+
+\begin{lyxcode}
+First,Last,Age,Weight,Height,Birthday
+
+John,Hunter,36,175,180,1968-03-05
+
+Miriam,Sierig,33,135,177,1971-05-04
+
+Rahel,Hunter,7,55,134,1998-02-25
+
+Ava,Hunter,3,45,121,2001-04-26
+
+Clara,Hunter,0,15,55,2004-10-02
+\end{lyxcode}
+Here is the code to parse that file
+
+\begin{lyxcode}
+\textcolor{blue}{\#~open~the~file~for~reading}
+
+fh~=~file('../data/family.csv',~'r')
+
+\textcolor{blue}{\#~slurp~the~header,~splitting~on~the~comma}
+
+headers~=~fh.readline().split(',')
+
+\textcolor{blue}{\#~now~loop~over~the~remaining~lines~in~the~file~and~parse~them}
+
+for~line~in~fh:
+
+~~~~\textcolor{blue}{\#~remove~any~leading~or~trailing~white~space}
+
+~~~~line~=~line.strip()
+
+~~~~\textcolor{blue}{\#~split~the~line~on~the~comma~into~separate~variables}
+
+~~~~first,~last,~age,~weight,~height,~dob~=~line.split(',')
+
+~~~~\textcolor{blue}{\#~convert~some~of~these~strings~to~floats}
+
+~~~~age,~weight,~height~=~{[}float(val)~for~val~in~(age,~weight,~height)]
+
+~~~~print~first,~last,~age,~weight,~height,~dob
+\end{lyxcode}
+This example illustrates several interesting things. The syntax for
+opening a file is \texttt{file(filename, mode)} and the \texttt{mode}
+is a string like \texttt{'r'} or \texttt{'w'} that determines whether
+you are opening in read or write mode. You can also read and write
+binary files with \texttt{'rb'} and \texttt{'wb'}. There are more
+options and you should do \texttt{help(file)} to learn about them.
+We then use the file \texttt{readline} method to read in the first
+line of the file. This returns a string (the line of text) and we
+call the string method \texttt{split(',')} to split that string wherever
+it sees a comma, and this returns a list of strings which are the
+headers
+
+\begin{lyxcode}
+>\,{}>\,{}>~headers
+
+{[}'First',~'Last',~'Age',~'Weight',~'Height',~'Birthday\textbackslash{}n']
+\end{lyxcode}
+The new line character \texttt{'\textbackslash{}n'} at the end of
+\texttt{'Birthday\textbackslash{}n'} indicates we forgot to strip
+the string of whitespace. To fix that, we should have done
+
+\begin{lyxcode}
+>\,{}>\,{}>~headers~=~fh.readline().strip().split(',')
+
+>\,{}>\,{}>~headers
+
+{[}'First',~'Last',~'Age',~'Weight',~'Height',~'Birthday']~
+\end{lyxcode}
+Notice how this works like a pipeline: \texttt{fh.readline} returns
+a line of text as a string; we call the string method \texttt{strip}
+which returns a string with all white space (spaces, tabs, newlines)
+removed from the left and right; we then call the \texttt{split} method
+on this stripped string to split it into a list of strings.
+
+Next we start to loop over the file -- this is a nice feature of python
+file handles, you can iterate over them as a sequence. We've learned
+our lesson about trailing newlines, so we first strip the line with
+\texttt{line = line.strip()}. The rest is string processing, splitting
+the line on a comma as we did for the headers, and converting the
+strings to numbers where approriate by calling f\texttt{loat(val)}
+for each of \texttt{age}, \texttt{weight} and \texttt{height}. Notice
+how we use list comprehensions and tuple unpacking -- the age, weight,
+\texttt{height = {[}float(val) for val in (age, weight, height)]}
+line, to convert several values at once.
+
+Now that we have all this data, how mught we store it. We could store
+it in a \texttt{results} list
+
+\begin{lyxcode}
+results~=~{[}]
+
+for~line~in~fh:
+
+~~~~\textcolor{blue}{\#~process~the~line~as~above~to~get~the~variables}
+
+~~~~results.append(~(first,~last,~age,~weight,~height,~dob)~)
+
+
+
+
+
+\textcolor{blue}{\#~and~later~when~we~want~to~analyze~the~data}
+
+for~first,~last,~age,~weight,~height,~dob~in~results:
+
+~~~~\textcolor{blue}{\#~do~something~with~the~data}
+\end{lyxcode}
+\begin{xca}
+\texttt{zip} magic.  Python has a nice funcion \texttt{zip} that lets
+you do very useful things with lists of tuples.  \texttt{results}
+above is a list of tuples -- each tuple is the \texttt{first}, \texttt{last},
+\texttt{age}, \texttt{weight}, \texttt{height}, \texttt{dob} for a
+family member.  What happens if you do 
+\end{xca}
+\begin{lyxcode}
+>\,{}>\,{}>~first,~last,~age,~weight,~height,~dob~=~zip({*}results)
+\end{lyxcode}
+What is \texttt{age} now?
+
+\begin{xca}
+Write a class \texttt{Person} and store the attributes \texttt{first},
+\texttt{last}, \texttt{age}, \texttt{weight}, \texttt{height}, \texttt{dob}
+in that class.  Add a class instance to the results list, eg
+\end{xca}
+\begin{lyxcode}
+results.append(Person(first,~last,~age,~weight,~height,~dob))
+\end{lyxcode}
+Python also has a special syntax for printing to an open writable
+file object
+
+\begin{lyxcode}
+\textcolor{blue}{\#~open~the~file~for~writing}
+
+outfile~=~file('mydata.data',~'w')~
+
+for~x,y,z~in~myresults:
+
+~~~~print~>\,{}>~outfile,~'\%1.3f~\%1.3f~\%1.3f'\%(x,y,z)
+\end{lyxcode}
+Another really nice thing about file objects is that other classes
+can implement the file protcol and allow you to use them as if they
+were files. For example, the StringIO module in the standard library
+allows you to read and write to strings as if they were files. The
+urllib.urlopen function allows you to open a remove web page as a
+file object. Try this
+
+\begin{lyxcode}
+\textcolor{blue}{\#~loop~over~the~lines~in~google's~html}
+
+from~urllib~import~urlopen
+
+for~line~in~urlopen('http://www.google.com').readlines():
+
+~~~~print~line,
+\end{lyxcode}
+

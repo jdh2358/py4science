@@ -1,0 +1,390 @@
+
+\chapter[External libraries]{Interfacing with external libraries}
+
+
+\section{weave}
+
+% John - should we talk to Eric Jones about letting us use parts of his weave
+% docs? There's a very old set of docs for weave, I could update some of it and
+% this would make an excellent section. Weave is really amazing, but badly
+% under-documented and hence unknown.
+
+Below is a listing of examples of weave use. This needs a lot of cleaning,
+as some of this code is very old and doesn't actually run with current
+weave. 
+
+\lstinputlisting{examples/wrap_weave.py}
+
+
+\section{swig }
+
+
+\section{f2py }
+
+This is a rough set of notes on how to use f2py. It does NOT substitute
+the official manual, but is rather meant to be used alongside with
+it. 
+
+For any non-trivial poject involving f2py, one should also keep at
+hand Pierre Schnizer's excellent 'A short introduction to F2PY', available
+from http://fubphpc.tu-graz.ac.at/\textasciitilde{}pierre/f2py\_tutorial.tar.gz 
+
+
+\subsection{Usage for the impatient }
+
+Start by building a scratch signature file automatically from your
+Fortran sources (in this case all, you can choose only those .f files
+you need): 
+
+\begin{lyxcode}
+f2py~-m~MODULENAME~-h~MODULENAME.pyf~{*}.f~
+\end{lyxcode}
+This writes the file MODULENAME.pyf, making the best guesses it can
+from the Fortran sources. It builds an interface for the module to
+be accessed as 'import adap1d' from python.
+
+You will then edit the .pyf file to fine-tune the python interface
+exhibited by the resulting extension. This means for example making
+unnecessary scratch areas or array dimensions hidden, or making certain
+parameters be optional and take a default value.
+
+Then, write your setup.py file using distutils, and list the .pyf
+file along with the Fortran sources it is meant to wrap. f2py will
+build the module for you automatically, respecting all the interface
+specifications you made in the .pyf file.
+
+This approach is ultimately far easier than trying to get all the
+declarations (especially dependencies) right through Cf2py directives
+in the Fortran sources. While that may seem appealing at first, experience
+seems to show that it's ultimately far more time-consuming and prone
+to subtle errors. Using this approach, the first f2py pass can do
+the bulk of the interface writing and only fine-tuning needs to be
+done manually. I would only recommend embedded Cf2py directives for
+very simple problems (where it works very well).
+
+The only drawback of this approach is that the interface and the original
+Fortran source lie in different files, which need to be kept in sync.
+This increases a bit the chances of forgetting to update the .pyf
+file if the Fortran interface changes (adding a parameter, for example).
+However, the benefit of having explicit, clear control over f2py's
+behavior far outweighs this concern. 
+
+
+\subsection{Choosing a default compiler }
+
+Set the FC\_VENDOR environment variable. This will then prevent f2py
+from testing all the compilers it knows about. 
+
+
+\subsection{Using Cf2py directives }
+
+For simpler cases you may choose to go the route of Cf2py directives.
+Below are some tips and examples for this approach.
+
+Here's the signature of a simple Fortran routine: \lstinputlisting[language=Fortran]{snippets/wrap_sub_sig.f}
+
+The above is correctly handled by f2py, but it can't know what is
+meant to be input/output and what the relations between the various
+variables are (such as integers which are array dimensions). If we
+add the following f2py directives, the generated python interface
+is a lot nicer: \lstinputlisting[language=Fortran]{snippets/wrap_sub_sig_f2py.f}
+
+
+
+Some comments on the above:
+
+\begin{itemize}
+\item The f2py directives should come immediately after the 'subroutine'
+line and before the Fortran variable lines. This allows the f2py dimension
+directives to override the Fortran var({*}) directives.
+\item If the Fortran code uses var(N) instead of var({*}), the f2py directives
+can be placed after the Fortran declarations. This mode is preferred,
+as there is less redundancy overall. The result is much simpler: 
+\end{itemize}
+\lstinputlisting[language=Fortran]{snippets/wrap_sub_sig_f2py.f}
+
+
+
+Since python can automatically manage memory, it is possible to hide
+the need for manually passed 'work' areas. The C/python wrapper to
+the underlying fortran routine will allocate the memory for the needed
+work areas on the fly. This is done by specifying intent(hide,cache).
+'hide' tells f2py to remove the variable from the argument list and
+'cache' tells it to auto-generate it.
+
+In cases where the allocation cost becomes a performance problem,
+one can remove the 'hide' part and make it an optional argument. In
+this case it will only be generated if not given. For this, the line
+above should be changed to:
+
+\begin{lyxcode}
+{\small Cf2py~~~real~{*}8~dimension(2{*}mm+2),~intent(cache),~optional,~depend(mm)~::~wrk~}{\small \par}
+\end{lyxcode}
+Note that this should only be done after proving that the scratch
+areas are causing a performance problem. The \texttt{cache} directive
+causes f2py to keep cached copies of the scratch areas, so no unnecessary
+mallocs should be triggered.
+
+Since f2py relies on Numeric arrays, all dimensions can be determined
+from the arrays themselves and it is not necessary to pass them explicitly.
+
+With all this, the resulting f2py-generated docstring becomes: 
+
+\begin{lyxcode}
+phipol~-~Function~signature:
+
+~~phi~=~phipol(j,nodes,wei,x)
+
+Required~arguments:
+
+~~j~:~input~int
+
+~~nodes~:~input~rank-1~array('d')~with~bounds~(mm)
+
+~~wei~:~input~rank-1~array('d')~with~bounds~(mm)
+
+~~x~:~input~rank-1~array('d')~with~bounds~(nn)
+
+Return~objects:
+
+~~phi~:~rank-1~array('d')~with~bounds~(nn)
+\end{lyxcode}
+
+\subsection{Debugging}
+
+For debugging, use the --debug-capi option to f2py. This causes the
+extension modules to print detailed information while in operation.
+In distutils, this must be passed as an option in the f2py\_options
+to the Extension constructor. 
+
+
+\subsection{Wrapping C codes with f2py}
+
+Below is Pearu Peterson's (the f2py author) response to a question
+about using f2py to wrap existing C codes. While SWIG provides similar
+functionality and weave is perfect for inlining C, f2py seems to be
+an incredibly simple and convenient tool for wrapping C libraries.
+
+Pearu's response follows: 
+
+For example, consider the following C file:
+
+\begin{lyxcode}
+/{*}~foo.c~{*}/
+
+double~foo(double~{*}x,~int~n)~\{
+
+~~int~i;
+
+~~double~r~=~0;
+
+~~for~(i=0;i<n;++i)
+
+~~~~r~+=~x{[}i];
+
+~~return~r;
+
+\}
+
+/{*}~EOF~foo.c~{*}/
+\end{lyxcode}
+To wrap the C function foo() with f2py, create the following signature
+file bar.pyf: 
+
+\begin{lyxcode}
+!~-{*}-~F90~-{*}-
+
+python~module~bar
+
+~~interface
+
+~~~~real{*}8~function~foo(x,n)
+
+~~~~~~intent(c)~foo
+
+~~~~~~real{*}8~dimension(n),intent(in)~::~x
+
+~~~~~~integer~intent(c,hide),depend(x)~::~n~=~len(x)
+
+~~~~end~function~foo
+
+~~end~interface
+
+end~python~module~bar
+
+!~EOF~bar.pyf
+\end{lyxcode}
+(see usersguide for more info about intent(c)) and run
+
+\begin{lyxcode}
+~~f2py~-c~bar.pyf~foo.c
+\end{lyxcode}
+Finally, in Python:
+
+\begin{lyxcode}
+>\,{}>\,{}>~import~bar
+
+>\,{}>\,{}>~bar.foo({[}1,2,3])
+
+6.0
+\end{lyxcode}
+
+\subsection{Passing offset arrays to Fortran routines}
+
+It is possible to pass offset arrays (like pointers to the middle
+of other arrays) by using Numeric's slice notation.
+
+The print\_dvec function below simply prints its argument as \char`\"{}print{*},'x',x\char`\"{}.
+We show some examples of how it behaves with both 1 and 2-d arrays: 
+
+\begin{lyxcode}
+In~{[}3]:~x
+
+Out{[}3]:~array({[}~2.8,~~3.4,~~4.1])
+
+In~{[}4]:~tf.print\_dvec(x)
+
+~n~3
+
+~x~~2.8~~3.4~~4.1
+
+In~{[}5]:~tf.print\_dvec~?
+
+Type:~~~~~~~~~~~fortran
+
+String~Form:~~~~<fortran~object~at~0x8306fe8>
+
+Namespace:~~~~~~Currently~not~defined~in~user~session.
+
+Docstring:
+
+~~~~print\_dvec~-~Function~signature:
+
+~~~~~~print\_dvec(x,{[}n])
+
+~~~~Required~arguments:
+
+~~~~~~x~:~input~rank-1~array('d')~with~bounds~(n)
+
+~~~~Optional~arguments:
+
+~~~~~~n~:=~len(x)~input~int
+
+In~{[}6]:~tf.print\_dvec~(x{[}1])
+
+~n~1
+
+~x~~3.4
+
+In~{[}7]:~tf.print\_dvec~(x{[}1:])
+
+~n~2
+
+~x~~3.4~~4.1
+
+In~{[}8]:~A
+
+Out{[}8]:
+
+array({[}{[}~3.5,~~5.6,~~8.2],
+
+~~~~~~~{[}~2.1,~~4.5,~~1.2],
+
+~~~~~~~{[}~6.3,~~3.4,~~3.1]])
+
+In~{[}9]:~tf.print\_dvec(A)
+
+~n~9
+
+~x~~3.5~~5.6~~8.2~~2.1~~4.5~~1.2~~6.3~~3.4~~3.1
+
+In~{[}10]:~A
+
+Out{[}10]:
+
+array({[}{[}~3.5,~~5.6,~~8.2],
+
+~~~~~~~{[}~2.1,~~4.5,~~1.2],
+
+~~~~~~~{[}~6.3,~~3.4,~~3.1]])
+
+In~{[}11]:~tf.print\_dvec(A{[}1:])
+
+~n~6
+
+~x~~2.1~~4.5~~1.2~~6.3~~3.4~~3.1
+
+In~{[}12]:~A{[}1:]
+
+Out{[}12]:
+
+array({[}{[}~2.1,~~4.5,~~1.2],
+
+~~~~~~~{[}~6.3,~~3.4,~~3.1]])
+
+In~{[}13]:~A{[}1:,1:]
+
+Out{[}13]:
+
+array({[}{[}~4.5,~~1.2],
+
+~~~~~~~{[}~3.4,~~3.1]])
+
+In~{[}14]:~tf.print\_dvec(A{[}1:,1:])
+
+~n~4
+
+~x~~4.5~~1.2~~3.4~~3.1
+\end{lyxcode}
+
+\subsection{On matrix ordering and in-memory copies}
+
+Numeric (which f2py relies on) is C-based, and therefore its arrays
+are stored in row-major order. Fortran stores its arrays in column-major
+order. This means that copying issues must be dealt with. Below we
+reproduce some comments from Pearu on this topic given in the f2py
+mailing list in June/2002: 
+
+\begin{quote}
+To avoid copying, you should create array that has internally Fortran
+data ordering. This is achived, for example, by reading/creating your
+data in Fortran ordering to Numeric array and then doing Numeric.transpose
+on that. Every f2py generated extension module provides also function 
+
+has\_column\_major\_storage
+
+to check if an array is Fortran contiguous or not. If has\_column\_major\_storage(arr)
+returns true then there will be no copying for the array arr if passed
+to f2py generated functions (assuming that the types are proper, of
+cource).
+
+Also note that copying done by f2py generated interface is carried
+out in C on the raw data and therefore it is extremely fast compared
+to if you would make a copy in Python, even when using Numeric. Tests
+with say 1000x1000 matrices show that there is no noticable performance
+hit when copying is carried out, in fact, sometimes making a copy
+may speed up things a bit -- I was quite surprised about that myself.
+
+So, I think, you should worry about copying only if the sizes of matrices
+are really large, say, larger than 5000x5000 and efficient memory
+usage is relevant. The time spent for copying is negligible even for
+large arrays provided that your computer has plenty of memory (>=256MB).
+\end{quote}
+
+\subsection{Distutils}
+
+Below is an example setup.py file which generates a Python extension
+module from Fortran90 sources and a .pyf interface file generated
+by f2py and later fine tuned. 
+
+\lstinputlisting{examples/wrap_f2py_setup.py}
+
+
+\section{Others}
+
+boost, pyrex, cxx
+
+
+\section[Standalone applications]{Distributing standalone applications}
+
+py2exe, mcmillan installer

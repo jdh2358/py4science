@@ -6,15 +6,39 @@
 \usepackage{geometry}
 \geometry{verbose,letterpaper,tmargin=1in,bmargin=1in,lmargin=1.3in,rmargin=1.3in}
 \pagestyle{headings}
+\usepackage{verbatim}
+\usepackage{textcomp}
+
 \usepackage{graphicx}
+\usepackage{setspace}
 \usepackage{amssymb}
 \IfFileExists{url.sty}{\usepackage{url}}
                       {\newcommand{\url}{\texttt}}
 
 \makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
  \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[section]
+\newenvironment{lyxcode}
+{\begin{list}{}{
+\setlength{\rightmargin}{\leftmargin}
+\setlength{\listparindent}{0pt}% needed for AMS classes
+\raggedright
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\normalfont\ttfamily}%
+ \item[]}
+{\end{list}}
+  \theoremstyle{definition}
+  %%Delete [section] for sequential numbering
+  \newtheorem{xca}[section]{Exercise}
+ \theoremstyle{definition}
+  \newtheorem{example}[thm]{Example}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \input{preamble.tex}
@@ -23,22 +47,53 @@
 \makeatother
 \begin{document}
 
-\title{ \vspace{3cm} Practical Scientific Computing\\
-in Python\\
-A Workbook}
+\title{ \vspace{3cm} 
+Practical Scientific Computing\\
+in Python}
 
 
-\author{ \vspace{1cm} John D. Hunter\\
-Fernando Pérez \vspace{1cm}\\
-Andrew Straw} 
+\author{ \vspace{1cm} 
+Editors:\\
+John D. Hunter\\
+Fernando Pérez
+\vspace{1cm}\\
+With contributions from:\\
+Perry Greenfield\\
+Andrew Straw\\
+Stéfan van der Walt\\
+Jeff Whitaker\\
+}
 \maketitle
 \tableofcontents{}
 
 
+\part{Discussion}
+
+% In this part, each tex file is a chapter by itself, since it is more or less
+% meant to be used in whole.
+\input{why_python.tex}
+
+\input{intro_to_python.tex}
+
+\input{ipython_tut.tex}
+
+\input{matplotlib_tut.tex}
+
+\input{wrapping.tex}
+
+
+
+\part{Workbook}
+
+% This part specifies the chapter declarations in the main file, while the
+% chapters are made of individual TeX files which themselves should be written
+% at the section level.  The idea is for each chapter to be focused on one or a
+% few closely related topics, and to allow users to build them with as many or
+% as few actual sections as desired for a given audience.
+
 \chapter{Introduction}
 
 \input{intro.tex}
-
 
 \chapter{Simple non-numerical problems}
 
@@ -79,6 +134,7 @@ Andrew Straw}
 \chapter{Plotting on Maps}
 \input{basemap.tex}
 
-
+\bibliographystyle{plain}
+\bibliography{python,python2}
 
 \end{document}

@@ -38,8 +38,9 @@ exercises in the course.  In addition, to generate plot windows,
 matplotlib requires a user interface toolkit, for example Tk, GTK,
 wxPython or Qt. Tk comes with python, so that should work out of the
 box, but some of the other code we will be demoing work best with
-wxPython, so we also recommend you install wxPython
-(http://www.wxpython.org/)
+wxPython, so we also recommend you install wxPython_
+
+.. _wxPython: http://www.wxpython.org
 
 We will detail the optional packages that will be used in the workshop
 below.  It will be great if you can get all the optional packages as
@@ -126,15 +127,47 @@ The example code below shows you how to check your versions::
     In [11]: matplotlib.__version__
     Out[11]: '0.91.1'
 
+
+
 Platform specific instructions
 ==============================
 
-linux
+Linux
+=====
 
-os x
+TODO
 
-win32
+OS X
+====
 
+TODO
+
+Microsoft Windows
+=================
+
+- Install the latest windows `python MSI installer`_ from
+
+- install the win32com_ extensions.  IPython needs these to set up the start menu properly and they have lots of useful goodies for windows users anyhow, like the abiliy to read and write MS Office documents via the COM API.
+
+- ipython: grab the latest win32 exe installer from the `ipython distributions`_ page
+
+- numpy: grab the latest exe or msi installer for your version of python at `numpy download`_
+
+- scipy: grab the latest exe or msi installer from the "Binary installation for Windows" distribution from the `scipy download`_ page.
+
+- matplotlib: grab the latest exe from the `matplotlib download`_ page
+
+.. _`python MSI installer`: http://www.python.org/download/releases/2.5.1/
+
+.. _win32com: http://sourceforge.net/project/showfiles.php?group_id=78018&package_id=79063&release_id=449591
+
+.. _`ipython distributions`: http://ipython.scipy.org/dist/
+
+.. _`numpy download`: http://sourceforge.net/project/showfiles.php?group_id=1369&package_id=175103
+
+.. _`scipy download`: http://www.scipy.org/Download
+
+.. _`matplotlib download`: http://sourceforge.net/project/showfiles.php?group_id=80706&package_id=82474&release_id=558083
 
 Optional packages
 =================
@@ -171,13 +204,15 @@ package on your local machine.
 - pyrex_ : lets you mix c and python for writing high performance
   python extensions
   
-
 - basemap_ : a matplotlib toolkit for workin with geographic data and
   map projections.  Available for download at the matplotlib download
   page
   http://sourceforge.net/project/platformdownload.php?group_id=80706
 
-  
+- svn_ : we wil be teaching open source software development
+  processes, which require svn.  Windows users should consider
+  `tortise svn`_
+ 
 .. _pytables: http://www.pytables.org/moin 
 
 .. _basemap: http://matplotlib.sourceforge.net/matplotlib.toolkits.basemap.basemap.html
@@ -187,3 +222,8 @@ package on your local machine.
 .. _`enthought tool suite`: http://code.enthought.com/ets/
 
 .. _pydap: http://pydap.org.
+
+.. _svn: http://subversion.tigris.org/
+
+.. `tortise svn`_: http://tortoisesvn.tigris.org/
+

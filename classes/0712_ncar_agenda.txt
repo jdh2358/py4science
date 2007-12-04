@@ -79,8 +79,8 @@ Day 1 (Friday December 7)
   * (FP) - OpenDAP_ via the PyDAP_ implementation.
   * (JDH) - PyTables_: an HDF5 library.
 
-.. _OPenDAP:  http://pydap.org
-.. _PyDAP: http://opendap.org
+.. _OPenDAP:  http://opendap.org
+.. _PyDAP: http://pydap.org
 .. _PyTables: http://www.pytables.org
 
   

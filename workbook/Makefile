@@ -4,8 +4,10 @@
 
 # Warning: list the .aux *before* the bbl.  It's probably possible to get the
 # rules right, but I'm not sure how.
+TEXFILES = $(wildcard *.tex)
+
 SKEL_SRC = workbook_skeletons.aux workbook_skeletons.bbl \
-workbook_skeletons.tex main.tex
+workbook_skeletons.tex $(TEXFILES)
 
 SOL_SRC = $(subst _skeletons,_solved,$(SKEL_SRC))
 

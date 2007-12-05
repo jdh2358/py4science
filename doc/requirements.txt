@@ -145,17 +145,30 @@ TODO
 Microsoft Windows
 =================
 
-- Install the latest windows `python MSI installer`_ from
+- Install the latest windows `python MSI installer`_ from the
+  python.org site.
 
-- install the win32com_ extensions.  IPython needs these to set up the start menu properly and they have lots of useful goodies for windows users anyhow, like the abiliy to read and write MS Office documents via the COM API.
+- install the win32com_ extensions.  IPython needs these to set up the
+  start menu properly and they have lots of useful goodies for windows
+  users anyhow, like the abiliy to read and write MS Office documents
+  via the COM API.
 
-- ipython: grab the latest win32 exe installer from the `ipython distributions`_ page
+- ipython: grab the latest win32 exe installer from the `ipython
+  distributions`_ page
 
-- numpy: grab the latest exe or msi installer for your version of python at `numpy download`_
+- numpy: grab the latest exe or msi installer for your version of
+  python at `numpy download`_
 
-- scipy: grab the latest exe or msi installer from the "Binary installation for Windows" distribution from the `scipy download`_ page.
+- scipy: grab the latest exe or msi installer from the "Binary
+  installation for Windows" distribution from the `scipy download`_
+  page.
 
-- matplotlib: grab the latest exe from the `matplotlib download`_ page
+- matplotlib: grab the latest exe from the `matplotlib download`_
+  page.  matplotlib requires the msvcp71.dll library, which you can
+  download from `dll_files`.  You will need to unzip the archive and
+  drag the dll into c:\\windows\\system32
+
+
 
 .. _`python MSI installer`: http://www.python.org/download/releases/2.5.1/
 
@@ -168,6 +181,8 @@ Microsoft Windows
 .. _`scipy download`: http://www.scipy.org/Download
 
 .. _`matplotlib download`: http://sourceforge.net/project/showfiles.php?group_id=80706&package_id=82474&release_id=558083
+
+.. _`dll files`: http://www.dll-files.com/dllindex/dll-files.shtml?msvcp71
 
 Optional packages
 =================

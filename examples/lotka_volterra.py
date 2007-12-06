@@ -34,23 +34,21 @@ r = y[:,0]  # extract the rabbits vector
 f = y[:,1]  # extract the foxes vector
 
 p.figure()
-p.plot(t, r, label='rabbits')
-p.plot(t, f, label='foxes')
+p.subplots_adjust(hspace=0.3)
+p.subplot(211)
+p.plot(t, r, color='blue', label='rabbits', lw=2)
+p.plot(t, f, color='green', label='foxes', lw=2)
 p.xlabel('time (years)')
 p.ylabel('population')
-p.title('population trajectories')
+p.title('population trajectories and phase plane')
 p.grid()
 p.legend()
-p.savefig('lotka_volterra.png', dpi=150)
-p.savefig('lotka_volterra.eps')
 
 
-p.figure()
-p.plot(r, f)
+p.subplot(212, aspect='equal')
+p.plot(r, f, 'k', lw=2)
 p.xlabel('rabbits')
 p.ylabel('foxes')
-p.title('phase plane')
-
 
 # make a direction field plot with quiver
 rmax = 1.1 * r.max()
@@ -65,13 +63,13 @@ R, F = n.meshgrid(n.arange(-1, rmax, .1), n.arange(-1, fmax, .1))
 dR = dr(R, F)
 dF = df(R, F)
 
-p.contour(R, F, dR, levels=[0], linewidths=3, colors='black')
-p.contour(R, F, dF, levels=[0], linewidths=3, colors='black')
-p.ylabel('foxes')
-p.title('trajectory, direction field and null clines')
+CSR = p.contour(R, F, dR, levels=[0], linewidths=3, colors='blue')
+CSF = p.contour(R, F, dF, levels=[0], linewidths=3, colors='green')
 
-p.savefig('lotka_volterra_pplane.png', dpi=150)
-p.savefig('lotka_volterra_pplane.eps')
+p.ylabel('foxes')
+
+p.savefig('lotka_volterra.png', dpi=150)
+p.savefig('lotka_volterra.eps')
 
 
 p.show()

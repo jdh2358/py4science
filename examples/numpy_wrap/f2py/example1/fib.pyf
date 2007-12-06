@@ -1,0 +1,14 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module example ! in 
+    interface  ! in :example
+        subroutine fib(a,n) ! in :example:fib.f
+            real*8 dimension(n) :: a
+            integer optional,check(len(a)>=n),depend(a) :: n=len(a)
+        end subroutine fib
+    end interface 
+end python module example
+
+! This file was auto-generated with f2py (version:2_3681).
+! See http://cens.ioc.ee/projects/f2py2e/

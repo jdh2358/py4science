@@ -1,0 +1,940 @@
+Home </laurie/> 	laurie@tratt.net <mailto:laurie@tratt.net>
+
+------------------------------------------------------------------------
+RSS / XML feed <rss>
+
+
+  Laurence Tratt's blog
+
+------------------------------------------------------------------------
+
+
+    Tail Call Optimization <entries/tail_call_optimization>
+
+*December 21 2004*
+*Updated: April 4 2006*
+
+Lambda the Ultimate <http://lambda-the-ultimate.org/> might well be the
+last resort of the programming scoundrel, but it can be quite
+informative on occasion. Plus there's always the unintended
+entertainment value of those who refuse to accept that people who don't
+use functional programming very much
+</laurie/blog/entries/why_dont_we_use_functional_programming_languages_more>
+may still be worthy computer users: it can be genuinely hilarious. It's
+as if Tony Hancock's spirit had risen from the ashes and decided to
+inhabit the body of a 21st century academically-inclined computer
+programmer.
+
+However, I digress. A recent thread on dynamic languages
+<http://lambda-the-ultimate.org/node/view/426> on LtU has some comments
+on tail call optimization (inevitably courtesy in part of some griping
+from disgruntled functional programmers), which have prompted me to
+write down some thoughts I've had on this subject over the past six
+months or so.
+
+The first question many people will ask is "what is a tail call?".
+Whilst there's a slightly deeper general principle at work, it's easiest
+to see this via a simple example of a recursive function. Let's take the
+standard Fibonacci number generator in a simple Python example:
+
+def fib(i):
+  if i == 0:
+    return 0
+  elif i == 1:
+    return 1
+  else:
+    return fib(i - 1) + fib(i - 2)
+
+and then use this function in a simple interpreter session:
+
+>>> fib(0)
+0
+>>> fib(1)
+1
+>>> fib(2)
+1
+>>> fib(10)
+55
+
+Everything seems fine. But if I try to compute the 1000th member of the
+Fibonacci sequence I find the following:
+
+>>> fib(1000)
+  File "fib.py", line 7, in fib
+    return fib(i - 1) + fib(i - 2)
+  File "fib.py", line 7, in fib
+    return fib(i - 1) + fib(i - 2)
+  ...
+RuntimeError: maximum recursion depth exceeded
+
+[I have elided the huge numbers of repetitive exception entries that
+Python prints.]
+
+Essentially Python is saying "you can't have a function calling a
+function this many levels deep". Interestingly, Python sets a fairly
+strict limit to prevent programmers bogging their programs down
+unintentionally. However there is a standard problem here: if one has a
+recursive function then every time it recurses one needs extra stack
+space. At some point the stack /will/ run out. If you're a functional
+programmer, or coding in a similar style, this is not very appealing -
+one can never be sure if, or when, recursive functions will mysteriously
+fail.
+
+So in order to make this style of programming practical, a way is needed
+for allowing recursive functions to use a fixed stack size. This is
+where /tail calls/ come in. Let us first rewrite our Fibonacci generator
+as follows (shamelessly adapted from John David Stone's & Ben Gum's
+example
+<http://www.math.grin.edu/~silkin/teaching/2004fall/cs151/readings/tail-recursion.xhtml>):
+
+def fib(i, current = 0, next = 1):
+  if i == 0:
+    return current
+  else:
+    return fib(i - 1, next, current + next)
+
+Our function now has a tail call. That is, the branch of the |if|
+construct that recursively calls the function is a tail call. What this
+means is that /the very last thing the function does before returning/
+is to recursively call itself. At this point, why do we need to allocate
+more stack space? The current invocation of the function will never need
+the stack space again since as soon as it receives a value from the
+recursive call it will return it to its caller. So instead of allocating
+stack space, we could simply reuse the stack space used by the current
+function (and inherit the return address of the current function rather
+than making the current function the address to which we will return).
+This way, it doesn't matter /how many times/ the function recursively
+calls itself - it will only ever use a constant amount of stack space.
+Taking advantage of this fact is called /tail call optimization/.
+
+The utility of tail call optimization is an accepted part of functional
+programming: in fact, one /has/ to buy into the undisputed utility of
+tail call optimization if one wishes to be accepted as a functional
+programmer by ones peers. What the LtU chaps are unhappy with is that
+most languages such as Python and Java aren't capable of tail call
+optimization in any form. The standard argument in favour of tail call
+optimization runs along the lines of "it's so useful, and it doesn't
+cost anything to implement". It is this latter point which I wish to
+address. Whilst I agree tail calling is sometimes useful, it is not a
+feature without costs. Those costs may be worth paying in some, or maybe
+even all, circumstances but they are most definitely there.
+
+There are two chief costs associated with tail calls and their
+optimization. The first is fairly obvious, and is evident in the forced
+rewriting of the Fibonacci function: many functions have their most
+natural form without tail calls. Thus functions often need to be
+designed very specifically with tail calls in mind. Writing functions in
+this style, or rewriting existing functions in this style, can be far
+from trivial. What's more, as can be seen from the Fibonacci example,
+the resulting function is frequently hard to understand because it often
+requires state to be passed around in parameters.
+
+The second cost associated with tail calls is something that I have not
+seen mentioned elsewhere, which may well mean that I've got the wrong
+end of the stick. However I suspect it might be the case that it is not
+mentioned because the problem is only really evident in languages which
+give decent stack trace error reports when exceptions occur (in my entry
+on functional programming
+</laurie/blog/entries/why_dont_we_use_functional_programming_languages_more>
+I noted that tail-call capable languages such as Haskell often have poor
+error reporting facilities). Consider this: since tail call optimization
+involves overwriting the stack, what happens if an exception is raised
+at some point deep within a tail calling part of a program?
+
+Let's go back to our Fibonacci program and assume that, at some point
+during its execution, an exception relating to the overflow of a
+numerical operation is raised [in reality, this error is remarkably hard
+to trigger in modern Python, which generally automatically switches to a
+non-word representation of integers in the presence of overflow]. We
+would expect an error report along the following:
+
+Traceback (most recent call last):
+  File "fib.py", line 13, in ?
+    print fib(10)
+  File "fib.py", line 9, in fib
+    return fib(i - 1, next, current + next)
+  File "fib.py", line 9, in fib
+    return fib(i - 1, next, current + next)
+  File "fib.py", line 9, in fib
+    return fib(i - 1, next, current + next)
+  File "fib.py", line 9, in fib
+    return fib(i - 1, next, current + next)
+  File "fib.py", line 9, in fib
+    return fib(i - 1, next, current + next)
+  File "fib.py", line 3, in fib
+    raise OverflowError
+OverflowError
+
+Now the key here is that I earlier referred to such reports as "stack
+traces": this information is tightly related to information kept on the
+stack detailing function call histories. If our example had tail call
+optimization turned on, then no such information is available on the
+stack in the presence of tail calling. It seems the best we can hope for
+is a report along the lines of the following:
+
+Traceback (most recent call last):
+  File "fib.py", line 13, in ?
+    print fib(10)
+  File "fib.py", line 9, in fib: tail call, unknown recursion depth
+    return fib(i - 1, next, current + next)
+  File "fib.py", line 3, in fib
+    raise OverflowError
+OverflowError
+
+In other words, the report could tell you that one part in the exception
+was at a tail calling location, but that the number of times that tail
+calling occurred is unknown. However, in this example we can in fact
+restore our error report to its full glory and still maintain constant
+stack space. All we need to do is have a counter associated with the
+stack entry of a tail call detailing how many times the tail call has
+recursed. As the Fibonacci function calls itself, this value is
+incremented, and when it returns a value it is decremented. It seems
+tail calls and decent error reports are compatible with relatively
+little implementation effort.
+
+Unfortunately, whilst this trick works for tail recursive functions such
+as the Fibonacci function, I am not aware as to how one could generalize
+it to mutually recursive functions or for functions which contain two or
+more tail calling points. Consider the following slightly contrived
+function:
+
+def f(i, accum = 0):
+  if i == 0:
+    return accum
+  elif i % 2 == 0:
+    return f(i - 1, accum + i)
+  else:
+    return f(i - 1, accum) 
+
+This function essentially sums all even integers from |0| to |i|
+inclusive. However, this function contains two tail calls, and what's
+worse as the function recurses those two tail calls are interleaved (in
+this case, the pattern of that interleaving is simple and easily
+determined in advance, but there is no reason why that would be the case
+in general). As far as I can see, this means that it is now impossible
+to record, or calculate, a full error report in the presence of tail
+calls in a static amount of stack space. The previous trick of recording
+a pointer is of little use, since every time tail recursion occurs via a
+different line of code than the previous call, then a new counter needs
+to be created pointing to the new tail call location: in the worst case,
+this will lead to exactly the same number of stack levels being recorded
+as in the unoptimized tail calling case.
+
+I don't know whether the designers of languages such as Python and Java
+have considered this problem, but it may well be that this issue (or
+something related) is what has prevented them from automatically
+optimizating tail calls. For me personally, it is currently more
+important that error reports are full, detailed and comprehensible. If
+someone can point out to me how tail call optimization can be made to be
+compatible with this wish, then I may add such a feature into the
+Converge VM and compiler, since it is a relatively easy feature to
+implement. Until then, I fear I have little choice but to take the
+approach of most other languages, and leave such a feature out, despite
+the inevitable scorn of some of the LtU crowd.
+
+*Updated (April 4 2006):* It turns out that other people had noted that
+tail call optimization has drawbacks when it comes to stack backtraces;
+there is a very clear hint in the paper "Programming as an Experience:
+The Inspiration for Self"
+<http://www.iolanguage.com/Library/Papers/Self.pdf> by Randall B. Smith
+and David Ungar, although they don't articulate the specific reasons
+outlined in this entry.
+
+Link to this entry
+<http://tratt.net/laurie/blog/entries/tail_call_optimization>
+
+------------------------------------------------------------------------
+
+
+    Debugging Driven Development <entries/debugging_driven_development>
+
+*March 26 2006*
+
+There are an awful lot of development methodologies floating about these
+days, running the gamut from agile development to model driven
+development. For the purposes of this entry, the success (or even the
+utility) of such development methodologies is irrelevant. What is
+relevant is what these methodologies promise: follow these rules, and
+you'll create better software.
+
+What I'm not sure that any of these methodologies tackle sufficiently is
+a far more down-to-earth part of development: how to ensure developers
+stay motivated during the development process. What I mean by this is
+how can developers be kept interested in the task at hand, so as to
+ensure that the software they are working on moves forward at a
+reasonable rate? This is an overlooked factor because it is hard to
+define and even harder to measure. Programming is generally a long drawn
+out affair; even small percentage losses in productivity can have fairly
+large real world effects on timeliness, and on the quality of the
+delivered product. Since ultimately it is programmers who do the
+programming, the lack of focus on this area does us all a disservice.
+
+I've known for quite some time that I suffer from a habit that is common
+to many programmers. When I finish a challenging part of a program -
+after having spent an awful lot of time looking at incorrect output of
+one form or another - I find myself so surprised that things are working
+that I then spend a silly amount of time rerunning the program and
+admiring the correct output. It's almost like I don't /believe/ that
+it's really correct. When I eventually pull myself away from the
+programming equivalent of navel gazing, I find myself in a familiar, but
+unappealing, situation: I have a functioning, but incomplete system, and
+I need to add the next feature on the list to it. But adding another
+feature means that everything is going to stop working properly, and
+it's going to take an awful lot of work to get back to another point
+where the system will be working properly. And so I stare and stare at
+the screen, semi-paralyzed by the thought of breaking my perfectly
+functioning (if incomplete) system. Of course, eventually I pull myself
+together, make the first stages of the necessary change for the new
+feature and then I'm away, only for the cycle to repeat itself when the
+system reaches its next stable state. I've come to realise that all I'm
+going through in such instances is the programming equivalent of writers
+block; the fear of setting pen to paper for fear of starting down the
+wrong track.
+
+Interestingly, over the past couple of years I've inadvertently stumbled
+on an effective technique for avoiding this problem in many
+circumstances. It's taken me a little while to analyse exactly what I
+was doing, but now that I have, I feel confident enough to coin a new
+development methodology (hoping that no-one has coined it before):
+debugging driven development.
+
+The first thing to note from my previous description is that whenever a
+system I was developing got to a stable point, I paused (sometimes
+fairly considerably) before eventually starting on the path to the next
+stable point. These pauses are clearly a, if not the, major development
+bottleneck. As the length of these pauses seems largely outside of my
+control, logically - and although it may be counter-intuitive at first -
+the only solution to reducing the number of times I pause is to reduce
+the number of stable points the system is in. The less times the system
+reaches a stable point, the less times I pause my development.
+
+One defining characteristic of all genuinely keen programmers is that
+they dislike their systems to have any errors in. If a programmer stays
+late after work one day, it's far more likely that they're trying to
+debug their system than it is that they're adding a new feature in.
+Therefore what I found myself doing was continually leaving some small
+part of my system in such a state that it needed to be debugged. So as
+soon as I finished one feature, there was a little bit of the system
+screaming at me that it needed to be fixed. Disliking any system
+screaming at me, I would beaver away until the message was gone. At
+which point another message would have popped up somewhere, demanding to
+be fixed. And so on and so forth. Suddenly I found the number of times I
+was pausing to navel gaze had diminished significantly. This may well
+sound like a recipe for anarchy at best, or low-quality systems at worst
+but the aim of this isn't to prevent the system /ever/ reaching a stable
+state, nor is it the aim to leave small, and easily forgotten, bugs in.
+Rather the aim is to minimise the number of times the system reaches a
+stable state - outside of those dictated by the release schedule - by
+leaving blindingly obvious cock-ups in of the sort that stop the system
+in a predictable fashion whenever it is run. In practise I've found that
+ultimately the programs I've created using this approach have had
+significantly less bugs than those I created previously.
+
+I've gradually refined this technique, and these days I often use the
+|XXX| exceptions I outlined in my previous entry about exceptions
+</laurie/blog/entries/make_exceptions_work_for_you> to insert annoying
+messages into the system at any point where a feature hasn't yet been
+filled in. Sprinkling around |XXX| errors leads to a situation where
+mentally I think I'm in a continual state of debugging because such
+messages appear as program aborts, but really I'm not debugging in the
+traditional sense of the term: I'm just using it as a carrot (or is it a
+stick?) to force me to continue to program. My overall productivity has
+increased quite significantly due to this technique.
+
+Maybe this technique only works if your brain is wired similarly to
+mine, but I have a sneaking feeling it might be something that works for
+anyone else who takes pride in their programs. Debugging driven
+development might sound masochistic, or even deranged, but it works for
+me and it might work for somebody else - who knows?
+
+Link to this entry
+<http://tratt.net/laurie/blog/entries/debugging_driven_development>
+
+------------------------------------------------------------------------
+
+
+    Make Exceptions Work For You <entries/make_exceptions_work_for_you>
+
+*January 29 2006*
+
+In my experience, most programmers are scared of exceptions. They dread
+the news that their program has terminated in an unexpected manner,
+mainly because it implies that debugging is necessary (although perhaps
+a small part of the reason is because it suggests that their creation
+has fallen just a smidgen short of perfection).
+
+As such I don't think there's anything wrong with a small fear of
+exceptions. However it seems to be gradually becoming a part of
+programming culture to 'do something' about exceptions, and there's
+really only thing that can be done to them: suppress them. While certain
+limited classes of exceptions - 'file not found' for example - are
+generally fairly benign, others - an incorrect array index for example -
+are far more serious. All too often, although the programmer /thinks/
+the program will keep running after an exception, instead it hobbles to
+a slow and painful death.
+
+This mindset seems particularly prevalent amongst Java programmers.
+First, Java's horrible notion of checked exceptions positively
+encourages exceptions to be suppressed, just to try and keep the number
+of |try ... catch| constructs to a semi-reasonable level. Second, in
+multi-threaded Java applications, an exception which reaches the top
+level in one thread terminates only that thread; this gives the
+impression that exceptions in multi-threaded programs are somehow less
+serious than in their single threaded brethren. I have seen many Java
+programs randomly suppressing some exceptions, and allowing others to
+spew backtraces others to stdout, but continuing on anyway; this
+seriously undermines my confidence in the programs' correct running. But
+the funny thing is that people just say 'oh, ignore that exception, it
+doesn't seem to cause any harm.' This is a mindset that I find alien -
+to me, exceptions are always serious, and they always need to be fixed.
+
+I have come to look at things in a completely different light. Although
+seemingly perverse at first, I don't mind exceptions being raised in my
+program. Obviously I don't /want/ my program to have flaws of any kind,
+but since it would be foolish to think that I can create a program
+without flaws, the sooner flaws are identified, and the more accurate
+the information about them, the better. The backtraces with line numbers
+that most decent programming languages produce when an exception is
+raised are, in my opinion, the single most useful debugging aid possible.
+
+Jim Shore's Fail Fast
+<http://www.martinfowler.com/ieeeSoftware/failFast.pdf> article
+articulates a similar philosophy, using assertions to terminate a
+program when an assumption is violated, but I find assertions to be
+useful only in certain limited circumstances. I actually like to take
+things one step further in a crude sort of fashion. I have long realised
+that when I'm programming a new function, I'm generally only coding the
+bits of the function necessary to make my current use case function
+correctly. The other bits of the function that will make it fully
+general I fill in at some later point. This, I feel fairly confident in
+stating, is a common development strategy. The problem with it is that
+sometimes one forgets to fill in the other bits of the function. Then
+some poor unsuspecting fool comes along, feeds a value to the function
+which it can't properly cater for, and gets a random results. Random
+results are the worst thing that can happen in a program, as tracking
+down something random generally degenerates into guesswork.
+
+So what I now do is harness the power of exceptions to stop a program
+dead in its tracks (at least, unless one is using Java). When I come to
+the point where I think 'two things could happen here, but I only want
+to code for one of them at the moment', I raise an exception. I don't
+care what the exception is, merely that it is raised, and that it is
+easy to find in the source code. In Python and Converge, assuming I only
+wanted to cater for the case that |x == 0|, I use the following idiom:
+
+func f(x):
+  if x == 0:
+    // do whatever
+  else:
+    raise "XXX"
+
+Although |"XXX"| is an acceptable exception in Python, it isn't valid in
+Converge which expects instances conforming to the |Exception| class.
+But that doesn't matter, because when the user (which might be me, but
+might be someone else, at some unspecified point in the future) calls
+|f(0)|, the program will terminate in an orderly fashion that makes
+accurate pinpointing of the cause of the problem trivial. Whats more, I
+occasionally do a search for |XXX| in my source code just to see if
+there are any unfinished bits that I can usefully tackle. This idiom not
+only kills two birds with one stone, but it's so low effort that now I
+use it automatically, without even really thinking about it.
+
+With a little bit of thought, it's generally possible to get a similar
+effect in languages which don't have native exceptions. For example in
+my C programs I define the following macro:
+
+#define XXX do { printf("XXX exit file %s line: \n", __FILE__, __LINE__); \
+  abort(); } while (0)
+
+Quite often the file name and line number is sufficient information for
+me; in other cases, I use a debugger to produce a backtrace which ends
+at the call to |abort|.
+
+So I say don't fear exceptions - make them work for you.
+
+Link to this entry
+<http://tratt.net/laurie/blog/entries/make_exceptions_work_for_you>
+
+------------------------------------------------------------------------
+
+
+    Home Directory Synchronization <entries/home_directory_synchronization>
+
+*December 10 2005*
+
+My life sometimes feels overly peripatetic. One way in which I feel this
+pinch is that I regularly use three computers: my desktop at home, my
+laptop, and my desktop at work. I also have a server at work (on which
+you are probably reading this) and a server at home. This creates an
+obvious problem in synchronizing files between machines. When I was only
+regularly using two machines, I used to use the traditional approach to
+the problem which was to manually copy files (using |scp|) from machine
+to machine. This was a pain, and even with just two machines I
+occasionally overwrote files with old versions, or went on a trip only
+to discover I didn't have the latest version of a particular file on my
+laptop. With more than two computers the problem becomes
+disproportionately more difficult.
+
+My solution to this problem is not a novel one, but nor does it seem to
+be particularly well known. I had the germ of the idea around three
+years or so ago, and largely got it working before finding that Joey
+Hess <http://www.kitenet.net/~joey/> had already eloquently described
+most of the important steps <http://linuxjournal.com/article/5976>; I
+used some of Joey's ideas to refine my setup. The idea that's fairly
+completely described by Joey is 'use version control to store files in
+your home directory.' Version control systems such as CVS are generally
+used so that multiple developers can work on the same source code and
+share their changes in a controlled fashion amongst each other. As this
+implies, on each developers' machine lies a (largely) identical copy of
+the shared source code. However there's no reason to restrict this to
+being of use only when multiple people are involved. If one has multiple
+computers, using version control software simply means that each
+contains an identical copy of shared files.
+
+The benefits of taking this approach are, from my experience, almost
+impossible to overstate. My life has not only become significantly
+easier by significantly reducing the chance for mistakes, but I've also
+been able to be significantly more cavalier about moving between new
+machines, adding new machines to my menagerie, and even simply
+reinstalling existing machines. Of course for most normal people out
+there, this won't be an advantage at all since it fulfils a need you
+don't have, and uses a mechanism you won't want to understand, but if
+you're a serious computer user I think you should consider it.
+
+I suspect one of the reasons why this method is rarely used - I know a
+grand total of one person in real life who uses something approaching
+this technique - is because of the use of "version control system" in
+the above text. Version control software is traditionally scary (most of
+the tools were one or more of big, slow, and unreliable), and of course
+it is seen as being applicable only to source code. In practice, even
+with simple tools, neither of these points is valid. Using this
+technique does require some thought, and it does take getting used to,
+but once one is used to it, the benefits significantly outweigh the
+disadvantages.
+
+One thing that's interesting is that I see the list of pros, cons and
+irrelevancies a little bit differently than Joey and other similar
+write-ups <http://toykeeper.net/tutorials/svnhome>.
+
+    * *Pros* 1=. Automatic file synchronization across multiple machines.
+    * 1=. Multiple distributed backups (I always have a minimum of two
+      copies of my latest data in locations separated by over 100 miles).
+    * 3. No real reason to ever remove files from your home directory
+      since there's no significant organizational penalty for keeping
+      them around.
+    * 4. Allows easy use of staging servers. I use this to develop my
+      web site locally on various machines, before seamlessly committing
+      it to my web server.
+    * 5. Ensures home directory is kept 'clean' since a fresh checkout
+      will not check out irrelevant files (e.g. all the cruft files
+      associated with running LaTeX, or those resulting from a C
+      compilation) since those will never have been added to the
+      repository. 
+
+    * *Cons* 1. Getting your existing files into shape to make the move
+      to this system can be time-consuming (it probably took me around
+      4-5 hours).
+    * 2. Adding files to the repository (and maintaining the list of
+      files which shouldn't be added to the repository) is tedious, but
+      fortunately takes relatively little time once one is used to it.
+    * 3. You really need access to a server that is available anywhere
+      on the Internet to get the most out of the technique. As most
+      interested parties will have a DSL line, this is a very minor con. 
+
+    * *Irrelevancies* 1. /Being able to get old versions of your files
+      is useful/. I have used this feature once. And that was just to
+      see what would happen.
+    * 2. /It's not practical with binary data/. In fact, there's no
+      problem with this, provided you're sensible. See /divide your
+      binary data into three types/ a little later in the article. 
+
+I think it's telling that I could easily have written many more pros
+(admittedly, with diminishing returns), but I struggled to think of even
+a few cons and irrelevancies.
+
+So now that I've been using this technique for a few years I feel that I
+have a few useful suggestions for anyone tempted to go down this highly
+recommended route.
+
+
+      Use a commonly available version control system.
+
+At some point you will probably want to ensure that you can synchronize
+your data on a machine where it might be a liability to have unusual
+software. I use CVS since most of its (well known) deficiencies relate
+to problems encountered with multiple developers. The only significant
+remaining pain relates to directory handling and renaming files, and I
+can live with that, as annoying as it is.
+
+An oft used alternative is Subversion but I wouldn't touch that with a
+barge pole, since it appears to be a project with the limited ambition
+of just replacing CVS. Unfortunately while they fixed some of CVS's more
+obvious deficiencies, they've introduced some tear-inducingly stupid new
+flaws. I've seen several corrupted repositories because using BSD-DB or
+similar for a storage backend is an obviously bad move.
+
+At some point, one of the more advanced systems like Darcs
+<http://abridgegame.org/darcs/> or bzr <http://www.bazaar-ng.org/> might
+be well known enough to use here. But not for a few years yet I suspect.
+
+
+      Think before you name and add files.
+
+Especially with CVS, renaming of files and directories is a slow and
+tedious task. But no matter what your system, a useful consequence of
+using this approach is that you will probably carry a copy of every file
+you add to your repository for life. If you choose an inappropriate name
+in haste, or locate a file in an inappropriate location, you will make
+life difficult for yourself in the long run.
+
+A corollary of this is that the layout of the top-level directories in
+your home directory is extremely important. I have the following:
+
+    * .private
+    * audio
+    * bin
+    * misc
+    * photos
+    * research
+    * share
+    * src
+    * tmp
+    * web
+    * work 
+
+Notice that I have been dull to the extreme in my naming, that I have
+reused standard UNIX naming conventions when possible, and that I have
+only a few top-level directories. These are all deliberate decisions.
+Each one of these is also a CVS module which means that I only check out
+certain combinations of directories on certain machines (e.g. |.private|
+only gets checked out on trusted machines).
+
+
+      Divide your binary data into three types.
+
+Since binary data tends to be much bigger than text files, I split
+binary data into three groups:
+
+   1. Binary data which is both 'irreplaceable' and doesn't change
+      regularly, should be checked into the repository. Photos come
+      under this heading.
+   2. Binary data which has no intrinsic value should be considered
+      local to a particular machine. This means that it can be deleted
+      without consequence.
+   3. Binary data which it is useful to synchronize, but which can be
+      recreated by other means if necessary, is synchronized by a
+      lighter weight mechanism. Audio comes under this category (since I
+      own every CD I have converted into oggs, I can recreate this data
+      if necessary) as does some programs' data (I use this to
+      synchronize my RSS readers data). 
+
+I use Unison <http://www.cis.upenn.edu/~bcpierce/unison/> for this
+latter task. Unison is very fast, but I don't entirely trust it because
+I've watched in horror as it deleted a large directory of files when one
+of its archive files (Unison's name for its record keeping files) was
+removed (fortunately I was testing it out, so I had a backup). I only
+use it to synchronize files that I can recreate from another source.
+
+Some lateral thinking can lead to useful savings in terms of the amount
+of binary data you store. For example I store only the large versions of
+my photos in my repository, but I've set up Makefile's so that the
+thumbnails and web pages that allow one to sensibly view these files are
+created after checkout (or any changes to the photos). Although the
+saving of around 15% that I get in this particular case might not seem
+very significant, this actually translates to a useful saving when
+checking out a fresh repository or manipulating files because binary
+data tends to dwarf textual data in size.
+
+
+      E-mail is special.
+
+Using either version control or the binary data technique outlined for
+e-mail would be masochistic. I use OfflineIMAP
+<http://gopher.quux.org:70/devel/offlineimap/> to synchronize my e-mail
+because it's better suited to the task and I use some other useful
+tricks on it (which I will document in a later entry).
+
+
+      Automate your setup.
+
+I have a couple of small scripts which make my life a lot easier. The
+first is an obvious one which I call |cvssync| (not the best name in
+retrospect) and which takes two arguments: |ci| or |up|. It goes through
+all my various CVS modules and updates them or commits the changes, runs
+some Unison commands, calls my |cvsfix| script (see Joey's article for
+suggestions on what this should do), and performs a few other minor
+tasks. None of which I need to explicitly remember.
+
+The second script is much less obvious: I call it |cvsbootstrap|. When I
+have a freshly installed machine, I put just this one script on there
+and it connects to my server and downloads all the various CVS modules
+etc on to the new machine. This makes the process of installing a new
+machine painless. The script takes two arguments |maximal| and |minimal|
+which determine which modules are checked out (|minimal| is used on
+irregularly used machines or on those whose security I do not entirely
+trust). Since I use this script relatively infrequently it is often
+broken by the time I use it on a new machine since I may have changed
+the layout of my setup in some minor way, but even when it only does 75%
+of the job I need it to do, it still saves me a couple of hours of
+remembering how long-forgotten part of my setup works. I tend to fix the
+error that occurred, and then check it in without any testing which
+reflects the unusual nature of this script.
+
+
+      Create a complete backup before you try this.
+
+Trust me on this one. At first you will either forget to add files, not
+add them correctly, not fully understand the software you're using, or
+suffer a similar such problem. If you have a backup you can fix these
+problems with little penalty; after a month or so without problems, you
+may well feel comfortable discarding the backup.
+
+Link to this entry
+<http://tratt.net/laurie/blog/entries/home_directory_synchronization>
+
+------------------------------------------------------------------------
+
+
+    SREP <entries/srep>
+
+*October 3 2005*
+*Updated: October 7 2005*
+
+In my opinion, what separates the men from the boys when it comes to
+programming is debugging. It doesn't matter how good one is, bugs are an
+inevitable part of a programmers life. The difference in the amount of
+time it takes different people to notice a bug, track down its cause,
+and provide a fix can be quite amazing. Maybe I am a troglodyte, but I
+believe that the best advice I have seen on the subject of debugging is
+from Brian Kernighan, who once said that the best tool for debugging is
+|printf| and common sense. Frankly I have never found debuggers of any
+practical use (apart from when using those languages so crude that one
+needs a debugger to view a stack trace).
+
+There is however one other technique in my debugging armoury, and it
+involves the humble |grep| utility. [For those unfamiliar with |grep|,
+it searches through one or more files searching for a match against a
+given regular expression]. I use it to hunt for every occurrence of a
+function name or data-type in a large code base while trying to track
+down a problem. If I have a hunch of a possible problem, this often
+enables me to track down the offending calling code far faster than any
+other mechanism I am aware of. A very handy idiom that I use is the
+following which finds every file containing |Func| and loads it straight
+into my text editor:
+
+grep -iRl Func | xargs nedit
+
+This does a case insensitive (|-i|), recursive (|-R|) search and then
+prints out just the filename of matching files (|-l|). Cunning uses of
+|grep|'s regular expressions can result in a very powerful debugging aid
+which unfortunately seems to be severely underutilized by most people.
+
+Despite my fondness for |grep|, I have always felt that it is lacking in
+one important regard: it can not replace what it matches with another
+string. I have therefore long had a simple utility in my |~/bin|
+directory of useful little programs which was a simple wrapper around
+the |sub| function
+<http://www.python.org/doc/2.3/lib/node105.html#l2h-842> in Python's
+regular expression library. It essentially did a recursive search
+through a list of files replacing the regular expression /R/ with the
+string /S/. I have used this utility extensively for debugging and
+non-debugging related purposes and it is incredibly useful. However it
+is something of a crude tool. Experience has taught me that often a
+regular expression matches against more things than one intended, and
+that it is therefore a very good idea to take a backup of all relevant
+data before running the utility.
+
+Recently I have had much cause to make use of my simple utility on an
+evolving code base. Continually backing up data, and refining a regular
+expression until it matches only its intended target is highly
+repetitive and tedious, and in my experience anything that is repetitive
+and tedious leads, sooner or later, to boredom induced errors. So I sat
+down and quickly cooked up a new variant of my utility which I have
+flippantly named |srep| (Search and REPlace). |srep| has one novelty of
+particular interest: rather than always directly modifying files, it can
+be told produce output which is acceptable format for the |patch|
+utility i.e. it outputs diffs. This has some interesting benefits:
+
+    * One can inspect the diff output of |srep|, and check that it has
+      only matched against what was expected.
+    * One can edit any incorrect changes manually.
+    * The standard |patch| utility can be used to actually commit the
+      changes verified by the user to the data in question.
+    * If for any reason the changes turn out not to be correct, running
+      |patch| with the |-R| ('reverse') switch backs out the changes
+      from the data in question. 
+
+Here's an example of using |srep| on a code base of C files. The
+following command executes |srep| on all |.c| and |.h| files in the
+current directory, and outputs a unified diff (|-u|) into the |changes|
+file.
+
+find . | grep "\\.[ch]$" | xargs srep -u Con_Func_Obj Con_Func_Seg > changes
+
+A fragment of the |changes| file is as follows (the full unified diff
+can be found here </laurie/blog/files/srep/example_unified_diff>)
+
+--- ./VM.c Sun Oct  2 14:31:38 2005
++++ ./VM.c Sun Oct  2 14:31:38 2005
+@@ -183,12 +183,12 @@
+ Con_Obj * Con_VM_apply(Con_EC_Obj *ec, Con_Obj *func)
+ {
+     jmp_buf env;
+-    Con_Func_Obj *func_seg;
++    Con_Func_Seg *func_seg;
+     Con_Obj *return_obj;
+ 
+     if ((func->seg_c_class != ec->vm->builtins[CON_BUILTIN_FUNC_CLASS]))
+         return NULL;
+-    func_seg = (Con_Func_Obj *) func;
++    func_seg = (Con_Func_Seg *) func;
+     
+     if (func_seg->pc_type == PC_TYPE_C_FUNCTION) {
+         if (sigsetjmp(env, 0) == 0) {
+
+Once I have verified that the changes that will be made are what I
+expect, I can then apply this diff in the normal fashion:
+
+patch -p0 < changes
+
+|srep| has a useful variant on this, which is to output files in a
+unified diff but with the additional output from Tim Peter's |ndiff|
+utility. The |-n| flag tells |srep| to produce a hybrid unified /
+|ndiff| patch such as the following fragment (the full hybrid diff can
+be found here </laurie/blog/files/srep/example_ndiff>):
+
+--- ./VM.c     Sun Oct  2 14:31:38 2005
++++ ./VM.c     Sun Oct  2 14:31:38 2005
+@@ -154,12 +154,12 @@
+ Con_Obj * Con_VM_apply(Con_EC_Obj *ec, Con_Obj *func)
+ {
+     jmp_buf env;
+-    Con_Func_Obj *func_seg;
+?             ^^^
++    Con_Func_Seg *func_seg;
+?             ^^^
+     Con_Obj *return_obj;
+ 
+     if ((func->seg_c_class != ec->vm->builtins[CON_BUILTIN_FUNC_CLASS])
+         return NULL;
+-    func_seg = (Con_Func_Obj *) func;
+?                         ^^^
++    func_seg = (Con_Func_Seg *) func;
+?                         ^^^
+     
+     if (func_seg->pc_type == PC_TYPE_C_FUNCTION) {
+         if (sigsetjmp(env, 0) == 0) {
+
+What |srep| takes from |ndiff| is the lines beginning with |?| which
+show you which characters within a line are affected by the diff. This
+can be very useful when you are trying to visually track which
+intra-line changes will be made by applying a diff. Unfortunately the
+patch utility complains about such lines, so one can not directly feed
+such a diff into |patch|. One can however use |srep| to automatically
+modify the |changes| diff into valid |patch| input by removing all lines
+starting with |?|:
+
+srep "^\\?.*?\n" "" changes
+
+As this example suggests, if |srep| is run without either the unified
+(|-u|) or |ndiff| (|-n|) output options, it modifies files in situ.
+
+|srep| is what I would consider a hack in the best sense of that term.
+It's basically a simple idea with a correspondingly simple
+implementation. I wouldn't necessarily trust it not to eat my hard disk,
+although so far I've not had any problems; I can however tell you with
+some confidence that it is grossly resource inefficient, so don't expect
+it to run particularly fast. If you're feeling a touch brave and would
+like to try out this potentially interesting way to debug and change
+programs, download the put-together-very-quickly version of |srep|
+</laurie/blog/files/srep/srep> and feel free to play. And if you think
+of any new uses for it, please let me know! Perhaps one day someone
+might make |srep| a fully fledged utility rather than the slightly ugly
+hack it currently is.
+
+*Updated (October 7 2005):* Attributed the paraphrased "common-sense"
+quote to Kernighan.
+
+Link to this entry <http://tratt.net/laurie/blog/entries/srep>
+
+Earlier entries <blog.py?from=5>
+
+	
+
+	
+*Last 10 entries*
+Tail Call Optimization </laurie/blog/entries/tail_call_optimization>
+Debugging Driven Development
+</laurie/blog/entries/debugging_driven_development>
+Make Exceptions Work For You
+</laurie/blog/entries/make_exceptions_work_for_you>
+Home Directory Synchronization
+</laurie/blog/entries/home_directory_synchronization>
+SREP </laurie/blog/entries/srep>
+Metacircularity </laurie/blog/entries/metacircularity>
+Timing setjmp, and the Joy of Standards
+</laurie/blog/entries/timing_setjmp_and_the_joy_of_standards>
+Text is Dead They Say </laurie/blog/entries/text_is_dead_they_say>
+The Importance of Syntax </laurie/blog/entries/the_importance_of_syntax>
+Predicting the Future of Computing
+</laurie/blog/entries/predicting_the_future_of_computing>
+ 
+
+*Modelling*
+Grady Booch <http://www.booch.com/architecture/>
+Steve Cook <http://blogs.msdn.com/stevecook/default.aspx>
+Keith Duddy <http://modelwise.blogspot.com>
+Martin Fowler <http://martinfowler.com/bliki>
+Jack Greenfield <http://blogs.msdn.com/jackgr/default.aspx>
+Simon Johnston
+<http://www.ibm.com/developerworks/blogs/dw_blog.jspa?blog=352&ca=drs-bl>
+Steven Kelly <http://www.metacase.com/blogs/stevek/blogView>
+Stuart Kent <http://blogs.msdn.com/stuart_kent/default.aspx>
+Michael Lawley <http://www.lawley.id.au/blog>
+Kerry Raymond <http://twinparrots.blogspot.com>
+Jim Steel <http://thebootstrap.blogspot.com>
+Alan Cameron Wills <http://blogs.msdn.com/alan_cameron_wills/default.aspx>
+ 
+*OS*
+KernelTrap <http://kerneltrap.org>
+OpenBSD Journal <http://undeadly.org/>
+Keith Packard <http://keithp.com/blog/>
+ 
+*Personal*
+Andrew Clover <http://www.doxdesk.com/>
+Andy Driver <http://www.pagezero.net/>
+Jon Hill <http://www.digitalirony.com/blog/>
+ 
+*Programming*
+Artima <http://www.artima.com/spotlight/>
+Don Box <http://pluralsight.com/blogs/dbox/>
+Gilad Bracha <http://blogs.sun.com/roller/page/gbracha>
+Tim Bray <http://www.tbray.org/ongoing/>
+Code Generation Network <http://www.codegeneration.net/>
+Bram Cohen <http://bramcohen.livejournal.com/>
+Adrian Colyer <http://www.aspectprogrammer.org/blogs/adrian/>
+Bruce Eckel <http://www.artima.com/weblogs/index.jsp?blogger=beckel>
+Jonathan Edwards <http://alarmingdevelopment.org>
+Chad Fowler
+Martin Fowler <http://martinfowler.com/bliki>
+Andy Hunt <http://toolshed.com/blog/>
+Jeremy Hylton <http://jeremyhylton.blogspot.com>
+Ralph Johnson <http://www.cincomsmalltalk.com/userblogs/ralph/blogView>
+Lambda the Ultimate <http://lambda-the-ultimate.org>
+Patrick Logan <http://patricklogan.blogspot.com>
+Brian Marick <http://www.testing.com/cgi-bin/blog>
+Havoc Pennington <http://log.ometer.com/>
+Guido van Rossum <http://www.artima.com/weblogs/index.jsp?blogger=guido>
+Keith Short <http://blogs.msdn.com/keith_short/default.aspx>
+Eric Sink <http://software.ericsink.com/>
+Diomidis Spinellis <http://www.spinellis.gr/blog>
+Joel Spolsky <http://www.joelonsoftware.com>
+Dave Thomas <http://blogs.pragprog.com/cgi-bin/pragdave.cgi>
+Darren Tucker <http://www.advogato.org/person/dtucker/>
+Steve Vinoski <http://www.iona.com/blogs/vinoski/>
+Phil Wadler <http://wadler.blogspot.com>
+
+------------------------------------------------------------------------
+Home </laurie/> 	Copyright © 1995-2005 Laurence Tratt laurie@tratt.net
+<mailto:laurie@tratt.net>
+

@@ -1,0 +1,70 @@
+"""Tests for the py4science workshop.
+
+Start IPython as
+
+ipython -pylab
+
+and then run this code with:
+
+run test.ipy
+"""
+
+import matplotlib.pylab as P
+import numpy
+import scipy
+
+def pause(msg=None):
+    print '*'*70
+    if msg:
+        print msg
+    raw_input('Press Enter to continue.')
+    P.close('all')
+
+numpy.test(10,10)
+pause('The previous test suite should have passed with no errors.')
+
+scipy.test(10,10)
+pause('This one has 3 known failures, ignore them.')
+
+# our own examples, one by one
+run bessel.py
+pause()
+
+run -e erathostenes.py
+time_sieves()
+pause()
+
+run fft_imdenoise.py
+pause()
+
+run fitting.py
+pause()
+
+run montecarlo_pi.py
+pause()
+
+run polyroots1d.py
+pause()
+
+run -e qsort.py
+pause()
+
+run quad_newton.py
+pause()
+
+run -e trapezoid.py
+pause()
+
+run wallis_pi.py
+pause()
+
+run weave_blitz.py
+pause()
+
+run wordfreqs.py
+pause()
+
+cd faces
+run faces.py
+cd ..
+pause()

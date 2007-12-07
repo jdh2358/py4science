@@ -153,8 +153,9 @@ Microsoft Windows
   users anyhow, like the abiliy to read and write MS Office documents
   via the COM API.
 
-- ipython: grab the latest win32 exe installer from the `ipython
-  distributions`_ page
+- install pyreadline_: ipython needs this for tab completion and other handy features
+
+- ipython: grab the latest win32 exe installer from the `ipython distributions`_ page
 
 - numpy: grab the latest exe or msi installer for your version of
   python at `numpy download`_
@@ -173,6 +174,8 @@ Microsoft Windows
 .. _`python MSI installer`: http://www.python.org/download/releases/2.5.1/
 
 .. _win32com: http://sourceforge.net/project/showfiles.php?group_id=78018&package_id=79063&release_id=449591
+
+.. _pyreadline: http://ipython.scipy.org/moin/PyReadline/Intro
 
 .. _`ipython distributions`: http://ipython.scipy.org/dist/
 

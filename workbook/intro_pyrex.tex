@@ -3,7 +3,7 @@ language which is a hybid of C and python to write code that looks
 like python, but is converted by \texttt{pyrex} into python C
 extension code.  It can be used to write custom C extension modules in
 a python like module to remove performance bottlenecks in code, as
-well as to wrap and existing C API with a python binding.  \textt{pyrex}
+well as to wrap and existing C API with a python binding.  \texttt{pyrex}
 generates C code, so you can use it to automatically generate C
 extensions that you can ship with your code and users can build your
 code without \texttt{pyrex} installed.
@@ -116,11 +116,11 @@ In [3]: print primes.primes(20)
 
 \section{Working with \texttt{numpy} arrays}
 
-\textt{numpy} arrays are the core of high performance computing in
-python, and on of the most common data formats for passing large data
+\texttt{numpy} arrays are the core of high performance computing in
+python, and one of the most common data formats for passing large data
 sets around between pyhton code and other wrappers.  There are many
 things that arrays do very well and are practically as fast as a
-native C or Fortran implementations, eg convolutions and FFTs.  But
+native C or FORTRAN implementations, eg convolutions and FFTs.  But
 there are somethings that can be painfully slow in python when working
 with arrays, for example iterative algorithms over an array of values.
 For these cases, it is nice to be able to quickly generate some python
@@ -130,8 +130,8 @@ extension code for working with \texttt{numpy} array data.
 \texttt{pyrex} extension code, you can find it, and another file which
 \texttt{numpy} uses to expose the requisite bits of the Python C API
 which it needs, in the \texttt{numpy} source code directory
-\texttt{numpy/doc/pyrex}.  These files are \texttt{c_numpy.pxd} and
-\texttt{c_python.pxd}.  In addition, \texttt{numpy} provides and
+\texttt{numpy/doc/pyrex}.  These files are \texttt{c\_numpy.pxd} and
+\texttt{c\_python.pxd}.  In addition, \texttt{numpy} provides and
 example file \texttt{numpyx.pyx}that shows you how to build a pyx
 extension file for multi-dimensional array sof different data types
 (eg int, float, python object).  Here we will be a little less

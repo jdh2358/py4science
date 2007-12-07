@@ -6,4 +6,4 @@ test:   all
 
 .PHONY: clean
 clean:
-	rm -rf *~ *.so *.c *.o build
+	rm -rf *~ *.so *.o build ringbuf.c

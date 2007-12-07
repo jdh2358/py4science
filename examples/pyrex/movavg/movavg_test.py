@@ -1,3 +1,0 @@
-import numpy
-import movavg
-

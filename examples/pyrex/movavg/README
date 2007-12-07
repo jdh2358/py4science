@@ -1,0 +1,82 @@
+Introduction
+============
+
+This exercise introduces pyrex to wrap a C library for trailing
+statistics.
+
+Computation of trailing windowed statistics is common in many
+quantitative data driven disciplines, particularly where there is
+noisy data.  Common uses of windowed statistics are the trailing
+moving average, standard deviation, minumum and maximum.  Two common
+use cases which pose computational challenges for python: real time
+updating of trailing statistics as live data comes in, and posthoc
+computation of trailing statistics over a large data array.  In the
+second case, for some statistics we can use convolution and related
+techniques for efficient computation, eg of the trailing 30 sample
+average
+
+    numpy.convolve(x, numpy.ones(30), mode=valid')[:len(x)]
+
+but for other statistics like the trailing 30 day maximum at each
+point, efficient routines like convolution are of no help.
+
+This exercise introduces pyrex to efficiently solve the problem of
+trailing statistics over arrays as well as for a live, incoming data
+stream. A pure C library, ringbuf, defines a circular C buffer and
+attached methods for efficiently computing trailing averages, and
+pyrex is used to provide a pythonic API on top of this extension code.
+The rigid segregation between the C library and the python wrappers
+insures that the C code can be used in other projects, be it a matlab
+(TM) extension or some other C library.  The goal of the exericse is
+to compute the trailing statistics mean, median, stddev, min and max
+using three approaches:
+
+  - with brute force using numpy arrays, slices and methods
+    (movavg_bruteforce.py)
+
+  - with python bindings to the ringbuf code ringbuf.Rinbuf
+    (movavg_ringbuf.py).  See ringbuf_demo.py for an example of how to
+    use the ringbuf module
+
+  - using a pyrex extension to the ringbuf runstats code
+    (movavg_fast.py)
+
+pyrex module support
+====================
+
+  - Makefile : simple interface to setup.py so you can just 'make'
+
+  - setup.py : configure and build the python modules
+
+  - c_numpy.pxd : the numpy C API for pyrex
+
+  - c_python.pxd : the python C API for pyrex
+
+  - c_ringbuf.pxi : the ringbuf C API for pyrex
+
+  - ringbuf.pyx : python interface to the ringbuf C API
+
+examples
+========
+
+  - ringbuf_demo.py : basic demo of the python bindings to basic
+    Ringbuf class
+
+  - movavg_bruteforce.py : do the trailing stats with brute force
+    numpy slices and methods
+
+  - movavg_ringbuf.py : do the trailing stats with the Ringbuf code
+
+  - movavg_fast.py : do the trailing stats with the ringbuf runstats wrapper
+
+ringbuf C code
+==============
+
+  - ringbuf.h : pure C ringbuf API headers
+
+  - ringbufnan.c : pure C ringbuf library
+
+Acknowledgements
+================
+
+Thanks to Eric Firing for the ringbuf and runstats code!

@@ -1,41 +1,55 @@
-# -*- Mode: Python -*-  Not really, but close enough
+'''
+This is kept as a module separate from pyringbuf so that the
+latter does not depend on numpy.
+'''
 
-cimport c_python
 cimport c_numpy
 import numpy
 
-# Numpy must be initialized
 c_numpy.import_array()
 
+include "c_ringbuf.pxi"
 
 
-def sum_elements(c_numpy.ndarray arr):
-    cdef int i
-    cdef double x, val
+def runstats(data, nrb):
+    '''
+    Compute running stats on 1D array data for odd length nrb
+    '''
 
-    x = 0.
-    val = 0.
-    for i from 0<=i<arr.dimensions[0]:
-        val = (<double*>(arr.data + i*arr.strides[0]))[0]
-        x = x + val
+    cdef c_numpy.ndarray c_data
+    cdef c_numpy.ndarray c_dmean
+    cdef c_numpy.ndarray c_dstd
+    cdef c_numpy.ndarray c_dmin
+    cdef c_numpy.ndarray c_dmax
+    cdef c_numpy.ndarray c_dmedian
+    cdef c_numpy.ndarray c_ng
 
-    return x
 
+    data = numpy.asarray(data, dtype=numpy.float_)
+    if data.ndim != 1:
+        raise ValueError("data must be 1-D for now")
+    nd = data.shape[0]
 
+    dmean = numpy.empty_like(data)
+    dstd = numpy.empty_like(data)
+    dmin = numpy.empty_like(data)
+    dmax = numpy.empty_like(data)
+    dmedian = numpy.empty_like(data)
+    ng = numpy.empty(data.shape, dtype=numpy.int_)
 
-def sum_elements2(c_numpy.ndarray arr):
-    cdef int i
-    cdef double x, val
+    c_data = data
+    c_dmean = dmean
+    c_dstd = dstd
+    c_dmin = dmin
+    c_dmax = dmax
+    c_dmedian = dmedian
+    c_ng = ng
 
-    arr = numpy.asarray(arr, numpy.float_)
-
-    if arr.nd!=1:
-        raise RuntimeError('only 1D arrays supported; found shape=%s'%str(arr.shape))
-    assert(arr.nd==1)
-    x = 0.
-    val = 0.
-    for i from 0<=i<arr.dimensions[0]:
-        val = (<double*>(arr.data + i*arr.strides[0]))[0]
-        x = x + val
-
-    return x
+    c_runstats(nrb, nd, <double *>c_data.data,
+                        <double *>c_dmean.data,
+                        <double *>c_dstd.data,
+                        <double *>c_dmin.data,
+                        <double *>c_dmax.data,
+                        <double *>c_dmedian.data,
+                        <int *>c_ng.data)
+    return dmean, dstd, dmin, dmax, dmedian, ng

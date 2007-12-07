@@ -18,16 +18,12 @@ import numpy
 
 ringbufmod = Extension('ringbuf',
                         ['ringbuf.pyx',
-                         'ringbufnan.c'])
-
-
-movavgmod = Extension('movavg',
-                      ['movavg.pyx'],
-                      include_dirs = [numpy.get_include()])
+                         'ringbufnan.c'],
+                       include_dirs = [numpy.get_include()])
 
 # Call the routine which does the real work
-setup(name        = 'movavg',
-      description = 'moveng averages, using a c ring buffer',
-      ext_modules = [movavgmod, ringbufmod,],
+setup(name        = 'ringbuf',
+      description = 'trailing stats using a c ring buffer',
+      ext_modules = [ringbufmod,],
       cmdclass    = {'build_ext': build_ext},
       )

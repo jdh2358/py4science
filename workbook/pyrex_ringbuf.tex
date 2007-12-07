@@ -1,0 +1,43 @@
+This exercise introduces \texttt{pyrex} to wrap a C library for
+trailing statistics.
+
+Computation of trailing windowed statistics is common in many
+quantitative data driven disciplines, particularly where there is
+noisy data.  Common uses of windowed statistics are the trailing
+moving average, standard deviation, minumum and maximum.  Two common
+use cases which pose computational challenges for python: real time
+updating of trailing statistics as live data comes in, and posthoc
+computation of trailing statistics over a large data array.  In the
+second case, for some statistics we can use convolution and related
+techniques for efficient computation, eg of the trailing 30 sample
+average
+
+\begin{lstlisting}
+    numpy.convolve(x, numpy.ones(30), mode=valid')[:len(x)]
+\end{lstlisting}
+
+but for other statistics like the trailing 30 day maximum at each
+point, efficient routines like convolution are of no help.
+
+This exercise introduces \texttt{pyrex} to efficiently solve the problem of
+trailing statistics over arrays as well as for a live, incoming data
+stream. A pure C library, \texttt{ringbuf}, defines a circular C
+buffer and attached methods for efficiently computing trailing
+averages, and \texttt{pyrex} is used to provide a pythonic API on top of this
+extension code.  The rigid segregation between the C library and the
+python wrappers insures that the C code can be used in other projects,
+be it a matlab (TM) extension or some other C library.  The goal of
+the exercise is to compute the trailing statistics \textit{mean},
+\textit{median}, \textit{stddev}, \textit{min} and \textit{max} using
+three approaches:
+
+\begin{itemize}
+  \item with brute force using \texttt{numpy} arrays, slices and methods
+
+  \item with python bindings to the \texttt{ringbuf} code
+    \texttt{ringbuf.Ringbuf}.
+
+  \item using a \texttt{pyrex} extension to the
+    \texttt{ringbuf.runstats} code
+
+\end{itemize}

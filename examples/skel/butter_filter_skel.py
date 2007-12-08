@@ -2,16 +2,18 @@ import numpy as n
 import scipy.signal as signal
 from pylab import figure, show
 
+XXX = 0.  # just so he XXX blanks will not crash
 dt = 0.01
 t = n.arange(0, 2, dt)
-s = n.sin(2*n.pi*t)
+s = XXX   # a 1 Hz sine wave over t
 
-# sine corrupted wih gaussian white noise
-sn = s + 0.1*n.random.randn(len(s))  # noisy sine
+# sine corrupted wih gaussian white noise the sine wave s corrupted
+# with gaussian white noise with sigma=0.1.  See numpy.random.randn
 
+sn = XXX
 # the nyquist frequency 1/(2dt) is the maximum frequency in a sampled
 # signal
-Nyq = 0.5/dt
+Nyq = XXX
 
 #the corner frequency represents a boundary in the system response at
 #which energy entering the system begins to be attenuate, and the stop
@@ -22,32 +24,23 @@ stopfreq = 5.    # the stop frequency
 
 # the scipy.signal routines accept corner an stop frequencies as a
 # *fraction* of the nyquist
-ws = cornerfreq/Nyq
-wp = stopfreq/Nyq
+ws = XXX
+wp = XXX
 
 
 # call scipy.buttord to compute the order and natural frequency of the
 # butterorth filter.  See the help for signal.buttord.  You will pass
 # in ws and wp, as well as the attenuation in the pass and stop bands
-N, wn = signal.buttord(wp, ws, 3, 16)
+N, wn = XXX, XXX  # the output of signal.buttord
 
 # scipy.butter will take the output from buttord and return the
-# lfilter coeefs for that filter
-b, a = signal.butter(N, wn)
+# lfilter coeefs for that filter.  See help signal.butter
+b, a = XXX, XXX # the output of signal.butter
 
 # Now lfilter will filter the noisy sine with the filter parameters
-# from butter
-sf = signal.lfilter(b, a, sn)
+# from butter.  See help signal.lfilter
+sf = XXX  # the filtered signal returned from lfi,ter
 
 # plot the original, noisy and filtered sine, all on the same axes in
 # pylab, and make a legend
-fig = figure()
-ax = fig.add_subplot(111)
-ax.plot(t, s, label='original signal')
-ax.plot(t, sn, label='noisy signal')
-ax.plot(t, sf, label='filtered signal')
-ax.legend()
-ax.set_title('low pass butterworth filter of sine')
-ax.set_xlabel('time (s)')
-ax.grid()
-show()
+XXX

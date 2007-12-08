@@ -26,31 +26,6 @@ def print_array_info(c_numpy.ndarray arr):
 
 
 
-def sum_elements(c_numpy.ndarray arr):
-    cdef int i
-    cdef double x, val
-
-    x = 0.
-    val = 0.
-    for i from 0<=i<arr.dimensions[0]:
-        val = (<double*>(arr.data + i*arr.strides[0]))[0]
-        x = x + val
-
-    return x
-
-
-def scale_elements(int N):
-    cdef int i
-    cdef double x, val
-
-    x = 0.
-    val = 0.
-    for i from 0<=i<N:
-        val = 2.5 * i
-        x = x + val
-    return x
-
-
 cdef print_elements(char *data,
                     c_python.Py_intptr_t* strides,
                     c_python.Py_intptr_t* dimensions,

@@ -4,7 +4,7 @@ Use a brute force, slow method
 import numpy
 import ringbuf
 
-r = ringbuf.Ringbuf(30)
+r = ringbuf.Ringbuf(31)
 x = numpy.random.rand(10000)
 
 data = []

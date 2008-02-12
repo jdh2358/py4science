@@ -1,6 +1,6 @@
-_=================================
+=================================
  reST (reSTructured Text) basics
-=================================k
+=================================
 .. Author:  Fernando Perez
 .. Contact: Fernando.Perez@colorado.edu
 .. Time-stamp: "2007-08-29 15:50:06 fperez"

@@ -1261,7 +1261,7 @@ K.
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename ../../../talks/0708_ncar/fig/Fluidlab5.png
+	filename fig/Fluidlab5.png
 	lyxscale 50
 	width 90text%
 	keepAspectRatio
@@ -1278,7 +1278,7 @@ Volumetric rendering with FluidLab
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename ../../../talks/0708_ncar/fig/Fluidlab6.png
+	filename fig/Fluidlab6.png
 	lyxscale 50
 	width 90text%
 	keepAspectRatio
@@ -1313,7 +1313,7 @@ Winner of the 2007 Trophés du Libre, scientific software category
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename ../../../talks/0708_ncar/fig/sage-cube5plot-medium.jpg
+	filename fig/sage_notebook-medium.jpg
 	lyxscale 50
 	width 90text%
 	keepAspectRatio

@@ -1,5 +1,5 @@
-import pylab, numpy
-from matplotlib.toolkits.basemap import Basemap
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
 # create map by specifying width and height in km.
 resolution = 'l'; projection = 'lcc'
 lon_0 = -50; lat_0 = 60
@@ -12,5 +12,5 @@ m.drawmapboundary(fill_color='aqua')
 m.fillcontinents(color='coral',lake_color='aqua')
 m.drawcountries()
 m.drawstates()
-pylab.title('map region specified using width and height')
-pylab.show()
+plt.title('map region specified using width and height')
+plt.show()

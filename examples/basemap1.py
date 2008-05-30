@@ -1,5 +1,5 @@
-import pylab, numpy
-from matplotlib.toolkits.basemap import Basemap
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
 # create map by specifying lat/lon values at corners.
 resolution = 'l'; projection = 'lcc'
 lat_0 = 60; lon_0 = -50
@@ -18,5 +18,5 @@ m.fillcontinents(color='coral',lake_color='aqua')
 # draw states and countries.
 m.drawcountries()
 m.drawstates()
-pylab.title('map region specified using corner lat/lon values')
-pylab.show()
+plt.title('map region specified using corner lat/lon values')
+plt.show()

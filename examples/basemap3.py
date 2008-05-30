@@ -1,5 +1,5 @@
-import pylab, numpy
-from matplotlib.toolkits.basemap import Basemap
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
 # create map by specifying width and height in km.
 resolution = 'l'; projection = 'lcc'
 lon_0 = -50; lat_0 = 60
@@ -23,14 +23,14 @@ m.scatter([ny_x,lon_x],[ny_y,lon_y],25,color='k',marker='o',zorder=10)
 m.drawgreatcircle(nylon,nylat,lonlon,lonlat,linewidth=2,color='k')
 # put the names of the cities to the left of each dot, offset
 # by a little. Use a bold font.
-pylab.text(ny_x-100000,ny_y+100000,'New York',fontsize=12,\
+plt.text(ny_x-100000,ny_y+100000,'New York',fontsize=12,\
            color='k',horizontalalignment='right',fontweight='bold')
-pylab.text(lon_x-100000,lon_y+100000,'London',fontsize=12,\
+plt.text(lon_x-100000,lon_y+100000,'London',fontsize=12,\
            color='k',horizontalalignment='right',fontweight='bold')
 m.drawcoastlines(linewidth=0.5)
 m.drawmapboundary(fill_color='aqua')
 m.fillcontinents(color='coral',lake_color='aqua')
 m.drawcountries()
 m.drawstates()
-pylab.title('NY to London Great Circle')
-pylab.show()
+plt.title('NY to London Great Circle')
+plt.show()

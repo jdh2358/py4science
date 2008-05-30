@@ -1,5 +1,6 @@
-import pylab, numpy
-from matplotlib.toolkits.basemap import Basemap
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import numpy as np
 # create map by specifying width and height in km.
 resolution = 'l'
 lon_0 = -50
@@ -16,9 +17,9 @@ m.drawcountries()
 m.drawstates()
 # label meridians where they intersect the left, right and bottom
 # of the plot frame.
-m.drawmeridians(numpy.arange(-180,181,20),labels=[1,1,0,1])
+m.drawmeridians(np.arange(-180,181,20),labels=[1,1,0,1])
 # label parallels where they intersect the  left, right and top
 # of the plot frame.
-m.drawparallels(numpy.arange(-80,81,20),labels=[1,1,1,0])
-pylab.title('labelled meridians and parallels',y=1.075)
-pylab.show()
+m.drawparallels(np.arange(-80,81,20),labels=[1,1,1,0])
+plt.title('labelled meridians and parallels',y=1.075)
+plt.show()

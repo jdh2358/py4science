@@ -28,3 +28,8 @@ contains
 
 * _templates - used by the sphinx build system
 
+You can get the latest svn of this document at:
+
+  > svn co https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/py4science/examples/sphinx_template
+
+

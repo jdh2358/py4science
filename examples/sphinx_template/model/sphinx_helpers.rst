@@ -63,6 +63,31 @@ It is easy to make a link to `yahoo <http://yahoo.com>`_ or to some
 section inside this document (see :ref:`making-a-table`) or another
 document (see :ref:`final-results`).
 
+You can also reference classes, modules, functions, etc that are
+documented using the sphinx `autodoc
+<http://sphinx.pocoo.org/ext/autodoc.html>`_ facilites.  For example,
+see the module :mod:`matplotlib.backend_bases` documentation, or the
+class :class:`~matplotlib.backend_bases.LocationEvent`, or the method
+:meth:`~matplotlib.backend_bases.FigureCanvasBase.mpl_connect`.
+
+.. _ipython-highlighting:
+
+ipython sessions
+================
+
+Michael Droettboom contributed a sphinx extension which does pygments
+syntax highlighting on ipython sessions
+
+.. sourcecode:: ipython
+
+    In [69]: lines = plot([1,2,3])
+
+    In [70]: setp(lines)
+      alpha: float
+      animated: [True | False]
+      antialiased or aa: [True | False]
+      ...snip
+
 .. _formatting-text:
 
 Formatting text
@@ -78,6 +103,36 @@ You can represent code blocks fairly easily::
 Or literally include code:
 
 .. literalinclude:: ../simulations/code/elegant.py
+
+
+.. _using-math:
+
+Using math
+==========
+
+In sphinx you can include inline math :math:`x\leftarrow y\ x\forall
+y\ x-y` or display math
+
+.. math::
+
+  W^{3\beta}_{\delta_1 \rho_1 \sigma_2} = U^{3\beta}_{\delta_1 \rho_1} + \frac{1}{8 \pi 2} \int^{\alpha_2}_{\alpha_2} d \alpha^\prime_2 \left[\frac{ U^{2\beta}_{\delta_1 \rho_1} - \alpha^\prime_2U^{1\beta}_{\rho_1 \sigma_2} }{U^{0\beta}_{\rho_1 \sigma_2}}\right]
+
+
+There is a :file:`spinxext/mathml.py` file in the
+:file:`spinx_template` directory which can be enabled via the
+:file:`conf.py` configuration file.  However, we have found that
+resultant html is not supported across many browsers, so have added a
+sphinx extension for translating math to png.  In the file
+:file:`sphinxext/mathpng.py` there are two functions ``latex2png``. 
+The first one requires latex and dvipng, and the second one uses
+matplotlib mathtext (requires mpl svn rxx or later).  Because the 2nd
+function replaces the first one, the matplotlib mathtext support is on
+by default, so you can generate equation enabled html anywhere
+matplotlib is installed (for PDF you will still need pdflatex
+installed).  If you would rather use latex and dvipng, simply hide the
+second ``latex2png`` definition, eg by renaming the second function
+``_latex2png``.
+
 
 
 .. _emacs-helpers:

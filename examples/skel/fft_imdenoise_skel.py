@@ -36,7 +36,7 @@ im = # XXX make an image array from the file 'moonlanding.png', using the
      # channel from the MxNx4 RGBA matrix to represent the grayscale
      # intensities
 
-F = # Compute the 2d FFT of the input image.  Look for a 2-d FFT in N.dft
+F = # Compute the 2d FFT of the input image.  Look for a 2-d FFT in N.fft.
 
 # Define the fraction of coefficients (in each direction) we keep
 keep_fraction = 0.1

@@ -5,17 +5,12 @@ http://en.wikipedia.org/wiki/Moir%C3%A9_pattern
 
 See L. Glass. 'Moire effect from random dots' Nature 223, 578580 (1969).
 """
+import cmath
 from numpy import cos, sin, pi, matrix
 import numpy as npy
 import numpy.linalg as linalg
 from pylab import figure, show
 
-def csqrt(x):
-    """
-    sqrt func that handles returns sqrt(x)j for x<0
-    """
-    if x<0: return complex(0, npy.sqrt(abs(x)))
-    else: return npy.sqrt(x)
 
 def myeig(M):
     """
@@ -34,12 +29,13 @@ def myeig(M):
     tau = a+d       # the trace
     delta = a*d-b*c # the determinant
 
-    lambda1 = (tau + csqrt(tau**2 - 4*delta))/2.
-    lambda2 = (tau - csqrt(tau**2 - 4*delta))/2.
+    lambda1 = (tau + cmath.sqrt(tau**2 - 4*delta))/2.
+    lambda2 = (tau - cmath.sqrt(tau**2 - 4*delta))/2.
     return lambda1, lambda2
     
 # 2000 random x,y points in the interval[-0.5 ... 0.5]
-X1 = matrix(npy.random.rand(2,2000))-0.5
+X1 = matrix(npy.random.rand(2,2000)
+            )-0.5
 
 name =  'saddle'
 sx, sy, angle = 1.05, 0.95, 0.

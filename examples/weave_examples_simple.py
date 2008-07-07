@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 """Some simple examples of weave.inline use"""
 
+import numpy as np
 from scipy.weave import inline,converters
-import numpy as N
-from pylab import rand
 
 #-----------------------------------------------------------------------------
 # Returning a scalar quantity computed from an array.
@@ -37,16 +36,49 @@ for(int i=0;i<nrow;++i)
     inline(code,['num','mat','nrow','ncol'],
            type_converters = converters.blitz)
 
-def main():
-    zz = N.zeros([10,10])
+def prod(m, v):
+    #C++ version
+    nrows, ncolumns = m.shape
+    assert v.ndim==1 and ncolumns==v.shape[0],"Shape mismatch in prod"
+    
+    res = np.zeros(nrows, float)
+    code = r"""
+    for (int i=0; i<nrows; i++)
+    {
+        for (int j=0; j<ncolumns; j++)
+        {
+            res(i) += m(i,j)*v(j);
+        }
+    }
+    """
+    err = inline(code,['nrows', 'ncolumns', 'res', 'm', 'v'], verbose=2,
+                 type_converters=converters.blitz)
+    return res
+
+
+if __name__=='__main__':
+    print 'zz is all zeros'
+    zz = np.zeros([10,10])
     print 'tr(zz)=',trace(zz)
-    oo = N.ones([4,4],N.float)
+    print 'oo is all ones'
+    oo = np.ones([4,4],float)
     print 'tr(oo)=',trace(oo)
-    aa = rand(128,128)
+    print 'aa is random'
+    aa = np.random.rand(128,128)
     print 'tr(aa)=',trace(aa)
+    print 'tr(aa)=',np.trace(aa),' (via numpy)'
+
+    print
+    print 'Modify oo in place:'
     print 'oo:',oo
     in_place_mult(3,oo)
     print '3*oo:',oo
 
-if __name__=='__main__':
-    main()
+    print
+    print 'Simple matrix-vector multiply'
+    nr,nc = 20,10
+    m = np.random.rand(nr,nc)
+    v = np.random.rand(nc)
+    mv = prod(m,v)
+    mvd = np.dot(m,v)
+    print 'Mat*vec error:',np.linalg.norm(mv-mvd)

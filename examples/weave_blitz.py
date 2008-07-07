@@ -5,12 +5,11 @@ from __future__ import division
 
 import sys, time
 
-import numpy
-from numpy import zeros
+import numpy as np
 from scipy import weave
-from pylab import subplot, plot, show, legend, xlabel, ylabel, title
+from pylab import figure,subplot, plot, show, legend, xlabel, ylabel, title
 
-rand = numpy.random.rand
+rand = np.random.rand
 
 Nadds = 12
 Nevals = 10
@@ -45,7 +44,7 @@ def repeat_nadds(Nadds, Nevals, useWeave):
         # can disrupt timings
         if useWeave:
             # only weave needs to predefine result array
-            result= zeros(shape,dtype=float)
+            result= np.empty(shape,dtype=float)
             times[0] = now()
             for j in evalRng:
                 blitz(s)
@@ -67,9 +66,10 @@ nw, tw = repeat_nadds(Nadds, Nevals, useWeave=True)
 nn, tn = repeat_nadds(Nadds, Nevals, useWeave=False)
 
 # plot weave versus Numeric
+figure()
 ax = subplot(111)
 plot(nw, tw, 'go', nn, tn, 'bs')
-legend( ('Weave', 'Numeric') )
+legend( ('Blitz', 'Numpy') )
 xlabel('num adds')
 ylabel('time (s)')
 title('numpy vs weave; repeated adds, shape: %s' % (shape,))

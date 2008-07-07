@@ -1,0 +1,94 @@
+=========================================================
+ Introduction to Scientific Computing in Python - Agenda
+=========================================================
+
+.. contents::
+..
+    1  Introduction and resources
+    2  Day 1
+..
+
+Introduction and resources
+==========================
+
+While the tutorial will begin with very basic concepts, we will assume that
+attendees have given the free online `Python tutorial`_ a very decent read, and
+will have installed on their systems all the prerequisite tools.
+
+.. _`Python tutorial`: http://docs.python.org/tut
+
+In addition, the following are good sources of information for the tools we'll
+be using (all are linked from the main `SciPy documentation`_ page):
+
+  * The `STSci tutorial`_ on interactive data analysis.
+  * The tentative `NumPy tutorial`_.
+  * The list of NumPy `functions with examples`_.
+  * The SciPy community cookbook_.
+
+.. _`SciPy documentation`: http://www.scipy.org/Documentation
+.. _`STSci tutorial`: http://www.scipy.org/wikis/topical_software/Tutorial
+.. _`NumPy tutorial`: http://www.scipy.org/Tentative_NumPy_Tutorial
+.. _`functions with examples`: http://www.scipy.org/Numpy_Example_List_With_Doc
+.. _`cookbook`: http://www.scipy.org/Cookbook
+
+
+Initials indicate who presents what:
+
+  * MD: Michael Droetboom
+  * PG: Perry Greenfield
+  * FP: Fernando Perez
+
+
+Day 1
+=====
+
+* Python for scientific computing: A high-level overview of the topic of Python
+  in a scientific context ( simple 30 minute talk).
+
+* Workflow, guided by a simple examples and students typing along.  Will show
+  basics of everyday workflow as we cover the core concepts.
+
+  * Basic scalar types: strings and numbers (int, float, complex).  Exercise:
+    Walli's infinte product formula for Pi.
+
+  * Basic collections: lists and dicts (mention tuples and sets).  Exercise:
+    word frequency counting.
+
+  * Quick review of control flow: if, for, range, while, break, continue.
+
+  * Defining functions. Arguments and docstrings.
+
+  * Reusing your code: every script is a module, '__main__' (notes on module
+    loading and reloading)
+
+  * Exceptions: a core concept in Python, you really can't use the language
+    without them.
+
+  * Debugging your programs:
+    * Ye olde print statement.
+    * %debug in ipython.
+    * %run -d in ipython.
+    * winpdb - a free, cross-platform GUI debugger.
+
+  * Testing your code: reproducible research from the start.  Making a habit
+    out of having auto-validated code.
+
+* Introduction to NumPy arrays.
+  * Memory model.
+  * The dtype concept.
+  * Creating arrays.
+  * Basic operations: arithmetic and slicing.
+  * Indexing modes. Views vs. copies.
+  * Functions that operate on arrays: the builtins and making your own.
+  * Saving and reloading arrays on disk.
+
+  Exercises: Trapezoid rule integration. Image denoising using FFTs.
+
+* Working with data
+  * Reading files.
+  * Simple text parsing.
+  * CSV files.
+  * Matplotlib's data loader.
+
+
+* Python packages and modules, the very basics: __init__.py and $PYTHONPATH.

@@ -5,15 +5,12 @@ http://en.wikipedia.org/wiki/Moir%C3%A9_pattern
 
 See L. Glass. 'Moire effect from random dots' Nature 223, 578580 (1969).
 """
+import cmath  # provides complex math functions
 from numpy import cos, sin, pi, matrix
 import numpy as npy
 import numpy.linalg as linalg
 from pylab import figure, show
 
-def csqrt(x):
-    'sqrt func that handles returns sqrt(x)j for x<0'
-    XXX
-    
 def myeig(M):
     """
     compute eigen values and eigenvectors analytically

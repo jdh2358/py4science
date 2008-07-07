@@ -3,14 +3,13 @@
 
 import sys
 
-import numpy as N
-import pylab as P
-import scipy as S
+import numpy as np
+from matplotlib import pyplot as plt
 
 def mag_phase(F):
     """Return magnitude and phase components of spectrum F."""
 
-    return (N.absolute(F), N.angle(F))
+    return (np.absolute(F), np.angle(F))
 
 def plot_spectrum(F, amplify=1000):
     """Normalise, amplify and plot an amplitude spectrum."""
@@ -19,19 +18,19 @@ def plot_spectrum(F, amplify=1000):
     M[M > 1] = 1
 
     print M.shape, M.dtype
-    P.imshow(M, P.cm.Blues)
+    plt.imshow(M, plt.cm.Blues)
 
 try:
     # Read in original image, convert to floating point for further
     # manipulation; imread returns a MxNx4 RGBA image.  Since the
     # image is grayscale, just extrac the 1st channel
-    im = P.imread('data/moonlanding.png').astype(float)[:,:,0]
+    im = plt.imread('data/moonlanding.png').astype(float)[:,:,0]
 except:
     print "Could not open image."
     sys.exit(-1)
 
 # Compute the 2d FFT of the input image
-F = N.fft.fft2(im)
+F = np.fft.fft2(im)
 
 # Now, make a copy of the original spectrum and truncate coefficients.
 keep_fraction = 0.1
@@ -52,27 +51,27 @@ ff[:, c*keep_fraction:c*(1-keep_fraction)] = 0
 
 # Reconstruct the denoised image from the filtered spectrum, keep only the real
 # part for display
-im_new = N.fft.ifft2(ff).real
+im_new = np.fft.ifft2(ff).real
 
 # Show the results
-P.figure()
+plt.figure()
 
-P.subplot(221)
-P.title('Original image')
-P.imshow(im, P.cm.gray)
+plt.subplot(221)
+plt.title('Original image')
+plt.imshow(im, plt.cm.gray)
 
-P.subplot(222)
-P.title('Fourier transform')
+plt.subplot(222)
+plt.title('Fourier transform')
 plot_spectrum(F)
 
-P.subplot(224)
-P.title('Filtered Spectrum')
+plt.subplot(224)
+plt.title('Filtered Spectrum')
 plot_spectrum(ff)
 
-P.subplot(223)
-P.title('Reconstructed Image')
-P.imshow(im_new, P.cm.gray)
+plt.subplot(223)
+plt.title('Reconstructed Image')
+plt.imshow(im_new, plt.cm.gray)
 
-P.savefig('fft_imdenoise.png', dpi=150)
-P.savefig('fft_imdenoise.eps')
-P.show()
+plt.savefig('fft_imdenoise.png', dpi=150)
+plt.savefig('fft_imdenoise.eps')
+plt.show()

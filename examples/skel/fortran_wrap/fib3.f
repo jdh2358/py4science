@@ -19,7 +19,7 @@ Cf2py depend(n) a
       ENDDO
       END
 
-      SUBROUTINE CUMSUM(X, Y, N)
+C      SUBROUTINE CUMSUM(X, Y, N)
 C
 C     COMPUTE THE CUMULATIVE SUM OF X
 C

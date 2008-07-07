@@ -40,7 +40,7 @@ def fetch_stock(ticker):
 tickers = 'SPY', 'QQQQ', 'INTC', 'MSFT', 'YHOO', 'GOOG', 'GE', 'WMT', 'AAPL'
 
 # we want to compute returns since 2003, so define the start date
-startdate = datetime.datetime(2003,1,1)
+startdate = datetime.date(2003,1,1)
 
 # we'll store a list of each return and ticker for analysis later
 data = []   # a list of (return, ticker) for each stock 

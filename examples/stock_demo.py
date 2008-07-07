@@ -38,5 +38,4 @@ p.show()
 # <demo> stop
 # Now, make a slightly modified version of the file with cleaner formatting.
 # We'll use this later...
-mlab.rec2csv(r,'dap/myserver/data/sample.csv',
-             formatd={'date':mlab.FormatString()})
+#

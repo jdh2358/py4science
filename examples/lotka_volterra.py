@@ -46,7 +46,7 @@ p.savefig('lotka_volterra.eps')
 
 
 p.figure()
-p.plot(r, f)
+p.plot(r, f, color='red')
 p.xlabel('rabbits')
 p.ylabel('foxes')
 p.title('phase plane')
@@ -65,8 +65,8 @@ R, F = n.meshgrid(n.arange(-1, rmax, .1), n.arange(-1, fmax, .1))
 dR = dr(R, F)
 dF = df(R, F)
 
-p.contour(R, F, dR, levels=[0], linewidths=3, colors='black')
-p.contour(R, F, dF, levels=[0], linewidths=3, colors='black')
+p.contour(R, F, dR, levels=[0], linewidths=3, colors='blue')
+p.contour(R, F, dF, levels=[0], linewidths=3, colors='green')
 p.ylabel('foxes')
 p.title('trajectory, direction field and null clines')
 

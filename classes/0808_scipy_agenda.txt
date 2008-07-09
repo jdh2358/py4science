@@ -6,6 +6,7 @@
 ..
     1  Introduction and resources
     2  Day 1
+    3  Day 2
 ..
 
 Introduction and resources
@@ -92,3 +93,25 @@ Day 1
 
 
 * Python packages and modules, the very basics: __init__.py and $PYTHONPATH.
+
+Day 2
+=====
+
+* basic plotting with matplotlib
+  * basic line/scatter plotting
+    * customizing colors, styles
+    * legend
+  * backends - what they are and pros/cons of each
+  * matplotlibrc
+  * math text
+
+... probably some of Perry's content here ...
+
+* advanced plotting with matplotlib
+  * the object-oriented API
+  * text annotations
+  * tour of advanced plot types
+    * polar plots
+    * histograms
+    * images
+      * color maps

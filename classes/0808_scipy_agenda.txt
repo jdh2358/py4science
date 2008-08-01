@@ -97,7 +97,7 @@ Day 1
 Day 2
 =====
 
-* basic plotting with matplotlib
+* basic plotting with matplotlib (90 min) [Mike]
   * basic line/scatter plotting
     * customizing colors, styles
     * legend
@@ -105,7 +105,12 @@ Day 2
   * matplotlibrc
   * math text
 
-... probably some of Perry's content here ...
+* intermediate numpy (90 min) [Perry]
+  * advanced indexing
+  * use of where
+  * zen, examples of vectorizing
+  * ieee special number and error handling (5 min)
+  * masked arrays (10-15 min)
 
 * advanced plotting with matplotlib
   * the object-oriented API
@@ -115,3 +120,18 @@ Day 2
     * histograms
     * images
       * color maps
+
+* advanced numpy (Below is probably overloaded, will have to cull) (90 min) [Perry]
+  * memory management (5*10 min)
+    * memory mapped arrays
+  * array internals/indexing order issues (10 min)
+  * general performance issues (5 min)
+  * record arrays (10 min)
+  * object arrays (5 min)
+  * character arrays (5 min)
+  * interfacing to PIL (5 min)
+  * standard lib review (fft, random, etc, some of these will be used in examples before this so this seems questionable...) (5 min)
+  * interfacing to C/C++/Fortran review (10 min)
+    * no real details, just a survey of different approaches
+
+* scipy review (45 min?) [preferably Travis can do this, did he respond?]

@@ -14,17 +14,12 @@ def check_build():
         except OSError:
             pass
 
-def figs():
-    os.system('cd simulations/code/ && python make.py')
-
 def html():
     check_build()
-    figs()
     os.system('sphinx-build -b html -d build/doctrees . build/html')
 
 def latex():
     check_build()
-    figs()
     if sys.platform != 'win32':
         # LaTeX format.
         os.system('sphinx-build -b latex -d build/doctrees . build/latex')
@@ -47,13 +42,11 @@ def clean():
     shutil.rmtree('build')
 
 def all():
-    figs()
     html()
     latex()
 
 
-funcd = {'figs':figs,
-         'html':html,
+funcd = {'html':html,
          'latex':latex,
          'clean':clean,
          'all':all,

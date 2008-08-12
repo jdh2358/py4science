@@ -4,14 +4,8 @@
 Preliminary tests
 *****************
 
-I wrote this big hairy piece of code
+I wrote this big hairy piece of code to make the following plot:
 
-.. literalinclude:: code/hairy.py
-
-
-which produced this lovely figure
-
-.. image:: code/hairy.png
-   :scale: 50
-
+.. plot:: hairy.py
+   :include-source:
 

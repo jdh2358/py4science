@@ -6,7 +6,7 @@ Samplecode API
 
 It is easy to autodocument API code if the code has REST docstrings
 using the sphinx `autodoc <http://sphinx.pocoo.org/ext/autodoc.html>`_
-facilites.
+facilities.
 
 :mod:`matplotlib.backend_bases`
 ================================

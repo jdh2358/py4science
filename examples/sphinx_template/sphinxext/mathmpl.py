@@ -5,12 +5,19 @@ except ImportError:
     from md5 import md5
 
 from docutils import nodes
+from docutils.parsers.rst import directives
 from docutils.writers.html4css1 import HTMLTranslator
 from sphinx.latexwriter import LaTeXTranslator
+import warnings
 
 # Define LaTeX math node:
 class latex_math(nodes.General, nodes.Element):
     pass
+
+def fontset_choice(arg):
+    return directives.choice(arg, ['cm', 'stix', 'stixsans'])
+
+options_spec = {'fontset': fontset_choice}
 
 def math_role(role, rawtext, text, lineno, inliner,
               options={}, content=[]):
@@ -18,8 +25,16 @@ def math_role(role, rawtext, text, lineno, inliner,
     latex = rawtext[i+1:-1]
     node = latex_math(rawtext)
     node['latex'] = latex
+    node['fontset'] = options.get('fontset', 'cm')
     return [node], []
+math_role.options = options_spec
 
+def math_directive_run(content, block_text, options):
+    latex = ''.join(content)
+    node = latex_math(block_text)
+    node['latex'] = latex
+    node['fontset'] = options.get('fontset', 'cm')
+    return [node]
 
 try:
     from docutils.parsers.rst import Directive
@@ -28,22 +43,19 @@ except ImportError:
     from docutils.parsers.rst.directives import _directives
     def math_directive(name, arguments, options, content, lineno,
                        content_offset, block_text, state, state_machine):
-        latex = ''.join(content)
-        node = latex_math(block_text)
-        node['latex'] = latex
-        return [node]
+        return math_directive_run(content, block_text, options)
     math_directive.arguments = None
-    math_directive.options = {}
+    math_directive.options = options_spec
     math_directive.content = 1
     _directives['math'] = math_directive
 else:
     class math_directive(Directive):
         has_content = True
+        option_spec = options_spec
+
         def run(self):
-            latex = ' '.join(self.content)
-            node = latex_math(self.block_text)
-            node['latex'] = latex
-            return [node]
+            return math_directive_run(self.content, self.block_text,
+                                      self.options)
     from docutils.parsers.rst import directives
     directives.register_directive('math', math_directive)
 
@@ -74,25 +86,6 @@ def setup(app):
     LaTeXTranslator.visit_latex_math = visit_latex_math_latex
     LaTeXTranslator.depart_latex_math = depart_latex_math_latex
 
-from os.path import isfile
-
-# This calls out to LaTeX to render the expression
-def latex2png(latex, name):
-    f = open('math.tex', 'w')
-    f.write(r"""\documentclass[12pt]{article}
-                \pagestyle{empty}
-                \begin{document}""")
-    if inline:
-        f.write('$%s$' % latex)
-    else:
-        f.write(r'\[ %s \]' % latex)
-    f.write('\end{document}')
-    f.close()
-    os.system('latex --interaction=nonstopmode math.tex > /dev/null')
-    os.system('dvipng -bgTransparent -Ttight --noghostscript -l10 ' +
-              '-o %s math.dvi > /dev/null' % name)
-
-
 from matplotlib import rcParams
 from matplotlib.mathtext import MathTextParser
 rcParams['mathtext.fontset'] = 'cm'
@@ -100,21 +93,30 @@ mathtext_parser = MathTextParser("Bitmap")
 
 
 # This uses mathtext to render the expression
-def latex2png(latex, filename):
+def latex2png(latex, filename, fontset='cm'):
+    latex = "$%s$" % latex
+    orig_fontset = rcParams['mathtext.fontset']
+    rcParams['mathtext.fontset'] = fontset
     if os.path.exists(filename):
-        return
-    mathtext_parser.to_png(filename, "$%s$" % latex, dpi=120)
-
+        depth = mathtext_parser.get_depth(latex, dpi=100)
+    else:
+        print latex.encode("ascii", "backslashreplace")
+        try:
+            depth = mathtext_parser.to_png(filename, latex, dpi=100)
+        except:
+            warnings.warn("Could not render math expression %s" % latex,
+                          Warning)
+            depth = 0
+    rcParams['mathtext.fontset'] = orig_fontset
+    return depth
 
 # LaTeX to HTML translation stuff:
 def latex2html(node, source):
     inline = isinstance(node.parent, nodes.TextElement)
     latex = node['latex']
-    print latex.encode("ascii", "backslashreplace")
     name = 'math-%s' % md5(latex).hexdigest()[-10:]
     dest = '_static/%s.png' % name
-    if not isfile(dest):
-        latex2png(latex, dest)
+    depth = latex2png(latex, dest, node.get('fontset', rcParams['mathtext.fontset']))
 
     path = '_static'
     count = source.split('/doc/')[-1].count('/')
@@ -122,13 +124,14 @@ def latex2html(node, source):
         if os.path.exists(path): break
         path = '../'+path
     path = '../'+path #specifically added for matplotlib
-    if inline and '_' in latex:
-        align = 'align="absmiddle" '
-    else:
-        align = ''
     if inline:
         cls = ''
     else:
         cls = 'class="center" '
-    return '<img src="%s/%s.png" %s%s/>' % (path, name, align, cls)
+    if inline and depth != 0:
+        style = 'style="position: relative; bottom: -%dpx"' % (depth + 1)
+    else:
+        style = ''
+
+    return '<img src="%s/%s.png" %s%s/>' % (path, name, cls, style)
 

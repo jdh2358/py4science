@@ -5,13 +5,8 @@ Final Results
 *************
 
 
-After much head scratching, I wrote this big elegant piece of code
+After much head scratching, I wrote this big elegant piece of code, to
+produce this much more elegant figure:
 
-.. literalinclude:: code/elegant.py
-
-which produced this elegant figure
-
-.. image:: code/elegant.png
-   :scale: 50
-
-
+.. plot:: elegant.py
+   :include-source:

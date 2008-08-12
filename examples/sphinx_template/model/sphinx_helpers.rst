@@ -88,6 +88,9 @@ syntax highlighting on ipython sessions
       antialiased or aa: [True | False]
       ...snip
 
+This support is included in this template, but will also be included
+in a future version of Pygments by default.
+
 .. _formatting-text:
 
 Formatting text
@@ -102,7 +105,7 @@ You can represent code blocks fairly easily::
 
 Or literally include code:
 
-.. literalinclude:: ../simulations/code/elegant.py
+.. literalinclude:: ../pyplots/elegant.py
 
 
 .. _using-math:
@@ -117,25 +120,60 @@ y\ x-y` or display math
 
   W^{3\beta}_{\delta_1 \rho_1 \sigma_2} = U^{3\beta}_{\delta_1 \rho_1} + \frac{1}{8 \pi 2} \int^{\alpha_2}_{\alpha_2} d \alpha^\prime_2 \left[\frac{ U^{2\beta}_{\delta_1 \rho_1} - \alpha^\prime_2U^{1\beta}_{\rho_1 \sigma_2} }{U^{0\beta}_{\rho_1 \sigma_2}}\right]
 
+This documentation framework includes a Sphinx extension,
+:file:`sphinxext/mathmpl.py`, that uses matplotlib to render math
+equations when generating HTML, and LaTeX itself when generating a
+PDF.  This can be useful on systems that have matplotlib, but not
+LaTeX, installed.  To use it, add ``mathpng`` to the list of
+extensions in :file:`conf.py`.
 
-There is a :file:`spinxext/mathml.py` file in the
-:file:`spinx_template` directory which can be enabled via the
-:file:`conf.py` configuration file.  However, we have found that
-resultant html is not supported across many browsers, so have added a
-sphinx extension for translating math to png.  In the file
-:file:`sphinxext/mathpng.py` there are two functions ``latex2png``. 
-The first one requires latex and dvipng, and the second one uses
-matplotlib mathtext (requires mpl svn rxx or later).  Because the 2nd
-function replaces the first one, the matplotlib mathtext support is on
-by default, so you can generate equation enabled html anywhere
-matplotlib is installed (for PDF you will still need pdflatex
-installed).  If you would rather use latex and dvipng, simply hide the
-second ``latex2png`` definition, eg by renaming the second function
-``_latex2png``.
+Current SVN versions of Sphinx now include built-in support for math.
+There are two flavors:
 
+  - pngmath: uses dvipng to render the equation
 
+  - jsmath: renders the math in the browser using Javascript
+
+To use these extensions instead, add ``sphinx.ext.pngmath`` or
+``sphinx.ext.jsmath`` to the list of extensions in :file:`conf.py`.
+
+All three of these options for math are designed to behave in the same
+way.
 
 .. _emacs-helpers:
+
+Inserting matplotlib plots
+==========================
+
+Inserting automatically-generated plots is easy.  Simply put the
+script to generate the plot in the :file:`pyplots` directory, and
+refer to it using the ``plot`` directive.  To include the source code
+for the plot in the document, pass the ``include-source`` parameter::
+
+  .. plot:: elegant.py
+     :include-source:
+
+In the HTML version of the document, the plot includes links to the
+original source code, a high-resolution PNG and a PDF.  In the PDF
+version of the document, the plot is included as a scalable PDF.
+
+.. plot:: elegant.py
+   :include-source:
+
+Inheritance diagrams
+====================
+
+Inheritance diagrams can be inserted directly into the document by
+providing a list of class or module names to the
+``inheritance-diagram`` directive.
+
+For example::
+
+  .. inheritance-diagram:: codecs
+
+produces:
+
+.. inheritance-diagram:: codecs
 
 Emacs helpers
 =============

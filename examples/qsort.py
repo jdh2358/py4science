@@ -18,22 +18,28 @@ def qsort(lst):
     
     return qsort(less_than) + [pivot] + qsort(greater_equal)
 
+
+#-----------------------------------------------------------------------------
+# Tests
+#-----------------------------------------------------------------------------
+import random
+
+import nose, nose.tools as nt
+
+def test_sorted():
+    seq = range(10)
+    sseq = qsort(seq)
+    nt.assert_equal(seq,sseq)
+
+def test_random():
+    tseq = range(10)
+    rseq = range(10)
+    random.shuffle(rseq)
+    sseq = qsort(rseq)
+    nt.assert_equal(tseq,sseq)
+
+# If called from the command line, run all the tests
 if __name__ == '__main__':
-    from unittest import main, TestCase
-    import random
-
-    class qsortTestCase(TestCase):
-        def test_sorted(self):
-            seq = range(10)
-            sseq = qsort(seq)
-            self.assertEqual(seq,sseq)
-
-        def test_random(self):
-            tseq = range(10)
-            rseq = range(10)
-            random.shuffle(rseq)
-            sseq = qsort(rseq)
-            print tseq
-            print sseq
-            self.assertEqual(tseq,sseq)
-    main()
+    # This call form is ipython-friendly
+    nose.runmodule(argv=['-s','--with-doctest'],
+                   exit=False)

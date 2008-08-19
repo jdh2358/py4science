@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Simple trapezoid-rule integrator."""
 
-import numpy as N
+import numpy as np
 
 def trapz(x, y):
     """Simple trapezoid integrator for sequence-based innput.
@@ -40,43 +40,41 @@ def trapzf(f,a,b,npts=100):
       - The value of the trapezoid-rule approximation to the integral."""
 
     # Generate an equally spaced grid to sample the function at
-    x = N.linspace(a,b,npts)
+    x = np.linspace(a,b,npts)
     # For an equispaced grid, the x spacing can just be read off from the first
     # two points and factored out of the summation.
     dx = x[1]-x[0]
     # Sample the input function at all values of x
-    y = N.array(map(f,x))
+    y = np.array(map(f,x))
     # Compute the trapezoid rule sum for the final result
     return 0.5*dx*(y[1:]+y[:-1]).sum()
 
+
+#-----------------------------------------------------------------------------
+# Tests
+#-----------------------------------------------------------------------------
+import nose, nose.tools as nt
+import numpy.testing as nptest
+
+def square(x): return x**2
+
+def test_err():
+    nt.assert_raises(ValueError,trapz,range(2),range(3))
+
+def test_call():
+    x = np.linspace(0,1,100)
+    y = np.array(map(square,x))
+    nptest.assert_almost_equal(trapz(x,y),1./3,4)
+
+def test_square():
+    nptest.assert_almost_equal(trapzf(square,0,1),1./3,4)
+
+def test_square2():
+    nptest.assert_almost_equal(trapzf(square,0,3,350),9.0,4)
+
+
+# If called from the command line, run all the tests
 if __name__ == '__main__':
-    # Simple tests for trapezoid integrator, when this module is called as a
-    # script from the command line.  From ipython, run it via:
-    #
-    # run -e trapezoid
-    #
-    # so that ipython ignores the SystemExit exception automatically raised by
-    # the unittest module at the end.
-
-    import unittest
-    import numpy.testing as ntest
-
-    def square(x): return x**2
-
-    class trapzTestCase(unittest.TestCase):
-        def test_err(self):
-            self.assertRaises(ValueError,trapz,range(2),range(3))
-
-        def test_call(self):
-            x = N.linspace(0,1,100)
-            y = N.array(map(square,x))
-            ntest.assert_almost_equal(trapz(x,y),1./3,4)
-
-    class trapzfTestCase(unittest.TestCase):
-        def test_square(self):
-            ntest.assert_almost_equal(trapzf(square,0,1),1./3,4)
-
-        def test_square2(self):
-            ntest.assert_almost_equal(trapzf(square,0,3,350),9.0,4)
-
-    unittest.main()
+    # This call form is ipython-friendly
+    nose.runmodule(argv=['-s','--with-doctest'],
+                   exit=False)

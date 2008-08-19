@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """Image denoising example using 2-dimensional FFT."""
 
-import numpy as N
-import pylab as P
-import scipy as S
+XXX = None # a sentinel for missing pieces
+
+import numpy as np
+from matplotlib import pyplot as plt
 
 def mag_phase(F):
     """Return magnitude and phase components of spectrum F."""
@@ -13,7 +14,7 @@ def mag_phase(F):
 def plot_spectrum(F, amplify=1000):
     """Normalise, amplify and plot an amplitude spectrum."""
 
-    M = # XXX use mag_phase to get the magnitude...
+    M = XXX # use mag_phase to get the magnitude...
 
     # XXX Now, rescale M by amplify/maximum_of_M.  Numpy arrays can be scaled
     # in-place with ARR *= number.  For the max of an array, look for its max
@@ -25,56 +26,58 @@ def plot_spectrum(F, amplify=1000):
 
 
     # Display: this one already works, if you did everything right with M
-    P.imshow(M, P.cm.Blues)
+    plt.imshow(M, plt.cm.Blues)
 
 
-# 'main' script
+if __name__ == '__main__':
+
+    im = XXX # make an image array from the file 'moonlanding.png', using the
+         # pylab imread() function.  You will need to just extract the red
+         # channel from the MxNx4 RGBA matrix to represent the grayscale
+         # intensities
+
+    F = XXX # Compute the 2d FFT of the input image.  Look for a 2-d FFT in
+            # np.fft.
+
+    # Define the fraction of coefficients (in each direction) we keep
+    keep_fraction = 0.1
+
+    # XXX Call ff a copy of the original transform.  Numpy arrays have a copy
+    # method for this purpose.
+
+    # XXX Set r and c to be the number of rows and columns of the array.  Look
+    # for the shape attribute...
+
+    # Set to zero all rows with indices between r*keep_fraction and
+    # r*(1-keep_fraction):
+
+    # Similarly with the columns:
 
 
-im = # XXX make an image array from the file 'moonlanding.png', using the
-     # pylab imread() function.  You will need to just extract the red
-     # channel from the MxNx4 RGBA matrix to represent the grayscale
-     # intensities
+    # Reconstruct the denoised image from the filtered spectrum.  There's an
+    # inverse 2d fft in the dft module as well. Call the result im_new
 
-F = # Compute the 2d FFT of the input image.  Look for a 2-d FFT in N.fft.
+    # Show the results.
 
-# Define the fraction of coefficients (in each direction) we keep
-keep_fraction = 0.1
+    # The code below already works, if you did everything above right.
+    plt.figure()
 
-# XXX Call ff a copy of the original transform.  Numpy arrays have a copy method
-# for this purpose.
+    plt.subplot(221)
+    plt.title('Original image')
+    plt.imshow(im, plt.cm.gray)
 
-# XXX Set r and c to be the number of rows and columns of the array.  Look for
-# the shape attribute...
+    plt.subplot(222)
+    plt.title('Fourier transform')
+    plot_spectrum(F)
 
-# Set to zero all rows with indices between r*keep_fraction and
-# r*(1-keep_fraction):
+    plt.subplot(224)
+    plt.title('Filtered Spectrum')
+    plot_spectrum(ff)
 
-# Similarly with the columns:
+    plt.subplot(223)
+    plt.title('Reconstructed Image')
+    plt.imshow(im_new, plt.cm.gray)
 
-
-# Reconstruct the denoised image from the filtered spectrum.  There's an
-# inverse 2d fft in the dft module as well. Call the result im_new
-
-# Show the results.
-
-# The code below already works, if you did everything above right.
-P.figure()
-
-P.subplot(221)
-P.title('Original image')
-P.imshow(im, P.cm.gray)
-
-P.subplot(222)
-P.title('Fourier transform')
-plot_spectrum(F)
-
-P.subplot(224)
-P.title('Filtered Spectrum')
-plot_spectrum(ff)
-
-P.subplot(223)
-P.title('Reconstructed Image')
-P.imshow(im_new, P.cm.gray)
-
-P.show()
+    # Adjust the spacing between subplots for readability
+    plt.subplots_adjust(hspace=0.32)
+    plt.show()

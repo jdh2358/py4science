@@ -8,6 +8,8 @@ from __future__ import division
 
 from decimal import Decimal
 
+XXX = None # a sentinel for missing pieces
+
 def pi(n):
     """Compute pi using n terms of Wallis' product.
 
@@ -15,7 +17,7 @@ def pi(n):
 
     pi(n) = 2 \prod_{i=1}^{n}\frac{4i^2}{4i^2-1}."""
 
-    XXX
+    raise NotImplementedError
     
 # This part only executes when the code is run as a script, not when it is
 # imported as a library

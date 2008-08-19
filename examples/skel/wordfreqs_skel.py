@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 """Word frequencies - count word frequencies in a string."""
 
+XXX = None # a sentinel for missing pieces
+
 def word_freq(text):
     """Return a dictionary of word frequencies for the given text."""
-    # XXX you need to write this
+    # you need to write this
+    return XXX
+
 
 def print_vk(lst):
     """Print a list of value/key pairs nicely formatted in key/value order."""
@@ -17,6 +21,7 @@ def print_vk(lst):
     for v,k in lst:
         print fmt % (k,v)
 
+
 def freq_summ(freqs,n=10):
     """Print a simple summary of a word frequencies dictionary.
 
@@ -26,10 +31,10 @@ def freq_summ(freqs,n=10):
     Optional inputs:
       - n: the number of items to print"""
 
-    words,counts = # XXX look at the keys and values methods of dicts
+    words,counts =  XXX # look at the keys and values methods of dicts
     # Sort by count
     
-    items = # XXX think of a list, look at zip() and think of sort()
+    items =  XXX # think of a list, look at zip() and think of sort()
 
     print 'Number of words:',len(freqs)
     print
@@ -39,10 +44,12 @@ def freq_summ(freqs,n=10):
     print '%d most frequent words:' % n
     print_vk(items[-n:])
 
+
 if __name__ == '__main__':
-    text = # XXX
-    # You need to read the contents of the file HISTORY.gz.  Do NOT unzip it
-    # manually, look at the gzip module from the standard library and  the
-    # read() method of file objects.
+    # You need to read the contents of the file HISTORY.gz and store it in the
+    # variable named 'text'.  Do NOT unzip it manually, look at the gzip module
+    # from the standard library and the read() method of file objects.
+    text =  XXX
+    
     freqs = word_freq(text)
     freq_summ(freqs,20)

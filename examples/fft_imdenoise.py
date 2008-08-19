@@ -20,58 +20,64 @@ def plot_spectrum(F, amplify=1000):
     print M.shape, M.dtype
     plt.imshow(M, plt.cm.Blues)
 
-try:
-    # Read in original image, convert to floating point for further
-    # manipulation; imread returns a MxNx4 RGBA image.  Since the
-    # image is grayscale, just extrac the 1st channel
-    im = plt.imread('data/moonlanding.png').astype(float)[:,:,0]
-except:
-    print "Could not open image."
-    sys.exit(-1)
 
-# Compute the 2d FFT of the input image
-F = np.fft.fft2(im)
+if __name__ == '__main__':
 
-# Now, make a copy of the original spectrum and truncate coefficients.
-keep_fraction = 0.1
+    try:
+        # Read in original image, convert to floating point for further
+        # manipulation; imread returns a MxNx4 RGBA image.  Since the image is
+        # grayscale, just extrac the 1st channel
+        im = plt.imread('data/moonlanding.png').astype(float)[:,:,0]
+    except:
+        print "Could not open image."
+        sys.exit(-1)
 
-# Call ff a copy of the original transform.  Numpy arrays have a copy method
-# for this purpose.
-ff = F.copy()
+    # Compute the 2d FFT of the input image
+    F = np.fft.fft2(im)
 
-# Set r and c to be the number of rows and columns of the array.  
-r,c = ff.shape
+    # Now, make a copy of the original spectrum and truncate coefficients.
+    keep_fraction = 0.1
 
-# Set to zero all rows with indices between r*keep_fraction and
-# r*(1-keep_fraction):
-ff[r*keep_fraction:r*(1-keep_fraction)] = 0
+    # Call ff a copy of the original transform.  Numpy arrays have a copy
+    # method for this purpose.
+    ff = F.copy()
 
-# Similarly with the columns:
-ff[:, c*keep_fraction:c*(1-keep_fraction)] = 0
+    # Set r and c to be the number of rows and columns of the array.  
+    r,c = ff.shape
 
-# Reconstruct the denoised image from the filtered spectrum, keep only the real
-# part for display
-im_new = np.fft.ifft2(ff).real
+    # Set to zero all rows with indices between r*keep_fraction and
+    # r*(1-keep_fraction):
+    ff[r*keep_fraction:r*(1-keep_fraction)] = 0
 
-# Show the results
-plt.figure()
+    # Similarly with the columns:
+    ff[:, c*keep_fraction:c*(1-keep_fraction)] = 0
 
-plt.subplot(221)
-plt.title('Original image')
-plt.imshow(im, plt.cm.gray)
+    # Reconstruct the denoised image from the filtered spectrum, keep only the
+    # real part for display
+    im_new = np.fft.ifft2(ff).real
 
-plt.subplot(222)
-plt.title('Fourier transform')
-plot_spectrum(F)
+    # Show the results
+    plt.figure()
 
-plt.subplot(224)
-plt.title('Filtered Spectrum')
-plot_spectrum(ff)
+    plt.subplot(221)
+    plt.title('Original image')
+    plt.imshow(im, plt.cm.gray)
 
-plt.subplot(223)
-plt.title('Reconstructed Image')
-plt.imshow(im_new, plt.cm.gray)
+    plt.subplot(222)
+    plt.title('Fourier transform')
+    plot_spectrum(F)
 
-plt.savefig('fft_imdenoise.png', dpi=150)
-plt.savefig('fft_imdenoise.eps')
-plt.show()
+    plt.subplot(224)
+    plt.title('Filtered Spectrum')
+    plot_spectrum(ff)
+
+    plt.subplot(223)
+    plt.title('Reconstructed Image')
+    plt.imshow(im_new, plt.cm.gray)
+
+    plt.savefig('fft_imdenoise.png', dpi=150)
+    plt.savefig('fft_imdenoise.eps')
+
+    # Adjust the spacing between subplots for readability 
+    plt.subplots_adjust(hspace=0.32)
+    plt.show()

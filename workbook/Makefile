@@ -44,7 +44,7 @@ clean:
 	rm -f *~ *.aux *.log *.toc *.out *.bbl *.blg *.fmt
 
 distclean: clean
-	rm -f workbook_solutions.pdf workbook_skeletons.pdf 
+	rm -f workbook_solutions.pdf workbook_skeletons.pdf problems
 
 # Basic rules
 empty :=

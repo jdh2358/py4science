@@ -12,11 +12,11 @@ from IPython.genutils import target_outdated
 # Constants
 SRC_DIR = '../examples'
 UPDATE = './mkskel.py'
-
+PROBLEMS_DIR = 'problems'
 
 if __name__ == '__main__':
     
-    problems = [f for f in os.listdir('problems') if f.endswith('.py')]
+    problems = [f for f in os.listdir(PROBLEMS_DIR) if f.endswith('.py')]
 
     os.chdir(SRC_DIR)
     to_update = []

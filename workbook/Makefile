@@ -18,21 +18,25 @@ FASTPDFTEX = pdflatex -file-line-error -draftmode -halt-on-error
 # convenience shorthand for targets
 sol: workbook_solutions.pdf
 skel: workbook_skeletons.pdf
-all: soln skel
+all: sol skel
 
 # actual targets
-workbook_solutions.pdf: $(SOLN_SRC)
-	./update_problems.py
-	rm -f problems
-	ln -sf problems_soln problems
+workbook_solutions.pdf: prob_soln $(SOLN_SRC)
 	$(PDFTEX) workbook_solutions
 	$(PDFTEX) workbook_solutions
 
-workbook_skeletons.pdf: $(SKEL_SRC)
+workbook_skeletons.pdf: prob_skel $(SKEL_SRC)
+	$(PDFTEX) workbook_skeletons
+
+prob_soln:
+	rm -f problems
+	ln -sf problems_soln problems
 	./update_problems.py
+
+prob_skel:
 	rm -f problems
 	ln -sf problems_skel problems
-	$(PDFTEX) workbook_skeletons
+	./update_problems.py
 
 workbook_skeletons.tex:
 	ln -sf main.tex workbook_skeletons.tex
@@ -56,4 +60,4 @@ empty :=
 	$(FASTPDFTEX) $<
 
 # Phony targets
-.PHONY: all clean
+.PHONY: all clean prob_soln prob_skel sol skel

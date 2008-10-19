@@ -1,0 +1,1 @@
+../../examples/soln/stock_records_soln.py

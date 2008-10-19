@@ -9,25 +9,27 @@ TEXFILES = $(wildcard *.tex)
 SKEL_SRC = workbook_skeletons.aux workbook_skeletons.bbl \
 workbook_skeletons.tex $(TEXFILES)
 
-SOL_SRC = $(subst _skeletons,_solved,$(SKEL_SRC))
+SOLN_SRC = $(subst _skeletons,_solutions,$(SKEL_SRC))
 
 # programs
 PDFTEX = pdflatex -file-line-error
 FASTPDFTEX = pdflatex -file-line-error -draftmode -halt-on-error
 
 # convenience shorthand for targets
-sol: workbook_solved.pdf
+sol: workbook_solutions.pdf
 skel: workbook_skeletons.pdf
-all: sol skel
+all: soln skel
 
 # actual targets
-workbook_solved.pdf: $(SOL_SRC)
+workbook_solutions.pdf: $(SOLN_SRC)
+	./update_problems.py
 	rm -f problems
-	ln -sf problems_solved problems
-	$(PDFTEX) workbook_solved
-	$(PDFTEX) workbook_solved
+	ln -sf problems_soln problems
+	$(PDFTEX) workbook_solutions
+	$(PDFTEX) workbook_solutions
 
 workbook_skeletons.pdf: $(SKEL_SRC)
+	./update_problems.py
 	rm -f problems
 	ln -sf problems_skel problems
 	$(PDFTEX) workbook_skeletons
@@ -35,14 +37,14 @@ workbook_skeletons.pdf: $(SKEL_SRC)
 workbook_skeletons.tex:
 	ln -sf main.tex workbook_skeletons.tex
 
-workbook_solved.tex:
-	ln -sf main.tex workbook_solved.tex
+workbook_solutions.tex:
+	ln -sf main.tex workbook_solutions.tex
 
 clean:
-	rm -f *~ *.aux *.log *.toc *.out *.bbl *.blg
+	rm -f *~ *.aux *.log *.toc *.out *.bbl *.blg *.fmt
 
 distclean: clean
-	rm -f workbook_solved.pdf workbook_skeletons.pdf
+	rm -f workbook_solutions.pdf workbook_skeletons.pdf
 
 # Basic rules
 empty :=

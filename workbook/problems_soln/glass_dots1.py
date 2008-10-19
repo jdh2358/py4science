@@ -1,0 +1,1 @@
+../../examples/soln/glass_dots1_soln.py

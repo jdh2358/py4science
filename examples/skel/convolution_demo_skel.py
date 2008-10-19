@@ -27,33 +27,50 @@ from pylab import figure, show
 
 # build the time, input, output and response arrays
 dt = 0.01
-t = XXX        # the time vector from 0..20
+t = npy.arange(0.0, 20.0, dt)        # the time vector from 0..20
 Nt = len(t)
 
 def impulse_response(t):
     'double exponential response function'
-    return XXX
+    return (npy.exp(-t) - npy.exp(-5*t))*dt
 
 
-x = XXX   # gaussian white noise
+x = npy.random.randn(Nt)   # gaussian white noise
 
 # evaluate the impulse response function, and numerically convolve it
 # with the input x
-r = XXX # evaluate the impulse function
-y = XXX # convolution of x with r
-y = XXX # extract just the length Nt part
+r = impulse_response(t)               # evaluate the impulse function
+y = npy.convolve(x, r, mode='full')   # convultion of x with r
+y = y[:Nt]
 
 # compute y by applying F^-1[F(x) * F(r)].  The fft assumes the signal
 # is periodic, so to avoid edge artificats, pad the fft with zeros up
 # to the length of r + x do avoid circular convolution artifacts
-R = XXX  # the zero padded FFT of r
-X = XXX  # the zero padded FFT of x
-Y = XXX  # the product of R and X 
+R = npy.fft.fft(r, len(r)+len(x)-1)
+X = npy.fft.fft(x, len(r)+len(x)-1)
+Y = R*X
 
-# now inverse fft and extract the real part, just the part up to
-# len(x)
-yi = XXX
+# now inverse fft and extract just the part up to len(x)
+yi = npy.fft.ifft(Y)[:len(x)].real
 
-# plot x vs t, y and yi vs t, and r vs t in three subplots
-XXX
+# plot t vs x, t vs y and yi, and t vs r in three subplots
+fig = figure()
+ax1 = fig.add_subplot(311)
+ax1.plot(t, x)
+ax1.set_ylabel('input x')
+
+ax2 = fig.add_subplot(312)
+ax2.plot(t, y, label='convolve')
+ax2.set_ylabel('output y')
+
+ax3 = fig.add_subplot(313)
+ax3.plot(t, r)
+ax3.set_ylabel('input response')
+ax3.set_xlabel('time (s)')
+
+ax2.plot(t, yi, label='fft')
+ax2.legend(loc='best')
+
+fig.savefig('convolution_demo.png', dpi=150)
+fig.savefig('convolution_demo.eps')
 show()

@@ -5,18 +5,21 @@ a = 2       # 2 volt amplitude
 f = 10      # 10 Hz frequency
 sigma = 0.5 # 0.5 volt standard deviation noise
 
-# create the t and v arrays; see the scipy commands arange, sin, and randn
-t = XXX # an evenly sampled time array
-v = XXX # a noisy sine wave
+# create the t and v and store them a 2D array X 
+t = arange(0.0, 2.0, 0.02)                # an evenly sampled time array
+v = a*sin(2*f*pi*t) + sigma*randn(len(t)) # a noisy sine wave
+X = zeros((len(t),2))                     # an empty output array
+X[:,0] = t                                # add t to the first column 
+X[:,1] = v                                # add s to the 2nd column
+p.save('data/noisy_sine.dat', X)            # save the output file as ASCII
 
-# create a 2D array X and put t in the 1st column and v in the 2nd;
-# see the numpy command zeros
-X = XXX
-
-# save the output file as ASCII; see the pylab command save
-XXX
-
-# plot the arrays t vs v and label the x-axis, y-axis and title save
-# the output figure as noisy_sine.png.  See the pylab commands plot,
-# xlabel, ylabel, grid, show
-XXX
+# plot the arrays t vs v and label the x-axis, y-axis and title
+# save the output figure as noisy_sine.png
+p.plot(t, v, 'b-')
+p.xlabel('time (s)')
+p.ylabel('volts (V)')
+p.title('A noisy sine wave')
+p.grid()
+p.savefig('noisy_sine.png', dpi=150)
+p.savefig('noisy_sine.eps')
+p.show()

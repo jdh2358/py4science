@@ -22,26 +22,25 @@ def fetch_stock(ticker):
     system before re-downloading it
     """
     fname = '%s.csv'%ticker
-    url = XXX # create the url for this ticker
+    url = 'http://ichart.finance.yahoo.com/table.csv?' +\
+   's=%s&d=9&e=20&f=2007&g=d&a=0&b=29&c=1993&ignore=.csv'%ticker
 
     # the os.path module contains function for checking whether a file
-    # exists, and fetch it if not
-    XXX
-
-    # load the CSV file intoo a numpy record array
-    r = XXX
+    # exists
+    if not os.path.exists(fname):
+        urllib.urlretrieve(url, fname)
+    r = mlab.csv2rec(fname)
 
     # note that the CSV file is sorted most recent date first, so you
     # will probably want to sort the record array so most recent date
     # is last
-    XXX
+    r.sort()
     return r
 
-tickers = 'INTC', 'MSFT', 'YHOO', 'GOOG', 'GE', 'WMT', 'AAPL'
+tickers = 'SPY', 'QQQQ', 'INTC', 'MSFT', 'YHOO', 'GOOG', 'GE', 'WMT', 'AAPL'
 
-# we want to compute returns since 2003, so define the start date as a
-# datetime.datetime instance
-startdate = XXX
+# we want to compute returns since 2003, so define the start date
+startdate = datetime.date(2003,1,1)
 
 # we'll store a list of each return and ticker for analysis later
 data = []   # a list of (return, ticker) for each stock 
@@ -50,22 +49,24 @@ for ticker in tickers:
     print 'fetching', ticker
     r = fetch_stock(ticker)
     
-    # select the numpy records where r.date>=startdatre use numpy mask
-    # indexing to restrict r to just the dates > startdate
-    r = XXX
-    price = XXX   # set price equal to the adjusted close
-    returns = XXX # return is the (price-p0)/p0
-    XXX           # store the data
+    # select the numpy records where r.date>=startdatre
 
-    # plot the returns by date for each stock using pylab.plot, adding
-    # a label for the legend
-    XXX
+    r = r[r.date>=startdate]
+    price = r.adj_close                 # set price equal to the adjusted close
+    returns = (price-price[0])/price[0] # return is the (price-p0)/p0
+    data.append((returns[-1], ticker))  # store the data
 
-# use pylab legend command to build a legend
-XXX
+    # plot the returns by date for each stock
+    p.plot(r.date, returns, label=ticker)
+
+p.legend(loc='upper left')
 
 # now sort the data by returns and print the results for each stock
-XXX
+data.sort()
+for g, ticker in data:
+    print '%s: %1.1f%%'%(ticker, 100*g)
 
-# show the figures
+
+p.savefig('stock_records.png', dpi=100)
+p.savefig('stock_records.eps')
 p.show()

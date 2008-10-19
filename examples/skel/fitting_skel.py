@@ -1,15 +1,18 @@
 #!/usr/bin/env python
 """Simple data fitting and smoothing example"""
 
+XXX = None # placeholder for missing pieces
+
 from numpy import exp,arange,array,linspace
 from numpy.random import normal
 
 from scipy.optimize import leastsq
 from scipy.interpolate import splrep,splev
 
-import numpy as N
-import scipy as S
-import pylab as P
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
 
 def func(pars):
     a, alpha, k = pars
@@ -32,17 +35,18 @@ guess = 1.0, -.4, 0.0
 # now solve for the best fit paramters
 
 #XXX - use leastsq() here, call the output 'best' for code below to use
+best = XXX
 
 print 'Least-squares fit to the data'
 print 'true', pars_true
 print 'best', best
-print '|err|_l2 =',P.l2norm(pars_true-best)
+print '|err|_l2 =',np.linalg.norm(pars_true-best)
 
 # scipy's splrep uses FITPACK's curfit (B-spline interpolation)
 print
 print 'Spline smoothing of the data'
-sp = # XXX - use splrep()
-smooth = # XXX use splev()
+sp =  XXX # use splrep()
+smooth = XXX # use splev()
 
 print 'Spline information (see splrep and splev for details):',sp
 
@@ -50,23 +54,23 @@ print 'Spline information (see splrep and splev for details):',sp
 def plot_polyfit(x,y,n,fignum=None):
     """Do a polynomial fit of order n and plot it."""
     if fignum is None:
-        fignum = P.figure().number
-        P.plot(x,y,label='Data')
+        fignum = plt.figure().number
+        plt.plot(x,y,label='Data')
         
-    fit_coefs = # XXX- use N.polyfit here
-    fit_val = # XXX - use N.polyval
-    P.plot(x,fit_val,label='Polynomial fit, $n=%d$' % n)
-    P.legend()
+    fit_coefs = XXX # use np.polyfit here
+    fit_val = XXX # use np.polyval
+    plt.plot(x,fit_val,label='Polynomial fit, $n=%d$' % n)
+    plt.legend()
     return fignum
 
 # Now use pylab to plot
-P.figure()
+plt.figure()
 # Plot the least-squares fit here...
-P.plot(x_vals,y_noisy,label='Noisy data')
-P.plot(x_vals,func(best),lw=2,label='Least-squares fit')
-P.legend()
+plt.plot(x_vals,y_noisy,label='Noisy data')
+plt.plot(x_vals,func(best),lw=2,label='Least-squares fit')
+plt.legend()
 
-P.figure()
+plt.figure()
 # Plot the splines fit here...
 
 # Plot the polynomials fits with this:
@@ -74,4 +78,4 @@ fignum = plot_polyfit(x_vals,y_noisy,1)
 plot_polyfit(x_vals,y_noisy,2,fignum)
 plot_polyfit(x_vals,y_noisy,3,fignum)
 
-P.show()
+plt.show()

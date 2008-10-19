@@ -4,7 +4,6 @@ from matplotlib.mlab import detrend_linear, load
 import numpy
 import pylab
 
-XXX = None
 
 class Descriptives:
     """
@@ -12,16 +11,16 @@ class Descriptives:
     """
     def __init__(self, samples):
         self.samples = numpy.asarray(samples)
-        self.N = XXX        # the number of samples
-        self.median = XXX   # sample median 
-        self.min = XXX      # sample min
-        self.max = XXX      # sample max
-        self.mean = XXX     # sample mean
-        self.std = XXX      # sample standard deviation
-        self.var = XXX      # sample variance
-        self.skew = XXX     # the sample skewness
-        self.kurtosis = XXX # the sample kurtosis 
-        self.range = XXX    # the sample range max-min
+        self.N = len(samples)
+        self.median = stats.median(samples)
+        self.min = numpy.amin(samples)
+        self.max = numpy.amax(samples)
+        self.mean = stats.mean(samples)
+        self.std = stats.std(samples)
+        self.var = self.std**2.
+        self.skew = stats.skew(samples)
+        self.kurtosis = stats.kurtosis(samples)
+        self.range = self.max - self.min
 
     def __repr__(self):
         """
@@ -33,11 +32,20 @@ class Descriptives:
         
         descriptives = (
             'N        = %d'        % self.N,
-            XXX # the rest here
-            )
+            'Mean     = %1.4f' % self.mean,
+            'Median   = %1.4f'   % self.median,
+            'Min      = %1.4f'  % self.min,
+            'Max      = %1.4f'  % self.max,
+            'Range    = %1.4f'  % self.range,                        
+            'Std      = %1.4f' % self.std,            
+            'Skew     = %1.4f'     % self.skew,
+            'Kurtosis = %1.4f' % self.kurtosis,           
+        )
         return '\n'.join(descriptives)
 
-    def plots(self, figfunc, maxlags=20, Fs=1, detrend=detrend_linear, fmt='bo'):
+    def plots(self, figfunc, maxlags=20, Fs=1, detrend=detrend_linear,
+              fmt='bo', bins=100,
+              ):
         """
         plots the time series, histogram, autocorrelation and spectrogram
 
@@ -56,10 +64,11 @@ class Descriptives:
 
           maxlags : max number of lags for the autocorr
 
-          detrend : a function used to detrend the data for the
-          correlation and spectral functions
+          detrend : a function used to detrend the data for the correlation and spectral functions
 
           fmt     : the plot format string
+
+          bins : the bins argument to hist
         """
         data = self.samples
 
@@ -79,12 +88,27 @@ class Descriptives:
         c = C()
         N = 5
         fig = c.fig = figfunc()
+	fig.subplots_adjust(hspace=0.3)
         ax = c.ax1 = fig.add_subplot(N,1,1)
         c.plot = ax.plot(data, fmt)
+	ax.set_ylabel('data')
 
-        # XXX the rest of the plot funtions here
+        ax = c.ax2 = fig.add_subplot(N,1,2)
+        c.hist = ax.hist(data, bins)
+	ax.set_ylabel('hist')
 
-        
+        ax = c.ax3 = fig.add_subplot(N,1,3)
+        c.acorr = ax.acorr(data, detrend=detrend, usevlines=True, 
+	  maxlags=maxlags, normed=True)
+	ax.set_ylabel('acorr')
+
+        ax = c.ax4 = fig.add_subplot(N,1,4)
+        c.psd = ax.psd(data, Fs=Fs, detrend=detrend)
+	ax.set_ylabel('psd')
+
+        ax = c.ax5 = fig.add_subplot(N,1,5)
+        c.specgtram = ax.specgram(data, Fs=Fs, detrend=detrend)
+	ax.set_ylabel('specgram')
         return c
 
 
@@ -94,15 +118,20 @@ if __name__=='__main__':
     # list of floating point values, one value per line.  Note you
     # will have to do some extra parsing
     data = []
-    #fname = 'data/nm560.dat'  # tree rings in New Mexico 837-1987
+    fname = 'data/nm560.dat'  # tree rings in New Mexico 837-1987
     fname = 'data/hsales.dat'  # home sales
     for line in file(fname):
         line = line.strip()
         if not line: continue
-        # XXX convert to float and add to data here
-        
+        vals = line.split()
+        val = vals[0]
+        data.append(float(val))
+
     desc = Descriptives(data)
     print desc
-    c = desc.plots(pylab.figure, Fs=12, fmt='-o')
+    c = desc.plots(pylab.figure, Fs=12, fmt='-')
     c.ax1.set_title(fname)
+
+    c.fig.savefig('stats_descriptives.png', dpi=150)    
+    c.fig.savefig('stats_descriptives.eps')    
     pylab.show()

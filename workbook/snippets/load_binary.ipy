@@ -1,0 +1,13 @@
+# open a file as "read binary" and read it into a string
+In [1]: s = file('data/images/r1025.ima', 'rb').read()
+# the string is length 256*256*2 = 131072
+In [2]: len(s)
+Out[2]: 131072
+# the data are 2 byte / 16 bit integers
+# fromstring converts them to array
+In [3]: im = nx.fromstring(s, nx.Int16)
+# reshape the array to 256x256
+In [4]: im.shape = 256,256
+# and plot it with matplotlib's imshow function
+In [5]: imshow(im)
+Out[5]: <matplotlib.image.AxesImage instance at 0xb659230c>

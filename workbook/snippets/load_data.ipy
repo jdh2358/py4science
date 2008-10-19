@@ -1,0 +1,9 @@
+In [1]: X = load('data/ascii_data.dat') # X is an array
+In [2]: t = X[:,0]  # extract the first column
+In [3]: v = X[:,1]  # extract the second column
+In [4]: len(t)
+Out[4]: 20
+In [5]: len(v)
+Out[5]: 20
+In [6]: plot(t,v) # plot the data
+Out[6]: [<matplotlib.lines.Line2D instance at 0xb65921ac>]

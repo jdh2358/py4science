@@ -3,7 +3,7 @@
 
 Usage:
 
-   mkskel [--test]  file1.py file2.py ....
+   mkprob.py [--test]  file1.py file2.py ....
 
 If --test is given, the test suite is run instead.
 

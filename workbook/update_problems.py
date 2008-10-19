@@ -10,9 +10,10 @@ from os import system as sh
 from IPython.genutils import target_outdated
 
 # Constants
-SRC_DIR = '../examples'
-UPDATE = './mkskel.py'
-PROBLEMS_DIR = 'problems'
+
+SRC_DIR = '../examples'  # source dir for the examples
+UPDATE = './mkprob.py'  # executable to make problems (in SRC_DIR)
+PROBLEMS_DIR = 'problems'  # directory for problem output (in this dir)
 
 if __name__ == '__main__':
     

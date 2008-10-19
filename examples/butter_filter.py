@@ -1,13 +1,13 @@
-import numpy as n
+import numpy as np
 import scipy.signal as signal
-from pylab import figure, show
+from matplotlib.pyplot import figure, show
 
 dt = 0.01
-t = n.arange(0, 2, dt)
-s = n.sin(2*n.pi*t)
+t = np.arange(0, 2, dt)
+s = np.sin(2*np.pi*t)
 
 # sine corrupted wih gaussian white noise
-sn = s + 0.1*n.random.randn(len(s))  # noisy sine
+sn = s + 0.1*np.random.randn(len(s))  # noisy sine
 
 # the nyquist frequency 1/(2dt) is the maximum frequency in a sampled
 # signal

@@ -7,9 +7,10 @@ from numpy.random import normal
 from scipy.optimize import leastsq
 from scipy.interpolate import splrep,splev
 
-import numpy as N
-import scipy as S
-import pylab as P
+
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 def func(pars):
     a, alpha, k = pars
@@ -35,7 +36,7 @@ best, mesg = leastsq(errfunc, guess)
 print 'Least-squares fit to the data'
 print 'true', pars_true
 print 'best', best
-print '|err|_l2 =',P.l2norm(pars_true-best)
+print '|err|_l2 =',np.linalg.norm(pars_true-best)
 
 # scipy's splrep uses FITPACK's curfit (B-spline interpolation)
 print
@@ -48,27 +49,27 @@ print 'Spline information (see splrep and splev for details):',sp
 def plot_polyfit(x,y,n,fignum=None):
     """ """
     if fignum is None:
-        fignum = P.figure().number
-        P.plot(x,y,label='Data')
+        fignum = plt.figure().number
+        plt.plot(x,y,label='Data')
         
-    fit_coefs = N.polyfit(x,y,n)
-    fit_val = N.polyval(fit_coefs,x)
-    P.plot(x,fit_val,label='Polynomial fit, $n=%d$' % n)
-    P.legend()
+    fit_coefs = np.polyfit(x,y,n)
+    fit_val = np.polyval(fit_coefs,x)
+    plt.plot(x,fit_val,label='Polynomial fit, $n=%d$' % n)
+    plt.legend()
     return fignum
 
 # Now use pylab to plot
-P.figure()
-P.plot(x_vals,y_noisy,label='Noisy data')
-P.plot(x_vals,func(best),lw=2,label='Least-squares fit')
-P.legend()
-P.figure()
-P.plot(x_vals,y_noisy,label='Noisy data')
-P.plot(x_vals,smooth,lw=2,label='Spline-smoothing')
-P.legend()
+plt.figure()
+plt.plot(x_vals,y_noisy,label='Noisy data')
+plt.plot(x_vals,func(best),lw=2,label='Least-squares fit')
+plt.legend()
+plt.figure()
+plt.plot(x_vals,y_noisy,label='Noisy data')
+plt.plot(x_vals,smooth,lw=2,label='Spline-smoothing')
+plt.legend()
 
 fignum = plot_polyfit(x_vals,y_noisy,1)
 plot_polyfit(x_vals,y_noisy,2,fignum)
 plot_polyfit(x_vals,y_noisy,3,fignum)
 
-P.show()
+plt.show()

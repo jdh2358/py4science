@@ -15,7 +15,7 @@ To do:
 import math
 import random
 
-import numpy as N
+import numpy as np
 
 from scipy import weave
 from scipy.weave import inline,converters
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     print 'pi - weave :',v2()
 
     # make a simple 10x10 array
-    a = N.arange(100)
+    a = np.arange(100)
     a.shape = 10,10
 
     # Print it using our printer

@@ -4,35 +4,35 @@
 
 from math import sin
 
-import scipy, scipy.integrate, scipy.optimize
-
-quad = scipy.integrate.quad
-newton = scipy.optimize.newton
+from scipy.integrate import quad
+from scipy.optimize import newton
 
 # test input function
 def f(t):
-    return t*(sin(t))**2
+    #@ f(t): t * sin^2(t)
+    return t*(sin(t))**2  #@
 
-# exact \int_0^t f(s) ds - u
 def g(t):
+    "Exact form for g by integrating f(t)"
     u = 0.25
     return .25*(t**2-t*sin(2*t)+(sin(t))**2)-u
 
-# now let's construct g(t) via numerical integration
 def gn(t):
+    "g(t) obtained by numerical integration"
     u = 0.25
-    return quad(f,0.0,t)[0] - u
+    #@ Hint: use quad, see its return value carefully.
+    return quad(f,0.0,t)[0] - u  #@
 
 # main
 tguess = 10.0
 
 print '"Exact" solution (knowing the analytical form of the integral)'
-t0 = newton(g,tguess,f)
+t0 = newton(g,tguess,f) #@
 print "t0, g(t0) =",t0,g(t0)
 
 print
 print "Solution using the numerical integration technique" 
-t1 = newton(gn,tguess,f)
+t1 = newton(gn,tguess,f) #@
 print "t1, g(t1) =",t1,g(t1)
 
 print

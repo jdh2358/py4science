@@ -1,0 +1,66 @@
+=================
+ Python workflow
+=================
+
+ipython.  Saving and reloading files, interactive use of variables, %run,
+%debug, %xmode verbose.
+
+* Workflow, guided by a simple examples and students typing along.  Will show
+  basics of everyday workflow as we cover the core concepts.
+
+  * A very quick overview of the language.
+  
+  * Basic scalar types: strings and numbers (int, float, complex).
+
+  * Basic collections: lists and dicts (mention tuples and sets).
+  
+  * Quick review of control flow: if, for, range, while, break, continue.
+
+  * Defining functions. Arguments and docstrings.
+
+  * Reusing your code: every script is a module, '__main__' (notes on module
+    loading and reloading)
+
+  * Exceptions: a core concept in Python, you really can't use the language
+    without them.
+
+  * Debugging your programs:
+    * Ye olde print statement.
+    * %debug in ipython.
+    * %run -d in ipython.
+    * winpdb - a free, cross-platform GUI debugger.
+
+  * Testing your code: reproducible research from the start.  Making a habit
+    out of having auto-validated code.
+
+  * Quicksort together.
+
+
+Getting help:
+  - pydoc (-g, -p)
+
+  - The standard docs (bookmark them)
+
+  - ipython ?/??, help(), the tab key.  numpy.*cos*? search.
+
+  - The open source process: mailing lists, wikis, svn.  Python
+    cookbook. Participate! 
+
+Basic setup:
+  - ipython
+  
+  - matplotlib (latex, etc).
+  
+  - Modules: import/reload, PYTHONPATH.
+
+- Urllib Yahoo finance demo.
+  
+ToDo: Add numerical error measure of trapezoid rule.
+
+ToDo Add in workflow comparison with scipy's integration. compare timing and
+    eror.
+
+ToDo: write cheat-sheet.
+
+- Urllib Yahoo finance demo: examples/stock_demo.py
+

@@ -99,8 +99,8 @@ Day 2
 
 * basic plotting with matplotlib (90 min) [Mike]
   * basic line/scatter plotting
-    * customizing colors, styles
-    * legend
+    + customizing colors, styles
+    + legend
   * backends - what they are and pros/cons of each
   * matplotlibrc
   * math text

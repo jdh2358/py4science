@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Add a new problem to the workbook.  This script simply creates the two
+# necessary symlinks.
+#
+# Usage:
+#
+# add_problem name
+#
+# NOTE: name should NOT contain the .py extension or path, just the basename of
+# the script.  For example:
+#
+# add_problem qsort
+#
+# assumes there is a qsort.py problem in the examples directory, with
+# qsort_skel.py in the skel/ subdir and a qsort_soln.py in the soln/ subdir.
+
+prob=$1
+
+startdir=$(pwd)
+
+cd problems_skel
+ln -s ../../examples/skel/${prob}_skel.py ${prob}.py
+
+cd $startdir
+
+cd problems_soln
+ln -s ../../examples/soln/${prob}_soln.py ${prob}.py

@@ -16,6 +16,24 @@ weave.
 \lstinputlisting{examples/wrap_weave.py}
 
 
+\section{ctypes }
+
+Some quick notes about ctypes, to be finished later.
+
+
+\begin{itemize}
+
+\item \textbf{Classes}: \texttt{\_as\_parameter\_} attribute, one of: {[}int,
+  str, unicode]. A property can be used to provide custom access. This allows
+  any class to customize how it isseen if one of its instances is used as a
+  parameter in a ctypes call.
+
+\item \textbf{Functions}: when the underlying ctypes-exposed functions is
+seen on the Python side, set its \texttt{.argtypes} attribute.
+
+\end{itemize}
+
+
 \section{swig }
 
 

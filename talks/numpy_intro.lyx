@@ -618,7 +618,7 @@ basic functionality (sqrt, ext, sin, cos, etc)
 \end_deeper
 \end_deeper
 \begin_layout BeginPlainFrame
-Numerics
+Is it good enough for scientific computing?
 \end_layout
 
 \begin_layout AlertBlock
@@ -829,6 +829,52 @@ Random number generation
 NumPy: flexible arrays
 \end_layout
 
+\begin_layout Itemize
+Array is a container of objects 
+\begin_inset Quotes eld
+\end_inset
+
+of the same kind
+\begin_inset Quotes erd
+\end_inset
+
+: 
+\series bold
+\color blue
+homogeneous
+\series default
+\color inherit
+.
+\end_layout
+
+\begin_layout Itemize
+Concept of 
+\begin_inset Quotes eld
+\end_inset
+
+kind
+\begin_inset Quotes erd
+\end_inset
+
+ embodied in the data type, or 
+\series bold
+\color blue
+dtype
+\series default
+\color inherit
+.
+\end_layout
+
+\begin_layout Itemize
+Dtypes 
+\series bold
+\color blue
+can be user-defined
+\series default
+\color inherit
+ to be arbitrarily complex.
+\end_layout
+
 \begin_layout Standard
 \align center
 \begin_inset Graphics
@@ -842,7 +888,8 @@ NumPy: flexible arrays
 \end_layout
 
 \begin_layout Standard
-Foo
+Image credit: T.
+ Oliphant, Enthought Inc.
 \end_layout
 
 \begin_layout BeginPlainFrame
@@ -860,19 +907,20 @@ Image credit: E.
 	filename fig/numpy_indexing.pdf
 	lyxscale 50
 	height 85pheight%
-	BoundingBox 0bp 300bp 900bp 768bp
+	BoundingBox 0bp 300bp 1000bp 768bp
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-Foo
-\end_layout
-
 \begin_layout BeginPlainFrame
 NumPy: fancy indexing
+\end_layout
+
+\begin_layout Standard
+Image credit: E.
+ Jones, Enthought Inc.
 \end_layout
 
 \begin_layout Standard
@@ -881,15 +929,11 @@ NumPy: fancy indexing
 	filename fig/numpy_fancy_indexing.pdf
 	lyxscale 50
 	height 85pheight%
-	BoundingBox -4bp -4bp 518bp 588bp
+	BoundingBox 0bp 300bp 1024bp 768bp
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-f
 \end_layout
 
 \begin_layout BeginPlainFrame
@@ -897,20 +941,178 @@ NumPy: broadcasting
 \end_layout
 
 \begin_layout Standard
+Image credit: E.
+ Jones, Enthought Inc.
+\end_layout
+
+\begin_layout Standard
 \align center
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+vspace*{-5mm}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Graphics
 	filename fig/numpy_broadcasting.pdf
 	lyxscale 50
 	height 85pheight%
-	BoundingBox -4bp -4bp 518bp 588bp
+	BoundingBox 0bp 140bp 1024bp 768bp
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-b
+\begin_layout BeginPlainFrame
+SciPy: numerical algorithms galore
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+linalg
+\series default
+\color inherit
+ : Linear algebra routines (including BLAS/LAPACK)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+sparse
+\series default
+\color inherit
+ : Sparse Matrices (including UMFPACK, ARPACK,...)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+fftpack
+\series default
+\color inherit
+ : Discrete Fourier Transform algorithms
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+cluster
+\series default
+\color inherit
+ : Vector Quantization / Kmeans 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+odr
+\series default
+\color inherit
+ : Orthogonal Distance Regression 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+special
+\series default
+\color inherit
+ : Special Functions (Airy, Bessel, etc).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+stats
+\series default
+\color inherit
+ : Statistical Functions 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+optimize
+\series default
+\color inherit
+ : Optimization Tools 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+maxentropy
+\series default
+\color inherit
+ : Routines for fitting maximum entropy models 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+integrate
+\series default
+\color inherit
+ : Numerical Integration routines 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+ndimage
+\series default
+\color inherit
+ : n-dimensional image package 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+interpolate
+\series default
+\color inherit
+ : Interpolation Tools 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+signal
+\series default
+\color inherit
+ : Signal Processing Tools 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\color blue
+io
+\series default
+\color inherit
+ : Data input and output 
 \end_layout
 
 \begin_layout EndFrame

@@ -1,0 +1,2147 @@
+#LyX 1.5.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+% Include only certain frames - this speeds up compilation
+% The frames to be included need to be labeled, by using ERT
+% as [label=LABELNAME] (no backslashes or {})
+%\includeonlyframes{currentt}
+
+% To make a printable handout (one page per frame), pass
+% the handout option to the doc class (Layout menu)
+
+% For good fonts in PDFs, use pslatex fonts (Layout menu)
+
+% Colors and symbols
+\usepackage{latexsym}
+\usepackage{color}
+
+% Display covered items in transparent form (as opposed
+% to not showing them at all)
+\newcommand{\coveredinvisible}{
+    \setbeamercovered{invisible}
+}
+\newcommand{\coveredvisible}{
+    \setbeamercovered{highly dynamic}
+}
+
+% Choose default setting here:
+\coveredvisible
+
+\newcommand{\ps}{\vspace{-4mm} }
+
+% Theme configuration.  I've basically built a custom theme out of 
+% Warsaw, adding infoline and changing the nav. symbol bar
+
+% Warning: the commands below are order-sensitive!
+
+% load the infolines theme, b/c I want the headline Warsaw 
+% uses (split), but the footline from infolines.
+% In the document body, these will be deactivated for the title and
+% turned on later
+\useoutertheme{infolines}
+% Main theme
+\usetheme{Warsaw}
+% Adjust the color for the center (title) box to be that of
+% infolines, which Warsaw changes
+\setbeamercolor*{title in head/foot}{parent=palette secondary}
+
+% Define a minimal set of navigation symbols
+\defbeamertemplate*{navigation symbols}{minmal}
+{%
+  \hbox{%
+    \hbox{\insertframenavigationsymbol}
+    \hbox{\insertdocnavigationsymbol}
+    \hbox{\insertbackfindforwardnavigationsymbol}%
+  }%
+}
+% activate the minimal navbar
+\setbeamertemplate{navigation symbols}[minimal]
+
+%%%%% HACK %%%%%
+% I started getting errors because LyX is emmitting a color 'none'
+% call, which confuses xcolor.  I'm defining 'none' to be black here.
+\definecolor{none}{cmyk}{0,0,0,1}
+%%%%% /HACK %%%%%
+\end_preamble
+\options compress
+\language english
+\inputencoding auto
+\font_roman times
+\font_sans helvet
+\font_typewriter courier
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation landscape
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+Some things to fix in a future version:
+\end_layout
+
+\begin_layout Standard
+- trim a bit of time
+\end_layout
+
+\begin_layout Standard
+- add more about ipython and my own python work, reduce that of others
+\end_layout
+
+\begin_layout Standard
+- add a final python pros/cons, esp.
+ the cons part.
+ It will make things more balanced.
+\end_layout
+
+\begin_layout Standard
+- the PDE part repeats a bit the 'python benefits' which were already pounded
+ on.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+% disable the bottom bar for the title and outline pages
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+setbeamertemplate{footline}{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+vspace*{-5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Python in Scientific Computing
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+Python & Scientific Computing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subtitle
+An Introduction
+\end_layout
+
+\begin_layout Author
+Fernando\InsetSpace ~
+Pérez
+\newline
+
+\family typewriter
+\size scriptsize
+<Fernando.Perez@berkeley.edu>
+\family default
+\size default
+
+\newline
+John Hunter
+\newline
+
+\family typewriter
+\size scriptsize
+<jdh2358@gmail.com>
+\family default
+\size default
+
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+FP/JDH
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Standard
+This is used by the 'split' footline theme on the left side of the page
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+Neuroscience, UC Berkeley
+\newline
+Tradelink
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+- Use the 
+\backslash
+inst command only if there are several affiliations.
+\end_layout
+
+\begin_layout Standard
+- Keep it simple, no one is interested in your street address.
+\end_layout
+
+\end_inset
+
+
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+UC Berkeley/Tradelink
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+optional, but mostly needed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+Joint Sciences Division, Claremont, CA
+\newline
+Oct 25, 2008
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+Claremont, 10/25/08
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+If you have a file called "institution-logo-filename.xxx", where xxx is a
+ graphic format that can be processed by latex or pdflatex, resp., then you
+ can add a logo by uncommenting the following:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+pgfdeclareimage[height=0.5cm]{institution-logo}{institution-logo-filename}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+%
+\backslash
+logo{
+\backslash
+pgfuseimage{institution-logo}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+The following causes the table of contents to be shown at the beginning
+ of every Section.
+ Delete this, if you do not want it.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+AtBeginSection[]{
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+    
+\backslash
+frametitle{Outline}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+    
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+If you wish to uncover everything in a step-wise fashion, uncomment the
+ following command:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+% reactivate the footline
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+setbeamertemplate{footline}[infolines theme]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Outline
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Scientific Computing
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+SciComp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Existing tools
+\end_layout
+
+\begin_layout BeginFrame
+Pure Fortran, C and C++
+\end_layout
+
+\begin_layout Itemize
+Tools optimized for the CPU, not the developer.
+\end_layout
+
+\begin_layout Itemize
+Low-level (data types and libraries).
+\end_layout
+
+\begin_layout Itemize
+Difficult access to visualization, quick profiling, text processing, 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+ldots
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+No interactive facilities.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\color blue
+However!
+\end_layout
+
+\begin_layout Itemize
+They deliver excellent performance.
+\end_layout
+
+\begin_layout Itemize
+Millions of LOC in proven scientific codes.
+ 
+\end_layout
+
+\begin_layout Itemize
+We need to 
+\emph on
+\color blue
+work with these tools
+\emph default
+\color inherit
+, not replace them!
+\end_layout
+
+\begin_layout BeginFrame
+Complementary high level tools
+\end_layout
+
+\begin_layout Itemize
+Mathematica, Maple, Matlab, IDL: extremely popular, for good reasons.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Interactivity, visualization, extensive libraries.
+\end_layout
+
+\begin_layout Itemize
+Unpleasant for large-scale programs and non-mathematical tasks.
+\end_layout
+
+\begin_layout Itemize
+Expensive, proprietary: lock-in.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Another common approach: the `command pipeline'
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+FORTRAN, C, C++ programs ...
+\end_layout
+
+\begin_layout Itemize
+driven by Bash/awk/sed/Perl scripts ...
+\end_layout
+
+\begin_layout Itemize
+which feed them input and send the output ...
+\end_layout
+
+\begin_layout Itemize
+to visualization/analysis programs.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Python?
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+Python
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Python in this context
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Free
+\color none
+ (BSD license), highly portable (Linux, OSX, Windows, lots...).
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Interactive
+\color none
+ interpreter provided.
+\end_layout
+
+\begin_layout Itemize
+Extremely readable syntax (
+\color blue
+
+\begin_inset Quotes eld
+\end_inset
+
+executable pseudo-code
+\begin_inset Quotes erd
+\end_inset
+
+
+\color none
+).
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Simple
+\color none
+: non-professional programmers can use it effectively.
+\end_layout
+
+\begin_layout Itemize
+Clean object oriented model, but
+\color none
+ 
+\color blue
+not mandatory
+\color none
+.
+\end_layout
+
+\begin_layout Itemize
+Rich built-in types: lists, sets, dictionaries (hash tables), strings, ...
+\end_layout
+
+\begin_layout Itemize
+Very comprehensive standard library (
+\color blue
+batteries included
+\color none
+)
+\end_layout
+
+\begin_layout Itemize
+Standard libraries for IDL/Matlab-like arrays (NumPy)
+\end_layout
+
+\begin_layout Itemize
+Easy to wrap existing C, C++ and FORTRAN codes.
+\end_layout
+
+\begin_layout Section
+Interlude: Python in the real world
+\begin_inset OptArg
+status collapsed
+
+\begin_layout Standard
+Examples
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+EEG analysis for epilepsy
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+EEG
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Data analysis for epilepsy surgery
+\end_layout
+
+\begin_layout FrameSubtitle
+Isolating the origin of drug-resistant epileptic seizures which require
+ surgery.
+\end_layout
+
+\begin_layout Standard
+John Hunter, Department of Pediatric Neurology, University of Chicago.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/mpl_brain1.png
+	lyxscale 50
+	width 80text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Electrode location in 3D, combined with MRI data
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/mpl_brain3.png
+	lyxscale 50
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Correlation analysis of seizure data
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/mpl_brain4.png
+	lyxscale 50
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Final location of epileptic foci for surgery
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/mpl_brain5.png
+	lyxscale 50
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Multiwavelets for PDEs
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+PDEs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Adaptive, multiwavelet algorithms for integral operators
+\end_layout
+
+\begin_layout Standard
+Gregory Beylkin, Vani Cheruvu, Fernando Perez.
+ Applied Math, U.
+ of Colorado at Boulder.
+\end_layout
+
+\begin_layout Itemize
+Fast application of integral kernels.
+ (Partial Differential Equations)
+\end_layout
+
+\begin_layout Itemize
+Implementation went from 1 to 3 dimensions directly (
+\emph on
+extremely
+\emph default
+ unusual).
+\end_layout
+
+\begin_layout Itemize
+Very complex algorithm that goes beyond pure numerics.
+\end_layout
+
+\begin_layout Itemize
+Very good performance, thanks to NumPy, F2PY and weave.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/rho_2d_surf.png
+	lyxscale 80
+	width 35text%
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+hspace{1cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename fig/rho_2d_skel.eps
+	lyxscale 80
+	width 25text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+JPL: Mars mission data visualization
+\begin_inset OptArg
+status collapsed
+
+\begin_layout Standard
+JPL - Mars
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+JPL: Mars mission trajectory design and nav data
+\end_layout
+
+\begin_layout FrameSubtitle
+Ted Drain and Lynn Craig, Jet Propulsion Laboratory (NASA/Caltech)
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size footnotesize
+From: Name Elided <nameelided@jpl.nasa.gov> 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size footnotesize
+Date: Oct 2, 2007 7:15 PM 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size footnotesize
+Subject: Fwd: matplotlib bug numbers 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size footnotesize
+To: John Hunter <jdh2358@gmail.com>
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size tiny
+One of my lead developers mentioned that they had sent a bug to you about
+ the annotations feature of MatPlotLib.
+ Would you be able to let me know what the timeline is to resolve that bug?
+ The reason is that 
+\series bold
+\color red
+the feature is needed for the Phoenix project and their arrival at Mars
+ will be in March sometime
+\series default
+\color inherit
+, but they are doing their testing in the coming few months.
+ This annotation feature is used on reports that present the analysis of
+ the trajectory to the navigation team and it shows up on our schedule.
+ 
+\series bold
+\color red
+It would really help me to know approximately when it could be resolved.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size tiny
+B-plane plots are used to show the trajectory of a spacecraft with respect
+ to the target body (specifically perpendicular to the incoming asymptote
+ of the spacecraft trajectory) and we plot them with the y-axis inverted.
+ The plot is used heavily in flight operations so it is important to our
+ customers.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size tiny
+In addition, we have what is called a thundering heard plot where many different
+ trajectory solutions (determined from different measurement sources) are
+ plotted together.
+ The annotations are import there so we can see which plot corresponds to
+ each source of data.
+ I hope it helps to know how your code will be used in spacecraft navigation.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\size tiny
+Thanks for all your efforts.
+\end_layout
+
+\begin_layout BeginPlainFrame
+JPL: Mars mission data visualization
+\end_layout
+
+\begin_layout Standard
+Expected communication power levels between an orbiting spacecraft and a
+ lander as it goes through the atmosphere:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/jpl_lander_comm_power.png
+	lyxscale 25
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+JPL: Mars mission data visualization (2)
+\end_layout
+
+\begin_layout Standard
+Summary of the current navigation team activities and modelling (data used,
+ event times etc):
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+vspace{-3mm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename fig/jpl_nav_summary.png
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+PMV: structural bioinformatics
+\begin_inset OptArg
+status collapsed
+
+\begin_layout Standard
+PMV
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+PMV: the Python Molecule Viewer
+\end_layout
+
+\begin_layout FrameSubtitle
+Michel F.
+ Sanner, Molecular Biology Department, The Scripps Research Institute.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/pmv.png
+	lyxscale 50
+	width 100text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+MayaVi: customizable data visualization
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+MayaVi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+MayaVi: sophisticated data visualization
+\end_layout
+
+\begin_layout Itemize
+Free, easy to use scientific data visualizer.
+\end_layout
+
+\begin_layout Itemize
+Heavy lifting of OpenGL-based rendering: VTK (a C++ library).
+\end_layout
+
+\begin_layout Itemize
+A very good example of how to properly use Python:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+MayaVi is a standalone GUI program...
+\end_layout
+
+\begin_layout Itemize
+but also a Python library callable by any other Python program.
+\end_layout
+
+\begin_layout Itemize
+Python: very easy to modify, even by adding at runtime user-defined modules
+ which populate the GUI automatically.
+\end_layout
+
+\begin_layout Itemize
+C++: excellent rendering performance, fully hardware-accelerated OpenGL.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\series bold
+\color blue
+The punchline:
+\series default
+\color none
+ fully programmable visualization, with builtin access to all kinds of numerical
+ (and other) libraries from within the viz tool.
+\end_layout
+
+\begin_layout BeginPlainFrame
+FluidLab: a MayaVi based CFD visualization tool
+\end_layout
+
+\begin_layout Standard
+K.
+ Julien, P.
+ Schmitt (now NCAR), B.
+ Barrow, F.
+ Pérez (App.
+ Math, CU).
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/Fluidlab5.png
+	lyxscale 50
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Volumetric rendering with FluidLab
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/Fluidlab6.png
+	lyxscale 50
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+SAGE: System for Algebra and Geometry Experimentation
+\begin_inset OptArg
+status collapsed
+
+\begin_layout Standard
+SAGE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+SAGE: open source mathematics
+\end_layout
+
+\begin_layout FrameSubtitle
+Winner of the 2007 Trophés du Libre, scientific software category
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/sage_notebook-medium.jpg
+	lyxscale 50
+	width 90text%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+IPython
+\end_layout
+
+\begin_layout BeginFrame
+IPython
+\end_layout
+
+\begin_layout FrameSubtitle
+Extensible interactive environment with parallel computing support
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+A better Python shell
+\color none
+: object introspection, system access, 'magic' command system for adding
+ functionality when working interactively, 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+ldots
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+An embeddable interpreter
+\color none
+: useful for debugging and for mixing batch-processing with interactive
+ work.
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+A flexible component
+\color none
+: you can use it as the base environment for other systems with Python as
+ the underlying language.
+ It is very configurable in this direction.
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+A system for interactive control of distributed/parallel computing systems.
+
+\color none
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\color blue
+An interactive component
+\color none
+ we can plug into GUIs, browser-based shells, etc.
+\end_layout
+
+\begin_layout BeginPlainFrame
+IPython: Matlab/IDL-like interactive use
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/pylab-screen.png
+	lyxscale 30
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+IPython: interactive control of VTK visualizations
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/mlab-screen-black.png
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Distributed/parallel computing
+\end_layout
+
+\begin_layout Standard
+Work with Brian Granger (Cal State San Luis Obispo) and Min Ragan-Kelley
+ (U.
+ C.
+ Berkeley).
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/ipython_parallel.png
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+High-level graphical control of parallel codes
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/vision_beam_pattern.png
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Others
+\end_layout
+
+\begin_layout BeginFrame
+Who else?
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Academia
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+PyRAF:
+\color none
+ Astronomical data analysis (Hubble Space Telescope).
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+PyTrilinos:
+\color none
+ Parallel solvers (Sandia National Lab's ).
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+DANSE:
+\color none
+ Spallation Neutron Source (ORNL/Caltech).
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+CDAT
+\color none
+: Climate Data Analysis Tools (Lawrence Livermore).
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+OOF2
+\color none
+: Finite Element Analysis of Microstructures (NIST).
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Industry
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+InteractiveSupercomputing.com:
+\color none
+ Python interface to their proprietary backend.
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Numenta:
+\color none
+ pattern recognition algorithms (Jeff Hawkins-Palm)
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Google/YouTube:
+\color none
+ Internally, new AppEngine web service platform.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\color blue
+Lots
+\series default
+\color inherit
+ more
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+\begin_inset LatexCommand htmlurl
+target "http://www.scipy.org/Topical_Software"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Development in Python
+\begin_inset OptArg
+status collapsed
+
+\begin_layout Standard
+Development\InsetSpace ~
+Model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+Python is a general programming language
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\series bold
+It's not a bug, it's a feature
+\series default
+!
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Get others to develop the non-scientific tools you may need.
+\end_layout
+
+\begin_layout Itemize
+Networking, text processing, XML parsing, databases, etc
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+ldots
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Integrated support for automated testing.
+\end_layout
+
+\begin_layout Itemize
+Excellent documentation tools
+\end_layout
+
+\begin_layout Itemize
+Supports all major GUI toolkits.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout AlertBlock
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+{There are still rough edges - but we're working on these}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Installation, deployment: harder than needed.
+\end_layout
+
+\begin_layout Itemize
+No good, single-point of entry environment (but see Sage)
+\end_layout
+
+\begin_layout Itemize
+Documentation too scattered.
+\end_layout
+
+\begin_layout Itemize
+Your favorite/critical tool may well not exist 
+\series bold
+yet
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+Funding agency support for infrastructure work is difficult to get.
+\end_layout
+
+\end_deeper
+\begin_layout BeginFrame
+Using your codes from today with Python
+\end_layout
+
+\begin_layout Itemize
+Code too monolithic but with good core pieces?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Break into a 
+\color blue
+library core
+\color inherit
+ and control layers.
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+Wrap
+\color inherit
+ the libraries and expose them to Python.
+\end_layout
+
+\begin_layout Itemize
+Use Python for control or use 
+\color blue
+interactively
+\color inherit
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+For existing libraries in C/C++/Fortran
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Provide Python 
+\color blue
+bindings
+\color inherit
+ for them.
+\end_layout
+
+\begin_layout Itemize
+It will make it much easier for others to test/use them.
+\end_layout
+
+\begin_layout Itemize
+The network economy benefits all.
+ In this case,
+\color blue
+ 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+ is good!
+\end_layout
+
+\end_deeper
+\begin_layout BeginFrame
+Writing a new code?
+\end_layout
+
+\begin_layout Itemize
+Avoid whole programs in C/Fortran:
+\color none
+ 
+\color red
+you are optimizing globally!
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Prototype the problem in Python (get the algorithm right first)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+using fast libraries.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\color blue
+Profile 
+\color none
+the hotspots.
+\end_layout
+
+\begin_layout Itemize
+Optimize
+\color none
+ 
+\color blue
+only those
+\color inherit
+, if needed.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The result may be production-ready:
+\color none
+ 
+\color blue
+less throw-away prototypes.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Make your code available as a library for
+\color none
+ 
+\color blue
+interactive use
+\color none
+.
+\end_layout
+
+\begin_layout Itemize
+Integrate plotting, visualization, logging, ..., into your objects.
+\end_layout
+
+\end_deeper
+\begin_layout Section*
+Wrapup
+\end_layout
+
+\begin_layout BeginFrame
+Wrapup
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\color blue
+Python
+\end_layout
+
+\begin_layout Itemize
+Rapidly growing in scientific computing.
+\end_layout
+
+\begin_layout Itemize
+Collaborative effort: 
+\color blue
+by scientists, for scientists.
+\end_layout
+
+\begin_layout Itemize
+An open stack supports truly 
+\color blue
+reproducible computational research
+\color inherit
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\color blue
+What's in it for you?
+\end_layout
+
+\begin_layout Itemize
+Hopefully a very useful tool.
+\end_layout
+
+\begin_layout Itemize
+Provide Python bindings to your own research codes.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+...
+ and we all benefit from the resulting network effect.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+
+\series bold
+\size large
+Join in, 
+\color blue
+there's plenty to do!
+\end_layout
+
+\begin_layout BeginPlainFrame
+Thank you! Questions?
+\end_layout
+
+\begin_layout FrameSubtitle
+Credit: http://xkcd.com/353
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+vspace{-5mm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename fig/xkcd_python.png
+	lyxscale 50
+	height 85pheight%
+	BoundingBox -4bp -4bp 518bp 588bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginPlainFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size largest
+\color blue
+Let's start working!
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section*
+\start_of_appendix
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Standard
+All of the following is optional and typically not needed.
+\end_layout
+
+\end_inset
+
+Appendix
+\end_layout
+
+\begin_layout Subsection*
+URLs
+\end_layout
+
+\begin_layout BeginFrame
+Some useful URLs
+\end_layout
+
+\begin_layout Itemize
+A collection of links on Python and Scientific Computing:
+\color blue
+
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://amath.colorado.edu/faculty/fperez/python/scicomp"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+SciPy:
+\color none
+ 
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://www.scipy.org"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+IPython, an improved interactive shell
+\color blue
+:
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://ipython.scipy.org"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Matplotlib, 2d plotting with Matlab syntax
+\color blue
+:
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://matplotlib.sourceforge.net"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+MayaVi, 3d data visualization:
+\color blue
+
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://mayavi.sourceforge.net"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+PyX, programmatic PostScript generation (with 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+LaTeX 
+\end_layout
+
+\end_inset
+
+ support)
+\color blue
+:
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://pyx.sourceforge.net"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+F2Py (FORTRAN):
+\color none
+ 
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://cens.ioc.ee/projects/f2py2e"
+
+\end_inset
+
+
+\color none
+ 
+\end_layout
+
+\begin_layout Itemize
+SWIG (C/C++ for Python):
+\color none
+ 
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://swig.org"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+URLs for projects mentioned earlier
+\end_layout
+
+\begin_layout Itemize
+VPython, real-time 3D:
+\color none
+ 
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://vpython.org"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+UCSF Chimera - interactive molecular graphics
+\color blue
+:
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://www.cgl.ucsf.edu/chimera"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+PyRAF - Hubble Space Telescope interface to IRAF
+\color blue
+:
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://www.stsci.edu/resources/software_hardware/pyraf"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+BioPython -
+\color none
+ 
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://biopython.org"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+VisionEgg - vision research experiments (OpenGL):
+\color blue
+
+\newline
+
+\begin_inset LatexCommand htmlurl
+target "http://www.visionegg.org"
+
+\end_inset
+
+
+\color none
+ 
+\end_layout
+
+\begin_layout Itemize
+Natural Language Toolkit: 
+\newline
+
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://nltk.sourceforge.net"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Neural Integrator - visual programming for neural networks:
+\newline
+
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://starship.python.net/crew/seehof/NeuralPython.html"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Orange - component-based data mining:
+\newline
+
+\color blue
+
+\begin_inset LatexCommand htmlurl
+target "http://www.ailab.si/orange"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

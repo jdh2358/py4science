@@ -20,13 +20,13 @@ def trapz(x, y):
     # 
     # Hint: if the two inputs have mismatched lengths or less than 2
     # elements, we raise ValueError with an explanatory message.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 4 lines')
 
     # Efficient application of trapezoid rule via numpy
     # 
     # Hint: think of using numpy slicing to compute the moving difference in
     # the basic trapezoid formula.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
 def trapzf(f,a,b,npts=100):
     """Simple trapezoid-based integrator.
@@ -48,20 +48,20 @@ def trapzf(f,a,b,npts=100):
     # what differences in timings result for long vectors x?
 
     # Generate an equally spaced grid to sample the function.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # For an equispaced grid, the x spacing can just be read off from the first
     # two points and factored out of the summation.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # Sample the input function at all values of x
     # 
     # Hint: you need to make an array out of the evaluations, and the python
     # builtin 'map' function can come in handy.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # Compute the trapezoid rule sum for the final result
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
 
 #-----------------------------------------------------------------------------

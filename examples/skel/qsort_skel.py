@@ -37,13 +37,13 @@ def qsort(lst):
     """
 
     # Hint: remember that all recursive functions need an exit condition
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 2 lines')
 
     # Select pivot and apply recursively
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 3 lines')
 
     # Upon return, make sure to properly concatenate the output lists
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
 
 #-----------------------------------------------------------------------------

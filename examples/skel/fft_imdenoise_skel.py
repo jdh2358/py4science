@@ -17,12 +17,12 @@ def plot_spectrum(F, amplify=1000):
     # Compute the magnitude of the input F (call it mag).  Then, rescale mag by
     # amplify/maximum_of_mag.  Numpy arrays can be scaled in-place with ARR *=
     # number.  For the max of an array, look for its max method.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 2 lines')
     
     # Next, clip all values larger than one to one.  You can set all elements
     # of an array which satisfy a given condition with array indexing syntax:
     # ARR[ARR<VALUE] = NEWVALUE, for example.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # Display: this one already works, if you did everything right with mag
     plt.imshow(mag, plt.cm.Blues)
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         # - extract all rows, all columns, 0-th plane to get the first
         # channel
         # - the resulting array should have 2 dimensions only
-        raise NotImplementedError('insert missing code here')
+        raise NotImplementedError('Original solution has 1 line')
         print "Image shape:",im.shape
     except:
         print "Could not open image."
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # Compute the 2d FFT of the input image
     # Hint: Look for a 2-d FFT in np.fft.
     # Note: call this variable 'F', which is the name we'll be using below.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # In the lines following, we'll make a copy of the original spectrum and
     # truncate coefficients.  NO immediate code is to be written right here.
@@ -58,25 +58,25 @@ if __name__ == '__main__':
 
     # Call ff a copy of the original transform.  Numpy arrays have a copy
     # method for this purpose.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # Set r and c to be the number of rows and columns of the array.
     # Hint: use the array's shape attribute.
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # Set to zero all rows with indices between r*keep_fraction and
     # r*(1-keep_fraction):
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # Similarly with the columns:
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
 
     # Reconstruct the denoised image from the filtered spectrum, keep only the
     # real part for display.
     # Hint: There's an inverse 2d fft in the np.fft module as well (don't
     # forget that you only want the real part).
     # Call the result im_new, 
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
     
     # Show the results
     # The code below already works, if you did everything above right.

@@ -91,9 +91,9 @@ def src2skel(src):
             # Add the summary of 'raise' lines
 
             # flush counter of code (disabled, we report static summary)
-            #msg = '1 line' if del_lines==1 else ('%s lines' % del_lines)
-            #exc = exc_tpl % msg
-            exc = exc_tpl
+            msg = '1 line' if del_lines==1 else ('%s lines' % del_lines)
+            exc = exc_tpl % msg
+            #exc = exc_tpl
 
             # Use the last value of 'space'
             line = '%s%s' % (spaces[0],exc)
@@ -104,8 +104,8 @@ def src2skel(src):
         return del_lines
 
     # used to report actual # of lines removed - disabled
-    #exc_tpl = "raise NotImplementedError('%s missing')\n"
-    exc_tpl = "raise NotImplementedError('insert missing code here')\n"
+    exc_tpl = "raise NotImplementedError('Original solution has %s')\n"    
+    #exc_tpl = "raise NotImplementedError('insert missing code here')\n"
 
     # states for state machine and other initialization
     normal,delete = 0,1
@@ -241,7 +241,7 @@ def test_simple():
 
     clean = """
     first line
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 1 line')
     second line
     """
 
@@ -279,12 +279,12 @@ def test_multi():
     first line
     # Hint: remember that
     # idea we discussed before...
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 3 lines')
     second line:
-      raise NotImplementedError('insert missing code here')
+      raise NotImplementedError('Original solution has 2 lines')
     third line
 
-    raise NotImplementedError('insert missing code here')
+    raise NotImplementedError('Original solution has 2 lines')
     """
     cleaned = src2skel(srclines)
     yield str_match,cleaned,clean

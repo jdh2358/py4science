@@ -1,0 +1,827 @@
+#LyX 1.5.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+% Include only certain frames - this speeds up compilation
+% The frames to be included need to be labeled, by using ERT
+% as [label=LABELNAME] (no backslashes or {})
+%\includeonlyframes{currentt}
+
+% To make a printable handout (one page per frame), pass
+% the handout option to the doc class (Layout menu)
+
+% For good fonts in PDFs, use pslatex fonts (Layout menu)
+
+% Colors and symbols
+\usepackage{latexsym}
+\usepackage{color}
+
+% Display covered items in transparent form (as opposed
+% to not showing them at all)
+\newcommand{\coveredinvisible}{
+    \setbeamercovered{invisible}
+}
+\newcommand{\coveredvisible}{
+    \setbeamercovered{highly dynamic}
+}
+
+% Choose default setting here:
+\coveredvisible
+
+\newcommand{\ps}{\vspace{-4mm} }
+
+% Theme configuration.  I've basically built a custom theme out of 
+% Warsaw, adding infoline and changing the nav. symbol bar
+
+% Warning: the commands below are order-sensitive!
+
+% load the infolines theme, b/c I want the headline Warsaw 
+% uses (split), but the footline from infolines.
+% In the document body, these will be deactivated for the title and
+% turned on later
+\useoutertheme{infolines}
+% Main theme
+\usetheme{Warsaw}
+% Adjust the color for the center (title) box to be that of
+% infolines, which Warsaw changes
+\setbeamercolor*{title in head/foot}{parent=palette secondary}
+
+% Define a minimal set of navigation symbols
+\defbeamertemplate*{navigation symbols}{minmal}
+{%
+  \hbox{%
+    \hbox{\insertframenavigationsymbol}
+    \hbox{\insertdocnavigationsymbol}
+    \hbox{\insertbackfindforwardnavigationsymbol}%
+  }%
+}
+% activate the minimal navbar
+\setbeamertemplate{navigation symbols}[minimal]
+
+%%%%% HACK %%%%%
+% I started getting errors because LyX is emmitting a color 'none'
+% call, which confuses xcolor.  I'm defining 'none' to be black here.
+\definecolor{none}{cmyk}{0,0,0,1}
+%%%%% /HACK %%%%%
+\end_preamble
+\options compress
+\language english
+\inputencoding auto
+\font_roman times
+\font_sans helvet
+\font_typewriter courier
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation landscape
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+Some things to fix in a future version:
+\end_layout
+
+\begin_layout Standard
+- trim a bit of time
+\end_layout
+
+\begin_layout Standard
+- add more about ipython and my own python work, reduce that of others
+\end_layout
+
+\begin_layout Standard
+- add a final python pros/cons, esp.
+ the cons part.
+ It will make things more balanced.
+\end_layout
+
+\begin_layout Standard
+- the PDE part repeats a bit the 'python benefits' which were already pounded
+ on.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+% disable the bottom bar for the title and outline pages
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+setbeamertemplate{footline}{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+vspace*{-5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+PyDAP
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+PyDAP
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subtitle
+OpenDAP client and server in Python
+\end_layout
+
+\begin_layout Author
+Thanks and Credits:
+\newline
+Rob de Almeida
+\newline
+
+\family typewriter
+\size scriptsize
+<rob@pydap.org>
+\family default
+\size default
+
+\newline
+
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+RdA
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Standard
+This is used by the 'split' footline theme on the left side of the page
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+INPE - Brazilian Space Agency
+\end_layout
+
+\begin_layout Institute
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+- Use the 
+\backslash
+inst command only if there are several affiliations.
+\end_layout
+
+\begin_layout Standard
+- Keep it simple, no one is interested in your street address.
+\end_layout
+
+\end_inset
+
+
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+INPE
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+optional, but mostly needed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{5mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+NCAR, Boulder
+\newline
+Dec 7, 2007
+\begin_inset OptArg
+status open
+
+\begin_layout Standard
+NCAR, 12/7/07
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Standard
+If you have a file called "institution-logo-filename.xxx", where xxx is a
+ graphic format that can be processed by latex or pdflatex, resp., then you
+ can add a logo by uncommenting the following:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+pgfdeclareimage[height=0.5cm]{institution-logo}{institution-logo-filename}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+%
+\backslash
+logo{
+\backslash
+pgfuseimage{institution-logo}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+The following causes the table of contents to be shown at the beginning
+ of every Section.
+ Delete this, if you do not want it.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+AtBeginSection[]{
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+    
+\backslash
+frametitle{Outline}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+    
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+If you wish to uncover everything in a step-wise fashion, uncomment the
+ following command:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+% reactivate the footline
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+
+\backslash
+setbeamertemplate{footline}[infolines theme]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+OpenDAP: The Data Access Protocol
+\end_layout
+
+\begin_layout Itemize
+You all know OpenDAP better than me!
+\end_layout
+
+\begin_layout Itemize
+OPeNDAP: Open-source Project for a Network Data Access Protocol
+\end_layout
+
+\begin_layout Itemize
+Expose a dataset over the network, in a self-describing way:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+http://server/dataset: base URL
+\end_layout
+
+\begin_layout Itemize
+http://server/dataset.dds: 
+\color blue
+structure
+\end_layout
+
+\begin_layout Itemize
+http://server/dataset.das:
+\color blue
+ attributes
+\end_layout
+
+\begin_layout Itemize
+http://server/dataset.dods: 
+\color blue
+actual data
+\end_layout
+
+\end_deeper
+\begin_layout BeginFrame
+PyDAP 2.x
+\end_layout
+
+\begin_layout Itemize
+Pure Python, from scratch, written by Rob de Almeida based on DAP 2.0 spec
+ draft.
+\end_layout
+
+\begin_layout Itemize
+Developed as Google Summer of Code 2005 project.
+\end_layout
+
+\begin_layout Itemize
+Contains its own XDR library.
+\end_layout
+
+\begin_layout Itemize
+Server based on WSGI specification (common web services standard).
+\end_layout
+
+\begin_layout Itemize
+Fully buffered server, handles infinite datasets.
+\end_layout
+
+\begin_layout Itemize
+Approx.
+ 3k LOC for client and server.
+\end_layout
+
+\begin_layout BeginFrame
+Our simple Yahoo CSV data from this morning
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+http://127.0.0.1:8080/sample.csv.dds
+\end_layout
+
+\begin_layout LyX-Code
+Dataset {
+\end_layout
+
+\begin_layout LyX-Code
+    Sequence {
+\end_layout
+
+\begin_layout LyX-Code
+        String date;
+\end_layout
+
+\begin_layout LyX-Code
+        Int32 open;
+\end_layout
+
+\begin_layout LyX-Code
+        Float64 high;
+\end_layout
+
+\begin_layout LyX-Code
+        Float64 low;
+\end_layout
+
+\begin_layout LyX-Code
+        Float64 close;
+\end_layout
+
+\begin_layout LyX-Code
+        Int32 volume;
+\end_layout
+
+\begin_layout LyX-Code
+        Float64 adj_close;
+\end_layout
+
+\begin_layout LyX-Code
+    } sample;
+\end_layout
+
+\begin_layout LyX-Code
+} sample%2Ecsv;
+\end_layout
+
+\begin_layout BeginFrame
+PyDAP Client and Server
+\end_layout
+
+\begin_layout Itemize
+Pure Python implementation
+\end_layout
+
+\begin_layout Itemize
+Can be used interactively to explore a dataset (demo later)
+\end_layout
+
+\begin_layout Itemize
+Available via 
+\family typewriter
+\color blue
+setuptools
+\family default
+\color inherit
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\color blue
+easy_install dap
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\color blue
+easy_install 
+\begin_inset Quotes eld
+\end_inset
+
+dap[server]
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\color blue
+easy_install dap.plugins.netcdf dap.responses.wms dap.responses.html
+\end_layout
+
+\end_deeper
+\begin_layout BeginFrame
+Plugins and responses: a modular architecture
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename pydap_arch.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Plugins
+\end_layout
+
+\begin_layout FrameSubtitle
+Convert data from any format to PyDAP types
+\end_layout
+
+\begin_layout Standard
+Already available:
+\end_layout
+
+\begin_layout Itemize
+netCDF
+\end_layout
+
+\begin_layout Itemize
+CSV
+\end_layout
+
+\begin_layout Itemize
+Matlab 4/5
+\end_layout
+
+\begin_layout Itemize
+HDF5
+\end_layout
+
+\begin_layout Itemize
+GrADS grib
+\end_layout
+
+\begin_layout Itemize
+GDAL, 
+\end_layout
+
+\begin_layout Itemize
+DB API 2 (SQL)
+\end_layout
+
+\begin_layout Itemize
+grib2
+\end_layout
+
+\begin_layout Standard
+
+\color blue
+Can be written in pure python and added by the user for exposing local data
+ types.
+\end_layout
+
+\begin_layout BeginFrame
+Responses 
+\end_layout
+
+\begin_layout FrameSubtitle
+Return views of the data according to the requests of the user.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\color blue
+dds
+\family default
+\color inherit
+, 
+\family typewriter
+\color blue
+das
+\family default
+\color inherit
+, 
+\family typewriter
+\color blue
+dods
+\family default
+\color inherit
+: `standard'
+\end_layout
+
+\begin_layout Itemize
+ASCII for human consumption (
+\family typewriter
+\color blue
+ascii
+\family default
+\color inherit
+)
+\end_layout
+
+\begin_layout Itemize
+HTML, with auto-generated forms (
+\family typewriter
+\color blue
+html
+\family default
+\color inherit
+)
+\end_layout
+
+\begin_layout Itemize
+JSON (
+\family typewriter
+\color blue
+json
+\family default
+\color inherit
+): lightweight alternative to XML for data exchange
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+JSON is valid Python code (dictionary)!
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+WMS/Google Earth (
+\family typewriter
+\color blue
+kml
+\family default
+\color inherit
+)
+\end_layout
+
+\begin_layout Itemize
+EditGrid/Google Spreadsheets
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

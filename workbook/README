@@ -4,17 +4,28 @@ file.  To make a new unit, copy template.tex to yourfile.tex and fill
 it in.  We use the latex listing package for including python source
 code.
 
-For every unit, create an example in
-../problems_solved/your_problem.py, and a skeleton in
-../problems_skel/your_problem_skel.py.  If there are any figures, you
-should create a PNG and EPS version of each and add them to the fig
-subdirectory of the workbook directory.  You will need to svn add your
-tex file, problem, skeleton, skeleton symlink, and figures.
+For every unit with an example in the :file:`examples` create the
+solutions an skeletons for the workbook, with for example::
+
+  ./add_problem NAME
+
+See the :file:`add_problem` script in this dir
+../problems_solved/your_problem.py.
+
+If there are any figures, you should create a PNG and EPS version of
+each and add them to the fig subdirectory of the workbook directory.
+You will need to svn add your tex file, problem, skeleton, skeleton
+symlink, and figures.
+
+There is a file:`template.tex` which is a template for adding an
+example to the workbook.  Copy it to your_example.tex and replace the
+template content with your content -- this example shows how to
+include figures, excercises, ipython sessions, etc...
 
 You can build the workbook in skeleton form with
 
-  > make skeletons  # create workbook_skeletons.pdf
+  > make skel  # create workbook_skeletons.pdf
 
 and in solved form with
 
-  > make solved     # creates workbook_solved.pdf
+  > make sol     # creates workbook_solved.pdf

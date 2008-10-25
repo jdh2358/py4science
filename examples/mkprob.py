@@ -35,13 +35,13 @@ import shutil
 import sys
 
 # Third-party imports
-import nose
+#import nose
 
 # Constants
 MARKER = '#@'
 DEL_RE = re.compile(r'''^((\s*)(.*?))\s*%s\s*$''' % MARKER)
 HINT_RE = re.compile(r'''^(?P<space>\s*)%s\s+(?P<hint>.*)$''' % MARKER)
-                       
+
 
 #-----------------------------------------------------------------------------
 # Main code begins
@@ -52,7 +52,7 @@ def src2soln(src):
     Inputs:
       src : sequence of lines (file-like objects work out of the box)
     """
-    
+
     out = []
     addline = out.append
     for line in src:
@@ -66,7 +66,7 @@ def src2soln(src):
                 # if marker is matched in code, strip it and leave the code
                 line = mdel.group(1)+'\n'
             addline(line)
-            
+
     return ''.join(out)
 
 
@@ -94,19 +94,19 @@ def src2skel(src):
             #msg = '1 line' if del_lines==1 else ('%s lines' % del_lines)
             #exc = exc_tpl % msg
             exc = exc_tpl
-            
+
             # Use the last value of 'space'
             line = '%s%s' % (spaces[0],exc)
             out.append(line)
             del_lines = 0
             spaces[:] = []
-            
+
         return del_lines
-    
+
     # used to report actual # of lines removed - disabled
-    #exc_tpl = "raise NotImplementedError('%s missing')\n"    
+    #exc_tpl = "raise NotImplementedError('%s missing')\n"
     exc_tpl = "raise NotImplementedError('insert missing code here')\n"
-    
+
     # states for state machine and other initialization
     normal,delete = 0,1
     state_cur = normal
@@ -114,7 +114,7 @@ def src2skel(src):
     spaces = []
     normal_lines = []
     out = []
-    
+
     # To remove multiple consecutive lines of input marked for deletion, we
     # need a small state machine.
     for line in src:
@@ -134,7 +134,7 @@ def src2skel(src):
                 state_new = delete
                 del_lines += 1
                 spaces.append(mdel.group(2))
-            
+
         # Flush output only when there's a change of state
         if state_new != state_cur:
             del_lines = flush_buffers(normal_lines,del_lines)
@@ -144,7 +144,7 @@ def src2skel(src):
 
     # Final buffer flush is unconditional
     flush_buffers(normal_lines)
-    
+
     return ''.join(out)
 
 
@@ -155,14 +155,14 @@ def transform_file(fpath,fname_skel,fname_soln):
     # get the mode of the input so that we can create the output files with the
     # same mode
     fmode = os.stat(fpath).st_mode
-    
+
     with open(fpath) as infile:
         # Generate the skeleton
         skel = src2skel(infile)
         with open(fname_skel,'w') as fskel:
             fskel.write(skel)
         os.chmod(fname_skel,fmode)
-        
+
         # Reset the input file pointer and generate the solution
         infile.seek(0)
         soln = src2soln(infile)
@@ -193,7 +193,7 @@ def mvforce(src,dest):
 
 def main(argv=None):
     """Main entry point as a command line script for normal execution"""
-    
+
     if argv is None:
         argv = sys.argv
 
@@ -229,7 +229,7 @@ def str_match(s1,s2):
     """Check that two strings are equal ignoring trailing whitespace."""
     #print '***S1\n',s1,'\n***S2\n',s2  # dbg
     nose.tools.assert_equal(s1.rstrip(),s2.rstrip())
-    
+
 
 def test_simple():
     src = """
@@ -238,13 +238,13 @@ def test_simple():
     second line
     """
     srclines = src.splitlines(True)
-    
+
     clean = """
     first line
     raise NotImplementedError('insert missing code here')
     second line
     """
-    
+
     cleaned = src2skel(srclines)
     yield str_match,cleaned,clean
 
@@ -255,7 +255,7 @@ def test_simple():
     """
     cleaned = src2soln(src.splitlines(True))
     yield str_match,cleaned,clean
-    
+
 
 def test_multi():
     src = """
@@ -306,7 +306,7 @@ def test_multi():
     yield str_match,cleaned,clean
 
 
-@nose.tools.nottest
+#@nose.tools.nottest
 def test():
     """Simple self-contained test runner."""
     nose.runmodule(__name__,exit=False,

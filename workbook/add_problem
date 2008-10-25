@@ -5,12 +5,12 @@
 #
 # Usage:
 #
-# add_problem name
+# ./add_problem NAME
 #
-# NOTE: name should NOT contain the .py extension or path, just the basename of
+# NOTE: NAME should NOT contain the .py extension or path, just the basename of
 # the script.  For example:
 #
-# add_problem qsort
+# ./add_problem qsort
 #
 # assumes there is a qsort.py problem in the examples directory, with
 # qsort_skel.py in the skel/ subdir and a qsort_soln.py in the soln/ subdir.
@@ -19,10 +19,13 @@ prob=$1
 
 startdir=$(pwd)
 
+# do the skeleton
 cd problems_skel
 ln -s ../../examples/skel/${prob}_skel.py ${prob}.py
+svn add ${prob}.py
 
+# now do the solution
 cd $startdir
-
 cd problems_soln
 ln -s ../../examples/soln/${prob}_soln.py ${prob}.py
+svn add ${prob}.py

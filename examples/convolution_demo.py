@@ -13,7 +13,7 @@ is the impulse response function.
 
 In this exercise, we will compute investigate the convolution of a
 white noise process with a double exponential impulse response
-function, and compute the results 
+function, and compute the results
 
   * using numpy.convolve
 
@@ -21,40 +21,40 @@ function, and compute the results
     temporal domain is a multiplication in the fourier domain
 """
 
-import numpy as npy
+import numpy as np
 import matplotlib.mlab as mlab
-from pylab import figure, show
+import matplotlib.pyplot as plt
 
 # build the time, input, output and response arrays
 dt = 0.01
-t = npy.arange(0.0, 20.0, dt)        # the time vector from 0..20
+t = np.arange(0.0, 20.0, dt)        # the time vector from 0..20
 Nt = len(t)
 
 def impulse_response(t):
     'double exponential response function'
-    return (npy.exp(-t) - npy.exp(-5*t))*dt
+    return (np.exp(-t) - np.exp(-5*t))*dt
 
 
-x = npy.random.randn(Nt)   # gaussian white noise
+x = np.random.randn(Nt)   # gaussian white noise
 
 # evaluate the impulse response function, and numerically convolve it
 # with the input x
 r = impulse_response(t)               # evaluate the impulse function
-y = npy.convolve(x, r, mode='full')   # convultion of x with r
+y = np.convolve(x, r, mode='full')   # convultion of x with r
 y = y[:Nt]
 
 # compute y by applying F^-1[F(x) * F(r)].  The fft assumes the signal
 # is periodic, so to avoid edge artificats, pad the fft with zeros up
 # to the length of r + x do avoid circular convolution artifacts
-R = npy.fft.fft(r, len(r)+len(x)-1)
-X = npy.fft.fft(x, len(r)+len(x)-1)
+R = np.fft.fft(r, len(r)+len(x)-1)
+X = np.fft.fft(x, len(r)+len(x)-1)
 Y = R*X
 
 # now inverse fft and extract just the part up to len(x)
-yi = npy.fft.ifft(Y)[:len(x)].real
+yi = np.fft.ifft(Y)[:len(x)].real
 
 # plot t vs x, t vs y and yi, and t vs r in three subplots
-fig = figure()
+fig = plt.figure()
 ax1 = fig.add_subplot(311)
 ax1.plot(t, x)
 ax1.set_ylabel('input x')
@@ -73,4 +73,4 @@ ax2.legend(loc='best')
 
 fig.savefig('convolution_demo.png', dpi=150)
 fig.savefig('convolution_demo.eps')
-show()
+plt.show()

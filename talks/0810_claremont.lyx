@@ -65,6 +65,8 @@
 % call, which confuses xcolor.  I'm defining 'none' to be black here.
 \definecolor{none}{cmyk}{0,0,0,1}
 %%%%% /HACK %%%%%
+
+\usepackage{url}
 \end_preamble
 \options compress
 \language english
@@ -589,6 +591,32 @@ work with these tools
 \emph default
 \color inherit
 , not replace them!
+\end_layout
+
+\begin_layout BeginPlainFrame
+Hello World
+\end_layout
+
+\begin_layout Standard
+Ref: 
+\begin_inset LatexCommand htmlurl
+target "http://www.roesler-ac.de/wolfram/hello.htm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename fig/hello_world.png
+	lyxscale 50
+	width 95text%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout BeginFrame

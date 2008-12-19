@@ -1,4 +1,4 @@
-
+//See LICENSE.ringbuf for license (BSD)
 
 typedef struct {
    int N_size;

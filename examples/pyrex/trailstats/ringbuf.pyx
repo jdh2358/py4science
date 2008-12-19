@@ -3,6 +3,8 @@ ringbuf.pyx Pyrex interface to ringbuf.c It defines ring buffer class,
 Ringbuf, on which various statistics are calculated as each entry is
 added and a method runstats for computing a host of trailing
 statistics over a numpy array
+
+See LICENSE.ringbuf for license (BSD)
 """
 
 include "c_ringbuf.pxi"

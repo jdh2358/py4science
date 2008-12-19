@@ -10,6 +10,7 @@
 
    2003/07/28 EF
 
+See LICENSE.ringbuf for license (BSD)
 */
 
 #include <stdlib.h>

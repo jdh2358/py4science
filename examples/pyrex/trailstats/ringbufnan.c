@@ -121,7 +121,7 @@ void ringbuf_add(ringbuf_t *rb_ptr, double d)
    d_old = rb_ptr->data[rb_ptr->i_oldest];
    rb_ptr->data[i_new] = d;
    good_new = !isnan(d);
-#if 0
+#if 1
    printf("new value: %lf  good_new: %d\n", d, good_new);
    printf("i_next: %d i_oldest: %d N_filled: %d N_good: %d\n",
             rb_ptr->i_next, rb_ptr->i_oldest,
@@ -183,7 +183,7 @@ void ringbuf_add(ringbuf_t *rb_ptr, double d)
    {
       resum_ringbuf(rb_ptr);
    }
-#if 0
+#if 1
    printf("i_next: %d i_oldest: %d N_filled: %d N_good: %d\n",
             rb_ptr->i_next, rb_ptr->i_oldest,
             rb_ptr->N_filled, rb_ptr->N_good);
@@ -221,13 +221,21 @@ void sort_ringbuf(ringbuf_t *rb_ptr)
 
 double ringbuf_min(ringbuf_t *rb_ptr)
 {
+  if (rb_ptr->N_good==0)
+    return NaN;
    return rb_ptr->data[rb_ptr->i_sorted[0]];
 }
 
 double ringbuf_max(ringbuf_t *rb_ptr)
 {
-   int i_end;
+
+  int i_end;
+
+  if (rb_ptr->N_good==0)
+    return NaN;
+
    i_end = rb_ptr->N_good - 1;
+
    return rb_ptr->data[rb_ptr->i_sorted[i_end]];
 }
 
@@ -246,6 +254,16 @@ double ringbuf_median(ringbuf_t *rb_ptr)
       return 0.5 * (rb_ptr->data[rb_ptr->i_sorted[i_mid]]
                      + rb_ptr->data[rb_ptr->i_sorted[i_mid - 1]]);
    }
+}
+
+double ringbuf_ptile(ringbuf_t *rb_ptr, double ptile)
+{
+   int i, N;
+
+   N = rb_ptr->N_good;
+   if (N == 0) return NaN;
+   i = (int)(ptile*N);
+   return rb_ptr->data[rb_ptr->i_sorted[i]];
 }
 
 int ringbuf_N_good(ringbuf_t *rb_ptr)
@@ -272,6 +290,7 @@ double ringbuf_mean(ringbuf_t *rb_ptr)
 {
    int N;
 
+
    N = rb_ptr->N_good;
    if (N > 0)
    {
@@ -286,6 +305,7 @@ double ringbuf_mean(ringbuf_t *rb_ptr)
 double ringbuf_sd(ringbuf_t *rb_ptr)
 {
    double m, s;
+
    int N;
 
    N = rb_ptr->N_good;
@@ -304,7 +324,7 @@ double ringbuf_sd(ringbuf_t *rb_ptr)
 }
 
 void c_runstats(int nrb, int nd, double *data, double *dmean, double *dstd,
-                double *dmin, double *dmax, double *dmed, int *ng)
+                double *dmin, double *dmax, double *dmed, double *dptile5, double *dptile95, int *ng)
 {
     int i, j;
     ringbuf_t *rb_ptr;
@@ -319,6 +339,8 @@ void c_runstats(int nrb, int nd, double *data, double *dmean, double *dstd,
         dmin[j] = ringbuf_min(rb_ptr);
         dmax[j] = ringbuf_max(rb_ptr);
         dmed[j] = ringbuf_median(rb_ptr);
+        dptile5[j] = ringbuf_ptile(rb_ptr, 0.05);
+        dptile95[j] = ringbuf_ptile(rb_ptr, 0.95);
         ng[j] = rb_ptr->N_good;
     }
     delete_ringbuf(rb_ptr);
@@ -327,7 +349,8 @@ void c_runstats(int nrb, int nd, double *data, double *dmean, double *dstd,
 
 void c_runstats2(int nrb, int nd, int step, int ofs,
                  double *data, double *dmean, double *dstd,
-                 double *dmin, double *dmax, double *dmed, int *ng)
+                 double *dmin, double *dmax, double *dmed, double
+*dptile5, double *dptile95, int *ng)
 {
     int i, j;
     int npad = (nrb - 1) / 2;
@@ -339,6 +362,8 @@ void c_runstats2(int nrb, int nd, int step, int ofs,
     dmin += ofs;
     dmax += ofs;
     dmed += ofs;
+    dptile5 += ofs;
+    dptile95 += ofs;
     ng += ofs;
 
     rb_ptr = new_ringbuf(nrb);
@@ -355,6 +380,8 @@ void c_runstats2(int nrb, int nd, int step, int ofs,
         dmin[j*step] = ringbuf_min(rb_ptr);
         dmax[j*step] = ringbuf_max(rb_ptr);
         dmed[j*step] = ringbuf_median(rb_ptr);
+        dptile5[j*step] = ringbuf_ptile(rb_ptr, 0.05);
+        dptile95[j*step] = ringbuf_ptile(rb_ptr, 0.95);
         ng[j*step] = rb_ptr->N_good;
     }
     delete_ringbuf(rb_ptr);

@@ -14,7 +14,7 @@ include "c_ringbuf.pxi"
 cdef class Ringbuf:
    cdef ringbuf_t *rb_ptr
 
-   def __new__(self, N):
+   def __cinit__(self, N):
       self.rb_ptr = new_ringbuf(N)
 
    def __dealloc__(self):
@@ -55,6 +55,9 @@ cdef class Ringbuf:
    def median(self):
       return ringbuf_median(self.rb_ptr)
 
+   def ptile(self, x):
+      return ringbuf_ptile(self.rb_ptr, x)
+
    def N_added(self):
       return ringbuf_N_added(self.rb_ptr)
 
@@ -73,7 +76,7 @@ cdef class RingbufRecords:
 
    cdef object records
 
-   def __new__(self, N):
+   def __cinit__(self, N):
       self.rb_ptr = new_ringbuf(N)
       self.records = []
 
@@ -122,6 +125,9 @@ cdef class RingbufRecords:
    def median(self):
       return ringbuf_median(self.rb_ptr)
 
+   def ptile(self, x):
+      return ringbuf_ptile(self.rb_ptr, x)
+
    def N_added(self):
       return ringbuf_N_added(self.rb_ptr)
 
@@ -160,6 +166,8 @@ def runstats(data, nrb):
     cdef c_numpy.ndarray c_dmin
     cdef c_numpy.ndarray c_dmax
     cdef c_numpy.ndarray c_dmedian
+    cdef c_numpy.ndarray c_dptile5
+    cdef c_numpy.ndarray c_dptile95
     cdef c_numpy.ndarray c_ng
 
     # make sure that the input array is a 1D numpy array of floats.
@@ -181,6 +189,8 @@ def runstats(data, nrb):
     dmin = numpy.empty_like(data)
     dmax = numpy.empty_like(data)
     dmedian = numpy.empty_like(data)
+    dptile5 = numpy.empty_like(data)
+    dptile95 = numpy.empty_like(data)
     ng = numpy.empty(data.shape, dtype=numpy.int_)
 
     # now we have to assign the c_data structures and friends to their
@@ -191,6 +201,8 @@ def runstats(data, nrb):
     c_dmin = dmin
     c_dmax = dmax
     c_dmedian = dmedian
+    c_dptile5 = dptile5
+    c_dptile95 = dptile95
     c_ng = ng
 
     # now we call the function and pass in the c data pointers to the
@@ -202,7 +214,9 @@ def runstats(data, nrb):
                         <double *>c_dmin.data,
                         <double *>c_dmax.data,
                         <double *>c_dmedian.data,
+                        <double *>c_dptile5.data,
+                        <double *>c_dptile95.data,
                         <int *>c_ng.data)
 
     # all done, return the arrays
-    return dmean, dstd, dmin, dmax, dmedian, ng
+    return dmean, dstd, dmin, dmax, dmedian, dptile5, dptile95, ng

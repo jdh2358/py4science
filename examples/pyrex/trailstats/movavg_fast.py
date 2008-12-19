@@ -5,10 +5,10 @@ import numpy
 import ringbuf
 
 x = numpy.random.rand(10000)
-dmean, dstd, dmin, dmax, dmedian, ng = ringbuf.runstats(x, 30)
+dmean, dstd, dmin, dmax, dmedian, ptile5, ptile95, ng = ringbuf.runstats(x, 30)
 
 r = numpy.rec.fromarrays([dmean, dstd, dmin, dmax, dmedian, ng],
-                         names='dmean,dstd,dmin,dmax,dmedian,ngood')
+                         names='dmean,dstd,dmin,dmax,dmedian,ptile5,ptile95,ngood')
 
 
 

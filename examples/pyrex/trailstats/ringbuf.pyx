@@ -46,7 +46,7 @@ cdef class Ringbuf:
       zero_ringbuf(self.rb_ptr)
 
    def add(self, d):
-      ringbuf_add(self.rb_ptr, d)
+      return ringbuf_add(self.rb_ptr, d)
 
    def min(self):
       return ringbuf_min(self.rb_ptr)
@@ -113,10 +113,11 @@ cdef class RingbufRecords:
       self.records = []
 
    def add(self, d, r):
-      ringbuf_add(self.rb_ptr, d)
+      ret = ringbuf_add(self.rb_ptr, d)
       self.records.append(r)
       if len(self.records) > self.rb_ptr.N_size:
          del self.records[0]
+      return ret
 
    def min(self):
       return ringbuf_min(self.rb_ptr)
@@ -170,7 +171,9 @@ def runstats(data, nrb):
     cdef c_numpy.ndarray c_dmedian
     cdef c_numpy.ndarray c_dptile5
     cdef c_numpy.ndarray c_dptile95
+    cdef c_numpy.ndarray c_nsorted
     cdef c_numpy.ndarray c_ng
+
 
     # make sure that the input array is a 1D numpy array of floats.
     # asarray is used to copy and cast a python sequence or array to
@@ -193,6 +196,7 @@ def runstats(data, nrb):
     dmedian = numpy.empty_like(data)
     dptile5 = numpy.empty_like(data)
     dptile95 = numpy.empty_like(data)
+    nsorted = numpy.empty(data.shape, dtype=numpy.int_)
     ng = numpy.empty(data.shape, dtype=numpy.int_)
 
     # now we have to assign the c_data structures and friends to their
@@ -205,7 +209,9 @@ def runstats(data, nrb):
     c_dmedian = dmedian
     c_dptile5 = dptile5
     c_dptile95 = dptile95
+    c_nsorted = nsorted
     c_ng = ng
+
 
     # now we call the function and pass in the c data pointers to the
     # arrays.  The syntax <double *>c_data.data tells pyrex to pass
@@ -218,7 +224,8 @@ def runstats(data, nrb):
                         <double *>c_dmedian.data,
                         <double *>c_dptile5.data,
                         <double *>c_dptile95.data,
+                        <int *>c_nsorted.data,
                         <int *>c_ng.data)
 
     # all done, return the arrays
-    return dmean, dstd, dmin, dmax, dmedian, dptile5, dptile95, ng
+    return dmean, dstd, dmin, dmax, dmedian, dptile5, dptile95, nsorted, ng

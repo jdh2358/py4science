@@ -13,7 +13,7 @@ cdef extern from "ringbuf.h":
    ringbuf_t *new_ringbuf(int N)
    void zero_ringbuf(ringbuf_t *rb_ptr)
    void delete_ringbuf(ringbuf_t *rb_ptr)
-   void ringbuf_add(ringbuf_t *rb_ptr, double d)
+   int ringbuf_add(ringbuf_t *rb_ptr, double d)
    double ringbuf_getitem(ringbuf_t *rb_ptr, int i)
    double ringbuf_min(ringbuf_t *rb_ptr)
    double ringbuf_max(ringbuf_t *rb_ptr)
@@ -29,12 +29,12 @@ cdef extern from "ringbuf.h":
                                             double *dstd,
                                             double *dmin,
                                             double *dmax,
-			                    double *dmed, 
-                                            double *dptile5, 
-                                            double *dptile95,	
+			                    double *dmed,
+                                            double *dptile5,
+                                            double *dptile95,
+                                            int *nsorted,
                                             int *ng)
    void c_runstats2(int nrb, int nd, int step, int ofs,
                  double *data, double *dmean, double *dstd,
-                 double *dmin, double *dmax, double *dmed, double *dptile5, 
-                                            double *dptile95, int *ng)
-
+		    double *dmin, double *dmax, double *dmed, double *dptile5,
+		    double *dptile95, int *nsorted, int *ng)

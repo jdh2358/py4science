@@ -20,7 +20,7 @@ See LICENSE.ringbuf for license (BSD)
 
 static double NaN = 0.0;
 
-static void sort_ringbuf(ringbuf_t *rb_ptr);
+static int sort_ringbuf(ringbuf_t *rb_ptr);
 static void resum_ringbuf(ringbuf_t *rb_ptr);
 
 ringbuf_t *new_ringbuf(int N)
@@ -110,19 +110,21 @@ void resum_ringbuf(ringbuf_t *rb_ptr)
    }
 }
 
-void ringbuf_add(ringbuf_t *rb_ptr, double d)
+// return the index into the sorted ring buffer, -1 if no good points
+int ringbuf_add(ringbuf_t *rb_ptr, double d)
 {
 
    double d_old;
-   int i, i_new, good_new, N;
+   int i, i_new, good_new, N, indsorted;
 
+   indsorted = -1;
    N = rb_ptr->N_size; /* We need this many times. */
    i_new = rb_ptr->i_next;
    /* Save the old value; otherwise, it will be overwritten. */
    d_old = rb_ptr->data[rb_ptr->i_oldest];
    rb_ptr->data[i_new] = d;
    good_new = !isnan(d);
-#if 1
+#if 0
    printf("new value: %lf  good_new: %d\n", d, good_new);
    printf("i_next: %d i_oldest: %d N_filled: %d N_good: %d\n",
             rb_ptr->i_next, rb_ptr->i_oldest,
@@ -174,7 +176,7 @@ void ringbuf_add(ringbuf_t *rb_ptr, double d)
    {
       rb_ptr->sum += d;
       rb_ptr->sumsq += d*d;
-      sort_ringbuf(rb_ptr);
+      indsorted = sort_ringbuf(rb_ptr);
    }
    /* To prevent accumulation of truncation error, we
       recalculate the sums periodically.
@@ -184,11 +186,12 @@ void ringbuf_add(ringbuf_t *rb_ptr, double d)
    {
       resum_ringbuf(rb_ptr);
    }
-#if 1
+#if 0
    printf("i_next: %d i_oldest: %d N_filled: %d N_good: %d\n",
             rb_ptr->i_next, rb_ptr->i_oldest,
             rb_ptr->N_filled, rb_ptr->N_good);
 #endif
+   return indsorted;
 }
 
 /* This is not a full sort--it assumes the list is
@@ -196,7 +199,7 @@ void ringbuf_add(ringbuf_t *rb_ptr, double d)
    pass of bubble sorting to put that entry in its place.
    The code could be moved bodily into the function above.
 */
-void sort_ringbuf(ringbuf_t *rb_ptr)
+int sort_ringbuf(ringbuf_t *rb_ptr)
 {
    int i, i_hold;
    int *ip;
@@ -218,6 +221,7 @@ void sort_ringbuf(ringbuf_t *rb_ptr)
          break;
       }
    }
+   return i;
 }
 
 double ringbuf_min(ringbuf_t *rb_ptr)
@@ -325,7 +329,7 @@ double ringbuf_sd(ringbuf_t *rb_ptr)
 }
 
 void c_runstats(int nrb, int nd, double *data, double *dmean, double *dstd,
-                double *dmin, double *dmax, double *dmed, double *dptile5, double *dptile95, int *ng)
+                double *dmin, double *dmax, double *dmed, double *dptile5, double *dptile95, int *nsorted, int *ng)
 {
     int i, j;
     ringbuf_t *rb_ptr;
@@ -334,7 +338,7 @@ void c_runstats(int nrb, int nd, double *data, double *dmean, double *dstd,
 
     for (j=0; j<nd; i++, j++)
       {
-	ringbuf_add(rb_ptr, data[j]);
+	nsorted[j] = ringbuf_add(rb_ptr, data[j]);
         dmean[j] = ringbuf_mean(rb_ptr);
         dstd[j] = ringbuf_sd(rb_ptr);
         dmin[j] = ringbuf_min(rb_ptr);
@@ -342,6 +346,7 @@ void c_runstats(int nrb, int nd, double *data, double *dmean, double *dstd,
         dmed[j] = ringbuf_median(rb_ptr);
         dptile5[j] = ringbuf_ptile(rb_ptr, 0.05);
         dptile95[j] = ringbuf_ptile(rb_ptr, 0.95);
+
         ng[j] = rb_ptr->N_good;
     }
     delete_ringbuf(rb_ptr);
@@ -351,7 +356,7 @@ void c_runstats(int nrb, int nd, double *data, double *dmean, double *dstd,
 void c_runstats2(int nrb, int nd, int step, int ofs,
                  double *data, double *dmean, double *dstd,
                  double *dmin, double *dmax, double *dmed, double
-*dptile5, double *dptile95, int *ng)
+*dptile5, double *dptile95, int *nsorted, int *ng)
 {
     int i, j;
     int npad = (nrb - 1) / 2;
@@ -365,17 +370,18 @@ void c_runstats2(int nrb, int nd, int step, int ofs,
     dmed += ofs;
     dptile5 += ofs;
     dptile95 += ofs;
+    nsorted += ofs;
     ng += ofs;
 
     rb_ptr = new_ringbuf(nrb);
     for (i = 0; i < npad; i++)
     {
-        ringbuf_add(rb_ptr, data[i*step]);
+        nsorted[j*step] = ringbuf_add(rb_ptr, data[i*step]);
     }
     for (j=0; j<nd; i++, j++)
     {
-        if (i < nd) {ringbuf_add(rb_ptr, data[i*step]);}
-        else        {ringbuf_add(rb_ptr, NaN);}
+        if (i < nd) {nsorted[j*step] = ringbuf_add(rb_ptr, data[i*step]);}
+        else        {nsorted[j*step] = ringbuf_add(rb_ptr, NaN);}
         dmean[j*step] = ringbuf_mean(rb_ptr);
         dstd[j*step] = ringbuf_sd(rb_ptr);
         dmin[j*step] = ringbuf_min(rb_ptr);

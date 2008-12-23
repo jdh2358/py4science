@@ -376,7 +376,7 @@ void c_runstats2(int nrb, int nd, int step, int ofs,
     rb_ptr = new_ringbuf(nrb);
     for (i = 0; i < npad; i++)
     {
-        nsorted[j*step] = ringbuf_add(rb_ptr, data[i*step]);
+        nsorted[i*step] = ringbuf_add(rb_ptr, data[i*step]);
     }
     for (j=0; j<nd; i++, j++)
     {

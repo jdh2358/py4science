@@ -38,8 +38,8 @@ cdef class NNBF:
 
 
         self.n = n
-        self.numrows = 100
-        #  XXX how to create mepty as contiguous w/o copy?
+        self.numrows = 10000
+        #  XXX how to create empty as contiguous w/o copy?
         data = np.empty((self.numrows, self.n), dtype=np.float)
         self.data = np.ascontiguousarray(data, dtype=np.float)
         inner_data = self.data
@@ -53,7 +53,7 @@ cdef class NNBF:
         """
         cdef np.ndarray[double, ndim=2] inner_data
         cdef np.ndarray[double, ndim=1] pp
-        pp = np.asarray(point).astype(np.float)
+        pp = np.array(point).astype(np.float)
 
 
         self.data[self.numpoints] = pp
@@ -67,7 +67,7 @@ cdef class NNBF:
             self.data = np.ascontiguousarray(newdata, dtype=np.float)
             inner_data = self.data
             self.raw_data = <double*>inner_data.data
-            #self.raw_data = <double*>inner_data.data
+
 
     def get_data(NNBF self):
         """
@@ -99,16 +99,11 @@ cdef class NNBF:
 
         # don't do a python lookup inside the loop
         n = self.n
-        
+
         for i in range(self.numpoints):
-            # XXX : is there a more efficient way to access the row
-            # data?  Can/should we be using raw_data here?
-            #row = self.data[i]
             neighbor = is_neighbor(
                 n,
-                #(<double*>self.data.data)+i*n,
                 self.raw_data + i*n,
-                #dataptr + i*n,
                 <double*>pp.data,
                 d2max)
 
@@ -118,5 +113,20 @@ cdef class NNBF:
                 neighbors.append(i)
 
         return neighbors
+
+    def find_neighbors_numpy(self, point, radius):
+        """
+        do a plain ol numpy lookup to compare performance and output
+
+          *data* is a numpoints x numdims array
+          *point* is a numdims length vector
+          radius is the max distance distance
+
+        return an array of indices into data which are within radius
+        """
+        data = self.get_data()
+        distance = data - point
+        r = np.sqrt((distance*distance).sum(axis=1))
+        return np.nonzero(r<=radius)[0]
 
 

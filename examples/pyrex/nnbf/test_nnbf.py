@@ -4,18 +4,10 @@ import nose, nose.tools as nt
 import numpy.testing as nptest
 
 
-from nnbf_proto import find_neighbors_numpy
-# the pure python prototype
-
-
-#import nnbf_proto as nnbf
-
-# the cython extension
 import nnbf
 
 
-
-def jdh_add_data():
+def test_add_data():
     nn = nnbf.NNBF(6)
 
     for i in range(202):
@@ -38,14 +30,13 @@ def test_neighbors():
     ind = nn.find_neighbors(x, radius)
     data = nn.get_data()
 
-    indnumpy = find_neighbors_numpy(data, x, radius)
+    indnumpy = nn.find_neighbors_numpy(x, radius)
 
     nptest.assert_equal((ind==indnumpy), True)
 
 
 
-if 1:
-#def test_performance():
+def test_performance():
     NUMDIM = 6
     nn = nnbf.NNBF(NUMDIM)
 
@@ -61,27 +52,32 @@ if 1:
 
     print 'testing nnbf...'
     times = np.zeros(10)
-    for i in range(len(times)): 
+    for i in range(len(times)):
         start = time.clock()
         ind = nn.find_neighbors(x, radius)
         end = time.clock()
         times[i] = end-start
-    print '    10 trials: mean=%1.4f, min=%1.4f'%(times.mean(), times.min())
+
+    munn = times.mean()
+    print '    10 trials: mean=%1.4f, min=%1.4f'%(munn, times.min())
 
     print 'testing numpy...'
-    for i in range(len(times)):     
+    for i in range(len(times)):
         start = time.clock()
-        ind = find_neighbors_numpy(data, x, radius)
-        end = time.clock() 
+        ind = nn.find_neighbors_numpy(x, radius)
+        end = time.clock()
         times[i] = end-start
-    print '    10 trials: mean=%1.4f, min=%1.4f'%(times.mean(), times.min())        
+    munumpy = times.mean()
+    print '    10 trials: mean=%1.4f, min=%1.4f'%(munumpy, times.min())
 
+    # nn should be at least 3 times faster
+    nptest.assert_equal((3*munn < munumpy), True)
 
 
 
 
 if __name__=='__main__':
 
-    #nose.runmodule(argv=['-s','--with-doctest'], exit=False)
+    nose.runmodule(argv=['-s','--with-doctest'], exit=False)
     pass
 

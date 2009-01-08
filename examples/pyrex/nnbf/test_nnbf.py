@@ -44,7 +44,6 @@ def test_neighbors():
 
 
 
-
 if 1:
 #def test_performance():
     NUMDIM = 6

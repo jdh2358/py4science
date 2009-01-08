@@ -27,22 +27,23 @@ cdef inline int is_neighbor(int n, double*row, double*pp, double d2max):
 
 cdef class NNBF:
     cdef readonly object data
-    #cdef double* raw_data
+    cdef double* raw_data
     cdef readonly int n, numrows, numpoints
 
     def __init__(self, n):
         """
         create a buffer to hold n dimensional points
         """
-        #cdef np.ndarray[double, ndim=2] inner_data
+        cdef np.ndarray[double, ndim=2] inner_data
 
 
         self.n = n
         self.numrows = 100
         #  XXX how to create mepty as contiguous w/o copy?
-        self.data = np.empty((self.numrows, self.n), dtype=np.float)
-        #inner_data = self.data
-        #self.raw_data = <double*>inner_data.data
+        data = np.empty((self.numrows, self.n), dtype=np.float)
+        self.data = np.ascontiguousarray(data, dtype=np.float)
+        inner_data = self.data
+        self.raw_data = <double*>inner_data.data
         self.numpoints = 0
 
 
@@ -50,7 +51,7 @@ cdef class NNBF:
         """
         add a point to the buffer, grow if necessary
         """
-        #cdef np.ndarray[double, ndim=2] inner_data
+        cdef np.ndarray[double, ndim=2] inner_data
         cdef np.ndarray[double, ndim=1] pp
         pp = np.asarray(point).astype(np.float)
 
@@ -63,7 +64,9 @@ cdef class NNBF:
             self.numrows *= 2
             newdata = np.empty((self.numrows, self.n), np.float)
             newdata[:self.numpoints] = self.data
-            self.data = newdata
+            self.data = np.ascontiguousarray(newdata, dtype=np.float)
+            inner_data = self.data
+            self.raw_data = <double*>inner_data.data
             #self.raw_data = <double*>inner_data.data
 
     def get_data(NNBF self):
@@ -96,15 +99,16 @@ cdef class NNBF:
 
         # don't do a python lookup inside the loop
         n = self.n
-
+        
         for i in range(self.numpoints):
             # XXX : is there a more efficient way to access the row
             # data?  Can/should we be using raw_data here?
             #row = self.data[i]
             neighbor = is_neighbor(
                 n,
-                #<double*>row.data,
-                dataptr + i,
+                #(<double*>self.data.data)+i*n,
+                self.raw_data + i*n,
+                #dataptr + i*n,
                 <double*>pp.data,
                 d2max)
 

@@ -86,9 +86,6 @@ cdef class NNBF:
         cdef np.ndarray[double, ndim=1] pp
 
         # avoid python array indexing in the inner loop
-        #cdef np.ndarray[double, ndim=1] row
-        cdef double * dataptr
-        dataptr = <double*> self.data.data
         if len(point)!=self.n:
             raise ValueError('Expected a length %d vector'%self.n)
 

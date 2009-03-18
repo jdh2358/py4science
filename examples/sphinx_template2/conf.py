@@ -28,14 +28,17 @@ import ipython_console_highlighting
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = [#'mathmpl',
-              'ipython_console_highlighting', 'sphinx.ext.autodoc',
-              'inheritance_diagram', 'only_directives', 'plot_directive',
-              'sphinx.ext.pngmath',
-              ]
+extensions = ['matplotlib.sphinxext.mathmpl', 
+              'matplotlib.sphinxext.only_directives',
+              'matplotlib.sphinxext.plot_directive',
+              'sphinx.ext.autodoc',
+              'sphinx.ext.doctest',
+              'ipython_console_highlighting', 
+              'inheritance_diagram', 
+              'numpydoc']
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['tools/templates']
+templates_path = ['_templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -102,7 +105,7 @@ html_style = 'default.css'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['tools/static','_static']
+html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.

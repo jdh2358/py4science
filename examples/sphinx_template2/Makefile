@@ -14,7 +14,8 @@ PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) $(SRCDIR)
 
-.PHONY: help clean html web pickle htmlhelp latex changes linkcheck pdf all dist
+.PHONY: help clean html web pickle htmlhelp latex changes linkcheck pdf all \
+	dist api
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -31,7 +32,7 @@ help:
 	@echo "  dist      all, and then puts the results in dist/"
 
 clean:
-	-rm -rf build/ dist/ _static/ pyplots/*png pyplots/*pdf
+	-rm -rf build/ dist/ _static/* api/generated/*rst pyplots/*png pyplots/*pdf
 
 pdf: latex
 	cd build/latex && make all-pdf
@@ -44,11 +45,15 @@ dist: clean all
 	cp -al build/html dist/
 	@echo "Build finished.  Final docs are in dist/"
 
-html:
+html: api
 	mkdir -p build/html build/doctrees
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) build/html
 	@echo
 	@echo "Build finished. The HTML pages are in build/html."
+
+api:
+	python autogen_api.py
+	@echo "Build API docs finished."
 
 pickle:
 	mkdir -p build/pickle build/doctrees
@@ -60,14 +65,14 @@ pickle:
 
 web: pickle
 
-htmlhelp:
+htmlhelp: api
 	mkdir -p build/htmlhelp build/doctrees
 	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) build/htmlhelp
 	@echo
 	@echo "Build finished; now you can run HTML Help Workshop with the" \
 	      ".hhp project file in build/htmlhelp."
 
-latex:
+latex: api
 	mkdir -p build/latex build/doctrees
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) build/latex
 	@echo

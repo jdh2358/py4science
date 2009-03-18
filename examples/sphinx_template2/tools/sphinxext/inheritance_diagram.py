@@ -29,41 +29,29 @@ The graph is inserted as a PNG+image map into HTML and a PDF in
 LaTeX.
 """
 
-#-----------------------------------------------------------------------------
-# Module and package imports
-
-# From the standard library
-
 import inspect
 import os
 import re
 import subprocess
-
 try:
     from hashlib import md5
 except ImportError:
     from md5 import md5
 
-# Third party
 from docutils.nodes import Body, Element
-from docutils.writers.html4css1 import HTMLTranslator
 from docutils.parsers.rst import directives
-
-from sphinx.latexwriter import LaTeXTranslator
 from sphinx.roles import xfileref_role
 
-#-----------------------------------------------------------------------------
-# Global Constants
-# Sphinx automatically copies out the contents of this directory to the html
-# output, so by putting things in here they get correctly picked up in the end
-STATIC_DIR='_static'
+def my_import(name):
+    """Module importer - taken from the python documentation.
 
-options_spec = {
-    'parts': directives.nonnegative_int
-    }
-
-#-----------------------------------------------------------------------------
-# Main code begins, classes and functions
+    This function allows importing names with dots in them."""
+    
+    mod = __import__(name)
+    components = name.split('.')
+    for comp in components[1:]:
+        mod = getattr(mod, comp)
+    return mod
 
 class DotException(Exception):
     pass
@@ -105,11 +93,15 @@ class InheritanceGraph(object):
         path = (path and path.rstrip('.'))
         if not path:
             path = base
-        if not path:
-            raise ValueError(
-                "Invalid class or module '%s' specified for inheritance diagram" % name)
         try:
             module = __import__(path, None, None, [])
+            # We must do an import of the fully qualified name.  Otherwise if a
+            # subpackage 'a.b' is requested where 'import a' does NOT provide
+            # 'a.b' automatically, then 'a.b' will not be found below.  This
+            # second call will force the equivalent of 'import a.b' to happen
+            # after the top-level import above.
+            my_import(fullname)
+            
         except ImportError:
             raise ValueError(
                 "Could not import class or module '%s' specified for inheritance diagram" % name)
@@ -201,7 +193,6 @@ class InheritanceGraph(object):
 
     def _format_node_options(self, options):
         return ','.join(["%s=%s" % x for x in options.items()])
-
     def _format_graph_options(self, options):
         return ''.join(["%s=%s;\n" % x for x in options.items()])
 
@@ -292,7 +283,6 @@ class InheritanceGraph(object):
             raise DotException("'dot' returned the errorcode %d" % returncode)
         return result
 
-
 class inheritance_diagram(Body, Element):
     """
     A docutils node to use as a placeholder for the inheritance
@@ -300,12 +290,15 @@ class inheritance_diagram(Body, Element):
     """
     pass
 
-
-def inheritance_diagram_directive_run(class_names, options, state):
+def inheritance_diagram_directive(name, arguments, options, content, lineno,
+                                  content_offset, block_text, state,
+                                  state_machine):
     """
     Run when the inheritance_diagram directive is first encountered.
     """
     node = inheritance_diagram()
+
+    class_names = arguments
 
     # Create a graph starting with the list of classes
     graph = InheritanceGraph(class_names)
@@ -326,10 +319,8 @@ def inheritance_diagram_directive_run(class_names, options, state):
     node['content'] = " ".join(class_names)
     return [node]
 
-
 def get_graph_hash(node):
     return md5(node['content'] + str(node['parts'])).hexdigest()[-10:]
-
 
 def html_output_graph(self, node):
     """
@@ -341,15 +332,12 @@ def html_output_graph(self, node):
 
     graph_hash = get_graph_hash(node)
     name = "inheritance%s" % graph_hash
-    png_path = os.path.join(STATIC_DIR, name + ".png")
-
-    path = STATIC_DIR
-    source = self.document.attributes['source']
-    count = source.split('/doc/')[-1].count('/')
-    for i in range(count):
-        if os.path.exists(path): break
-        path = '../'+path
-    path = '../'+path #specifically added for matplotlib
+    path = '_images'
+    dest_path = os.path.join(setup.app.builder.outdir, path)
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
+    png_path = os.path.join(dest_path, name + ".png")
+    path = setup.app.builder.imgpath
 
     # Create a mapping from fully-qualified class names to URLs.
     urls = {}
@@ -366,7 +354,6 @@ def html_output_graph(self, node):
     return ('<img src="%s/%s.png" usemap="#%s" class="inheritance"/>%s' %
             (path, name, name, image_map))
 
-
 def latex_output_graph(self, node):
     """
     Output the graph for LaTeX.  This will insert a PDF.
@@ -376,12 +363,14 @@ def latex_output_graph(self, node):
 
     graph_hash = get_graph_hash(node)
     name = "inheritance%s" % graph_hash
-    pdf_path = os.path.join(STATIC_DIR, name + ".pdf")
+    dest_path = os.path.abspath(os.path.join(setup.app.builder.outdir, '_images'))
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
+    pdf_path = os.path.abspath(os.path.join(dest_path, name + ".pdf"))
 
     graph.run_dot(['-Tpdf', '-o%s' % pdf_path],
                   name, parts, graph_options={'size': '"6.0,6.0"'})
-    return '\\includegraphics{../../%s}' % pdf_path
-
+    return '\n\\includegraphics{%s}\n\n' % pdf_path
 
 def visit_inheritance_diagram(inner_func):
     """
@@ -402,57 +391,17 @@ def visit_inheritance_diagram(inner_func):
             node.children = []
     return visitor
 
-
 def do_nothing(self, node):
     pass
 
-
 def setup(app):
-    app.add_node(inheritance_diagram)
+    setup.app = app
+    setup.confdir = app.confdir
 
-    HTMLTranslator.visit_inheritance_diagram = \
-        visit_inheritance_diagram(html_output_graph)
-    HTMLTranslator.depart_inheritance_diagram = do_nothing
-
-    LaTeXTranslator.visit_inheritance_diagram = \
-        visit_inheritance_diagram(latex_output_graph)
-    LaTeXTranslator.depart_inheritance_diagram = do_nothing
-
-#-----------------------------------------------------------------------------
-# Main code - register the directives.  Do it in a way that's compatible with
-# the old and current docutils APIs.
-
-try:
-    from docutils.parsers.rst import Directive
-except ImportError:
-    # Legacy API
-    from docutils.parsers.rst.directives import _directives
-
-    def inheritance_diagram_directive(name, arguments, options, content, lineno,
-                                      content_offset, block_text, state,
-                                      state_machine):
-        return inheritance_diagram_directive_run(arguments, options, state)
-    
-    inheritance_diagram_directive.__doc__ = __doc__
-    inheritance_diagram_directive.arguments = (1, 100, 0)
-    inheritance_diagram_directive.options = options_spec
-    inheritance_diagram_directive.content = 0
-    _directives['inheritance-diagram'] = inheritance_diagram_directive
-
-else:
-    # New API
-    class inheritance_diagram_directive(Directive):
-        has_content = False
-        required_arguments = 1
-        optional_arguments = 100
-        final_argument_whitespace = False
-        option_spec = options_spec
-
-        def run(self):
-            return inheritance_diagram_directive_run(
-                self.arguments, self.options, self.state)
-
-    inheritance_diagram_directive.__doc__ = __doc__
-
-    directives.register_directive('inheritance-diagram',
-                                  inheritance_diagram_directive)
+    app.add_node(
+        inheritance_diagram,
+        latex=(visit_inheritance_diagram(latex_output_graph), do_nothing),
+        html=(visit_inheritance_diagram(html_output_graph), do_nothing))
+    app.add_directive(
+        'inheritance-diagram', inheritance_diagram_directive,
+        False, (1, 100, 0), parts = directives.nonnegative_int)

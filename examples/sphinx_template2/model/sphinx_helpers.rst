@@ -157,7 +157,7 @@ In the HTML version of the document, the plot includes links to the
 original source code, a high-resolution PNG and a PDF.  In the PDF
 version of the document, the plot is included as a scalable PDF.
 
-.. plot:: ../pyplots/elegant.py
+.. plot:: pyplots/elegant.py
    :include-source:
 
 Inheritance diagrams

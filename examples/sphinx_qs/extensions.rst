@@ -52,7 +52,7 @@ And then we tell it what extensions to load::
 
 
 Now let's look at some of these in action.  You can see the literal
-source for this file at :ref:`sphinx-extensions-literal`.
+source for this file at :ref:`extensions-literal`.
 
 
 .. _ipython-highlighting:
@@ -144,11 +144,11 @@ produces:
 .. inheritance-diagram:: codecs
 
 
-.. _sphinx-extensions-literal:
+.. _extensions-literal:
 
 This file
 =========
 
-.. literalinclude:: sphinx_extensions.rst
+.. literalinclude:: extensions.rst
 
 

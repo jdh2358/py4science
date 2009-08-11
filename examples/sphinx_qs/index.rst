@@ -13,7 +13,7 @@ Contents:
 
    getting_started.rst
    custom_look.rst
-   sphinx_extensions.rst
+   extensions.rst
 
 Indices and tables
 ==================

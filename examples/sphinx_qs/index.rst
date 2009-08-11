@@ -14,6 +14,8 @@ Contents:
    getting_started.rst
    custom_look.rst
    extensions.rst
+   cheatsheet.rst
+   emacs_help.rst
 
 Indices and tables
 ==================

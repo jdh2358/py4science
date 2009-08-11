@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# py4sci documentation build configuration file, created by
+# sampledoc documentation build configuration file, created by
 # sphinx-quickstart on Tue Aug 11 05:04:40 2009.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -45,7 +45,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'py4sci'
+project = u'sampledoc'
 copyright = u'2009, jdh'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -166,7 +166,7 @@ html_static_path = ['_static']
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'py4scidoc'
+htmlhelp_basename = 'sampledocdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -180,7 +180,7 @@ htmlhelp_basename = 'py4scidoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'py4sci.tex', u'py4sci Documentation',
+  ('index', 'sampledoc.tex', u'sampledoc Documentation',
    u'jdh', 'manual'),
 ]
 

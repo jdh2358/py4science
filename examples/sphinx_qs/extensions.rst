@@ -14,11 +14,11 @@ groups, eg numpy and ipython.  We're collecting these in this tutorial
 and showing you how to install and use them for your own project.
 First let's grab the python extension files from the :file:`sphinxext`
 directory from svn (see :ref:`fetching-the-data`, and install them in
-our :file:`py4sci` project :file:`sphinxext` directory::
+our :file:`sampledoc` project :file:`sphinxext` directory::
 
-    home:~/tmp/py4sci> mkdir sphinxext
-    home:~/tmp/py4sci> cp ../sphinx_qs/sphinxext/*.py sphinxext/
-    home:~/tmp/py4sci> ls sphinxext/
+    home:~/tmp/sampledoc> mkdir sphinxext
+    home:~/tmp/sampledoc> cp ../sphinx_qs/sphinxext/*.py sphinxext/
+    home:~/tmp/sampledoc> ls sphinxext/
     apigen.py             inheritance_diagram.py
     docscrape.py          ipython_console_highlighting.py
     docscrape_sphinx.py   numpydoc.py

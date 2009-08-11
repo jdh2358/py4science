@@ -27,10 +27,10 @@ sphinx-quickstart::
 
   > sphinx-quickstart
 
-accepting most of the defaults.  I choose "py4sci" as the name of my
+accepting most of the defaults.  I choose "sampledoc" as the name of my
 project.  cd into your new directory and check the contents::
 
-  home:~/tmp/py4sci> ls
+  home:~/tmp/sampledoc> ls
   Makefile	_static		conf.py
   _build		_templates	index.rst
 
@@ -61,9 +61,9 @@ the whole svn directory and just copy the files I need over for now.
 First, I'll cd to the directory containing my project, and get the
 "finished" product, and then copy in just the files I need::
 
-  home:~/tmp/py4sci> pwd
-  /Users/jdhunter/tmp/py4sci
-  home:~/tmp/py4sci> cd ..
+  home:~/tmp/sampledoc> pwd
+  /Users/jdhunter/tmp/sampledoc
+  home:~/tmp/sampledoc> cd ..
   home:~/tmp> svn co
   https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/\
     py4science/examples/sphinx_qs
@@ -77,8 +77,8 @@ First, I'll cd to the directory containing my project, and get the
   A    sphinx_qs/getting_started.rst
   A    sphinx_qs/index.rst
   Checked out revision 7449.
-  home:~/tmp> cp sphinx_qs/getting_started.rst py4sci/
-  home:~/tmp> cp sphinx_qs/_static/basic_screenshot.png py4sci/_static/
+  home:~/tmp> cp sphinx_qs/getting_started.rst sampledoc/
+  home:~/tmp> cp sphinx_qs/_static/basic_screenshot.png sampledoc/_static/
 
 Now we are ready to rebuild the docs.  We used the image directory to
 include to the screenshot above with::

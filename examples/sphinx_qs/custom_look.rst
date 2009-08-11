@@ -14,10 +14,10 @@ files :file:`_static/default.css`, :file:`_templates:layout.html` and
 :ref:`fetching-the-data`).  Since I did a svn checkout before, I will
 just copy the stuff I need from there::
 
-    home:~/tmp/py4sci> cp ../sphinx_qs/_static/default.css _static/
-    home:~/tmp/py4sci> cp ../sphinx_qs/_templates/layout.html _templates/
-    home:~/tmp/py4sci> cp ../sphinx_qs/_static/logo.png _static/
-    home:~/tmp/py4sci> ls _static/ _templates/
+    home:~/tmp/sampledoc> cp ../sphinx_qs/_static/default.css _static/
+    home:~/tmp/sampledoc> cp ../sphinx_qs/_templates/layout.html _templates/
+    home:~/tmp/sampledoc> cp ../sphinx_qs/_static/logo.png _static/
+    home:~/tmp/sampledoc> ls _static/ _templates/
     _static/:
     basic_screenshot.png	default.css		logo.png
 
@@ -48,7 +48,7 @@ moves the vertical navigation panels to the right side of the page::
 
     <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
     <a href="{{ pathto('index') }}"><img src="{{
-    pathto("_static/logo.png", 1) }}" border="0" alt="py4sci"/></a>
+    pathto("_static/logo.png", 1) }}" border="0" alt="sampledoc"/></a>
     </div>
     {{ super() }}
     {% endblock %}

@@ -1,5 +1,5 @@
 .. py4sci documentation master file, created by
-   sphinx-quickstart on Tue Aug 11 04:33:46 2009.
+   sphinx-quickstart on Tue Aug 11 05:04:40 2009.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    getting_started.rst
+
 Indices and tables
 ==================
 

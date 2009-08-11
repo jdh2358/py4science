@@ -44,3 +44,63 @@ should see a basic spinx site.
 
 .. image:: _static/basic_screenshot.png
 
+.. _fetching-the-data:
+
+Fetching the data
+-----------------
+
+Now we will start to customize out docs.  Grab a couple of files from
+the `web site
+<http://matplotlib.svn.sourceforge.net/viewvc/matplotlib/trunk/py4science/examples/sphinx_qs/>`_
+or svn.  You will need :file:`getting_started.rst` and
+:file:`_static/basic_screenshot.png`.  All of the files live in the
+"completed" version of this tutorial, but since this is a tutorial,
+we'll just grab them one at a time, so you can learn what needs to be
+changed where.  Since we have more files to come, I'm going to grab
+the whole svn directory and just copy the files I need over for now.
+First, I'll cd to the directory containing my project, and get the
+"finished" product, and then copy in just the files I need::
+
+  home:~/tmp/py4sci> pwd
+  /Users/jdhunter/tmp/py4sci
+  home:~/tmp/py4sci> cd ..
+  home:~/tmp> svn co
+  https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/\
+    py4science/examples/sphinx_qs
+  A    sphinx_qs/cheatsheet.rst
+  A    sphinx_qs/_static
+  A    sphinx_qs/_static/basic_screenshot.png
+  A    sphinx_qs/conf.py
+  A    sphinx_qs/Makefile
+  A    sphinx_qs/_templates
+  A    sphinx_qs/_build
+  A    sphinx_qs/getting_started.rst
+  A    sphinx_qs/index.rst
+  Checked out revision 7449.
+  home:~/tmp> cp sphinx_qs/getting_started.rst py4sci/
+  home:~/tmp> cp sphinx_qs/_static/basic_screenshot.png py4sci/_static/
+
+Now we are ready to rebuild the docs.  We used the image directory to
+include to the screenshot above with::
+
+  .. image:: _static/basic_screenshot.png
+
+The last step is to modify :file:`index.rst` to include the
+getting_started file (be careful with the indentation, the
+"getting_started" should line up with the ':' in ``:maxdepth``::
+
+  Contents:
+
+  .. toctree::
+     :maxdepth: 2
+
+     getting_started.rst
+
+and then rebuild the docs with ``make html``.  When you reload the
+page, you should see a link to the "Getting Started" docs, and in
+there this page with the screenshot.  `Voila!`
+
+
+Next we'll customize the look and feel of our site to give it a logo,
+some custom css, and update the navigation panels to look more like
+the `<http://sphinx.pocoo.org/>`_ site itself -- see :ref:`custom_look`.

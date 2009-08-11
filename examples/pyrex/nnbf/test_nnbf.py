@@ -36,7 +36,8 @@ def test_neighbors():
 
 
 
-def test_performance():
+if 1:
+#def test_performance():
     NUMDIM = 6
     nn = nnbf.NNBF(NUMDIM)
 
@@ -78,6 +79,6 @@ def test_performance():
 
 if __name__=='__main__':
 
-    nose.runmodule(argv=['-s','--with-doctest'], exit=False)
+    #nose.runmodule(argv=['-s','--with-doctest'], exit=False)
     pass
 

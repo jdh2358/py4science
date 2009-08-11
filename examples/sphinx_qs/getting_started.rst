@@ -5,9 +5,6 @@
 Getting started
 ***************
 
-Cheat sheet on how to make this site and install these extensions and
-other goodies.  
-
 .. _installing-docdir:
 
 Installing your doc directory

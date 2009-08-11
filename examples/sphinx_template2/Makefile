@@ -32,7 +32,7 @@ help:
 	@echo "  dist      all, and then puts the results in dist/"
 
 clean:
-	-rm -rf build/ dist/ _static/* api/generated/*rst pyplots/*png pyplots/*pdf
+	-rm -rf build/ dist/  api/generated/*rst pyplots/*png pyplots/*pdf
 
 pdf: latex
 	cd build/latex && make all-pdf

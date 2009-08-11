@@ -16,7 +16,7 @@ if __name__ == '__main__':
     outdir = pjoin('api','generated')
     docwriter = ApiDocWriter(package,rst_extension='.rst')
     # Skip packages you don't want to document
-    docwriter.package_skip_patterns += [r'\.mime',
+    docwriter.package_skip_patterns += [r'\.mime', 'test',
                                         ]
     # For modules, there are also skip patterns
     docwriter.module_skip_patterns += [ r'\.mime',

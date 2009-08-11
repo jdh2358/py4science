@@ -13,7 +13,7 @@ sphinx doc directory, and there are other extensions written by other
 groups, eg numpy and ipython.  We're collecting these in this tutorial
 and showing you how to install and use them for your own project.
 First let's grab the python extension files from the :file:`sphinxext`
-directory from svn (see :ref:`getting-the-data`, and install them in
+directory from svn (see :ref:`fetching-the-data`, and install them in
 our :file:`py4sci` project :file:`sphinxext` directory::
 
     home:~/tmp/py4sci> mkdir sphinxext
@@ -118,7 +118,7 @@ script to generate the plot in the :file:`pyplots` directory, and
 refer to it using the ``plot`` directive.  To include the source code
 for the plot in the document, pass the ``include-source`` parameter::
 
-  .. plot:: ../pyplots/ellipses.py
+  .. plot:: pyplots/ellipses.py
      :include-source:
 
 In the HTML version of the document, the plot includes links to the

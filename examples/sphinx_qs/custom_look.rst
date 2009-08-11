@@ -5,13 +5,14 @@
 Customizing the site
 *********************
 
-the `<http://sphinx.pocoo.org/>`_ site itself looks better than the
-sites created with the default css, so here we'll invoke Tufte's
+The `sphinx <http://sphinx.pocoo.org/>`_ site itself looks better than
+the sites created with the default css, so here we'll invoke Tufte's
 phrase "Intelligence imitates but genious steals and grab their css
 and part of their layout.  As before, you can either get the required
-files :file:`_static/default.css`, :file:`_templates:layout.html` and :file:`_static\logo.png`
-from the website or svn (see :ref:`fetching-the-data`).  Since I did a
-svn checkout before, I will just copy the stuff I need from there::
+files :file:`_static/default.css`, :file:`_templates:layout.html` and
+:file:`_static\logo.png` from the website or svn (see
+:ref:`fetching-the-data`).  Since I did a svn checkout before, I will
+just copy the stuff I need from there::
 
     home:~/tmp/py4sci> cp ../sphinx_qs/_static/default.css _static/
     home:~/tmp/py4sci> cp ../sphinx_qs/_templates/layout.html _templates/
@@ -23,9 +24,15 @@ svn checkout before, I will just copy the stuff I need from there::
     _templates/:
     layout.html
 
-Sphinx will automatically pick up the css and layout html files since we put them in the
-default places with the default names, but we have to manually include the logo in our :file:`layout.html`.  Let's take a look at the
-layout file: the first part puts a horizontal navigation bar at the top of our page, like you see on the `sphinx <http://sphinx.pocoo.org>`_ and `matplotlib <http://matplotlib.sourceforge.net/>`_ sites, the second part includes a logo that when we click on it will take us `home` and the last part moves the vertical navigation panels to the right side of the page.
+Sphinx will automatically pick up the css and layout html files since
+we put them in the default places with the default names, but we have
+to manually include the logo in our :file:`layout.html`.  Let's take a
+look at the layout file: the first part puts a horizontal navigation
+bar at the top of our page, like you see on the `sphinx
+<http://sphinx.pocoo.org>`_ and `matplotlib
+<http://matplotlib.sourceforge.net/>`_ sites, the second part includes
+a logo that when we click on it will take us `home` and the last part
+moves the vertical navigation panels to the right side of the page::
 
     {% extends "!layout.html" %}
 
@@ -49,3 +56,7 @@ layout file: the first part puts a horizontal navigation bar at the top of our p
     {# put the sidebar before the body #}
     {% block sidebar1 %}{{ sidebar() }}{% endblock %}
     {% block sidebar2 %}{% endblock %}
+
+Once you rebuild the site with a ``make html`` and reload the page in your browser, you should see a fancier site that looks like this
+
+.. image:: _static/fancy_screenshot.png

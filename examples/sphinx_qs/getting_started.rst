@@ -1,9 +1,9 @@
-.. _sphinx_helpers:
+.. _getting_started:
 
 
-******************
-Sphinx Cheat Sheet
-******************
+***************
+Getting started
+***************
 
 Cheat sheet on how to make this site and install these extensions and
 other goodies.  You can see a literal version of this file below in
@@ -103,4 +103,7 @@ there this page with the screenshot.  `Voila!`
 
 Next we'll customize the look and feel of our site to give it a logo,
 some custom css, and update the navigation panels to look more like
-the `<http://sphinx.pocoo.org/>`_ site itself -- see :ref:`custom_look`.
+the `sphinx <http://sphinx.pocoo.org/>`_ site itself -- see
+:ref:`custom_look`.
+
+

@@ -17,7 +17,7 @@ directory from svn (see :ref:`fetching-the-data`, and install them in
 our :file:`sampledoc` project :file:`sphinxext` directory::
 
     home:~/tmp/sampledoc> mkdir sphinxext
-    home:~/tmp/sampledoc> cp ../sphinx_qs/sphinxext/*.py sphinxext/
+    home:~/tmp/sampledoc> cp ../sampledoc_tut/sphinxext/*.py sphinxext/
     home:~/tmp/sampledoc> ls sphinxext/
     apigen.py             inheritance_diagram.py
     docscrape.py          ipython_console_highlighting.py

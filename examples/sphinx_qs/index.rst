@@ -11,7 +11,9 @@ your own sphinx documentation system.  We'll cover everything from
 installing sphinx, to customizing the look and feel, to using custom
 extensions for embedding plots, inheritance diagrams, syntax
 highlighted ipython sessions and more.  If you follow along the
-tutorial, you'll start with nothing and end up with this site!
+tutorial, you'll start with nothing and end up with this site!  The
+source code for this tutorial lives in mpl svn (see
+:ref:`fetching-the-data`)
 
 Contents:
 

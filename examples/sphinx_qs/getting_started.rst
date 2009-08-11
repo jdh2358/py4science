@@ -48,7 +48,7 @@ Fetching the data
 
 Now we will start to customize out docs.  Grab a couple of files from
 the `web site
-<http://matplotlib.svn.sourceforge.net/viewvc/matplotlib/trunk/py4science/examples/sphinx_qs/>`_
+<http://matplotlib.svn.sourceforge.net/viewvc/matplotlib/trunk/sampledoc_tut/>`_
 or svn.  You will need :file:`getting_started.rst` and
 :file:`_static/basic_screenshot.png`.  All of the files live in the
 "completed" version of this tutorial, but since this is a tutorial,
@@ -63,19 +63,19 @@ First, I'll cd to the directory containing my project, and get the
   home:~/tmp/sampledoc> cd ..
   home:~/tmp> svn co
   https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk/\
-    py4science/examples/sphinx_qs
-  A    sphinx_qs/cheatsheet.rst
-  A    sphinx_qs/_static
-  A    sphinx_qs/_static/basic_screenshot.png
-  A    sphinx_qs/conf.py
-  A    sphinx_qs/Makefile
-  A    sphinx_qs/_templates
-  A    sphinx_qs/_build
-  A    sphinx_qs/getting_started.rst
-  A    sphinx_qs/index.rst
+    sampledoc_tut
+  A    sampledoc_tut/cheatsheet.rst
+  A    sampledoc_tut/_static
+  A    sampledoc_tut/_static/basic_screenshot.png
+  A    sampledoc_tut/conf.py
+  A    sampledoc_tut/Makefile
+  A    sampledoc_tut/_templates
+  A    sampledoc_tut/_build
+  A    sampledoc_tut/getting_started.rst
+  A    sampledoc_tut/index.rst
   Checked out revision 7449.
-  home:~/tmp> cp sphinx_qs/getting_started.rst sampledoc/
-  home:~/tmp> cp sphinx_qs/_static/basic_screenshot.png sampledoc/_static/
+  home:~/tmp> cp sampledoc_tut/getting_started.rst sampledoc/
+  home:~/tmp> cp sampledoc_tut/_static/basic_screenshot.png sampledoc/_static/
 
 Now we are ready to rebuild the docs.  We used the image directory to
 include to the screenshot above with::

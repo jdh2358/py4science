@@ -14,9 +14,9 @@ files :file:`_static/default.css`, :file:`_templates:layout.html` and
 :ref:`fetching-the-data`).  Since I did a svn checkout before, I will
 just copy the stuff I need from there::
 
-    home:~/tmp/sampledoc> cp ../sphinx_qs/_static/default.css _static/
-    home:~/tmp/sampledoc> cp ../sphinx_qs/_templates/layout.html _templates/
-    home:~/tmp/sampledoc> cp ../sphinx_qs/_static/logo.png _static/
+    home:~/tmp/sampledoc> cp ../sampledoc_tut/_static/default.css _static/
+    home:~/tmp/sampledoc> cp ../sampledoc_tut/_templates/layout.html _templates/
+    home:~/tmp/sampledoc> cp ../sampledoc_tut/_static/logo.png _static/
     home:~/tmp/sampledoc> ls _static/ _templates/
     _static/:
     basic_screenshot.png	default.css		logo.png

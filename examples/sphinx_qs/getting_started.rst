@@ -6,8 +6,7 @@ Getting started
 ***************
 
 Cheat sheet on how to make this site and install these extensions and
-other goodies.  You can see a literal version of this file below in
-:ref:`sphinx-literal`.
+other goodies.  
 
 .. _installing-docdir:
 Installing your doc directory
@@ -105,5 +104,4 @@ Next we'll customize the look and feel of our site to give it a logo,
 some custom css, and update the navigation panels to look more like
 the `sphinx <http://sphinx.pocoo.org/>`_ site itself -- see
 :ref:`custom_look`.
-
 

@@ -1,38 +1,162 @@
-.. _sphinx_helpers:
-
+.. _cheat-sheet:
 
 ******************
-Sphinx Cheat Sheet
+Sphinx cheat sheet
 ******************
 
-Cheat sheet on how to make this site and install these extensions and
-other goodies.  You can see a literal version of this file below in
-:ref:`sphinx-literal`.
+Here is a quick and dirty cheat sheet for some common stuff you want
+to do in sphinx and ReST.  You can see the literal source for this
+file at :ref:`cheatsheet
+-literal`.
+   
 
-.. _installing-docdir:
-Installing your doc directory
-=============================
+.. _formatting-text:
 
-You may already have sphinx `sphinx <http://sphinx.pocoo.org/>`_
-installed -- you can check by doing::
+Formatting text
+===============
 
-  python -c 'import sphinx'
+You use inline markup to make text *italics*, **bold**, or ``monotype``.
 
-If that fails grab the latest version of and install it with::
+You can represent code blocks fairly easily::
 
-  > sudo easy_install sphinx
+   import numpy as np
+   x = np.random.rand(12)
 
-Now you are ready to build a template for your docs, using
-sphinx-quickstart::
+Or literally include code:
 
-  > sphinx-quickstart
-
-accepting most of the defaults.  I choose "py4sci" as the name of my project
-
-We can test the installation by changing into the project directory,
-and typing `make html`::
-
-  cd py4sci
-  make html
+.. literalinclude:: ../pyplots/ellipses.py
 
 
+
+.. _making-a-list:
+
+Making a list
+=============
+
+It is easy to make lists in rest
+
+Bullet points
+-------------
+
+This is a subsection making bullet points
+
+* point A
+
+* point B
+
+* point C
+
+
+Enumerated points
+------------------
+
+This is a subsection making numbered points
+
+#. point A
+
+#. point B
+
+#. point C
+
+
+.. _making-a-table:
+
+Making a table
+==============
+
+This shows you how to make a table -- if you only want to make a list see :ref:`making-a-list`.
+
+==================   ============
+Name                 Age
+==================   ============
+John D Hunter        40
+Cast of Thousands    41
+And Still More       42
+==================   ============
+
+.. _making-links:
+
+Making links
+============
+
+It is easy to make a link to `yahoo <http://yahoo.com>`_ or to some
+section inside this document (see :ref:`making-a-table`) or another
+document (see :ref:`final-results`).
+
+You can also reference classes, modules, functions, etc that are
+documented using the sphinx `autodoc
+<http://sphinx.pocoo.org/ext/autodoc.html>`_ facilites.  For example,
+see the module :mod:`matplotlib.backend_bases` documentation, or the
+class :class:`~matplotlib.backend_bases.LocationEvent`, or the method
+:meth:`~matplotlib.backend_bases.FigureCanvasBase.mpl_connect`.
+
+
+
+.. _making-a-list:
+
+Making a list
+=============
+
+It is easy to make lists in rest
+
+Bullet points
+-------------
+
+This is a subsection making bullet points
+
+* point A
+
+* point B
+
+* point C
+
+
+Enumerated points
+------------------
+
+This is a subsection making numbered points
+
+#. point A
+
+#. point B
+
+#. point C
+
+
+.. _making-a-table:
+
+Making a table
+==============
+
+This shows you how to make a table -- if you only want to make a list see :ref:`making-a-list`.
+
+==================   ============
+Name                 Age
+==================   ============
+John D Hunter        40
+Cast of Thousands    41
+And Still More       42
+==================   ============
+
+.. _making-links:
+
+Making links
+============
+
+It is easy to make a link to `yahoo <http://yahoo.com>`_ or to some
+section inside this document (see :ref:`making-a-table`) or another
+document (see :ref:`final-results`).
+
+You can also reference classes, modules, functions, etc that are
+documented using the sphinx `autodoc
+<http://sphinx.pocoo.org/ext/autodoc.html>`_ facilites.  For example,
+see the module :mod:`matplotlib.backend_bases` documentation, or the
+class :class:`~matplotlib.backend_bases.LocationEvent`, or the method
+:meth:`~matplotlib.backend_bases.FigureCanvasBase.mpl_connect`.
+
+.. _cheatsheet-literal:
+
+This file
+=========
+
+.. literalinclude:: cheatsheet.rst

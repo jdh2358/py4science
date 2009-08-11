@@ -1,9 +1,9 @@
 .. _custom_look:
 
 
-*********************
-Customizing the site
-*********************
+******************************************
+Customizing the look and feel of the site
+******************************************
 
 The `sphinx <http://sphinx.pocoo.org/>`_ site itself looks better than
 the sites created with the default css, so here we'll invoke Tufte's

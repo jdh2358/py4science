@@ -40,7 +40,7 @@ if __name__ == '__main__':
         #@  - extract all rows, all columns, 0-th plane to get the first
         #@    channel
         #@  - the resulting array should have 2 dimensions only
-        im = plt.imread('data/moonlanding.png').astype(float)[:,:,0] #@
+        im = plt.imread('moonlanding.png').astype(float) #@
         print "Image shape:",im.shape
     except:
         print "Could not open image."

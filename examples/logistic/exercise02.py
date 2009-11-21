@@ -66,9 +66,8 @@ def cobweb(mu, walkers=10, steps=7):
     return f
 
 
-def invariant_density(mu, x0,cycles=1000000,ret_all=False):
+def invariant_density(mu, x0,cycles=1000000,ret_all=False, bins=500):
     transients = 1000
-    bins = 500
     f = plt.figure()
     ax = f.add_subplot(111)
     logmap = Logistic(mu)
@@ -94,7 +93,7 @@ def ex2B():
         return 1./(np.pi * np.sqrt( x*(1.-x)))
 
     # Don't start from 0.5, which is a fixed point!
-    f = invariant_density(1.0,0.567)
+    f = invariant_density(1.0, 0.567, bins=100)
     ax = f.gca()
     # avoid the edges: rho(x) is singular at 0 and 1!
     x0 = np.linspace(0.001, 0.999, 1000)

@@ -22,14 +22,14 @@ def df(r, f):
 
 def derivs(state, t):
     """
-    Return the derivatives of r and f, stored in the *state* vector::
+    Return the derivatives of R and F, stored in the *state* vector::
 
-       state = [r, f]
+       state = [R, F]
 
-    The return data should be [dr, df] which are the derivatives of r
-    and f at position state and time *t*
+    The return data should be [dR, dF] which are the derivatives of R
+    and F at position state and time *t*
     """
-    r, f = state          # and foxes    #@
+    R, F = state          # and foxes    #@
     deltar = dr(r, f)     # in rabbits   #@
     deltaf = df(r, f)     # in foxes     #@
     return deltar, deltaf                #@
